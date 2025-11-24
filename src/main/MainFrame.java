@@ -8,16 +8,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class MainFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
-    
-    private CardLayout card;
+    private final CardLayout card;
     
     public MainFrame() {
         initComponents();
         
-        // default Interface
+        // default Interface set to home 
         card = (CardLayout) Interface.getLayout();
         card.show(Interface,"home");
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -36,7 +35,7 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle("Dashboard");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(0, 0, 0));
-        setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("MainFrame"); // NOI18N
 
         Interface.setBackground(new java.awt.Color(102, 102, 102));
@@ -64,6 +63,8 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException ex) {
         }
         //</editor-fold>
+        UIManager.put("Button.arc", 20); // rounded buttons
+        UIManager.put("Component.arc", 20); // rounded components
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
