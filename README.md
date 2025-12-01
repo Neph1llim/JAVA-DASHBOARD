@@ -22,4 +22,6 @@
 - [x] File Structure
 - [ ] UI Implementation
 - [ ] Final GUI wireframe
-- [ ] theme handler  
+- [ ] theme handler
+- [ ] database
+- [ ] back-end 
