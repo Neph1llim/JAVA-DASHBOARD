@@ -1,17 +1,15 @@
-## DASHv0.3
+## DASHv0.4
 
 ---
 ### UPDATE: 
 
-- Updated file structure to handle Object Oriented Programming
-- Kept the Netbeans IDE, mixed both Built in generated code and Independent code
-- Major and Minor Bug fix
-- Updated UI to handle OOP
+- Created a class to handle custom properties of Buttons objects and Panel objects
 
 ---
 ### IN PROGRESS:
 
-- Settings page UI
+- Rework of design to properly utilize the new panels and button configs
+- Settings UI
 - Themes and Theme handler
 - Database to handle save files
 
