@@ -1,9 +1,10 @@
-## DASHv0.4
+## DASHv0.5
 
 ---
 ### UPDATE: 
 
 - Created a class to handle custom properties of Buttons objects and Panel objects
+- Created methods to handle collapse animation for Mainframe panels.
 
 ---
 ### IN PROGRESS:
