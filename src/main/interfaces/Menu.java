@@ -2,7 +2,10 @@ package main.interfaces;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.Timer;
 import main.MainFrame;
 
 public class Menu extends javax.swing.JPanel {
@@ -214,41 +217,54 @@ public class Menu extends javax.swing.JPanel {
         card.show(MainFrame.Interface, name);
     }
     
-    public void Minimize(boolean isMinimized){
-        // Update buttons
-        btnTextField(isMinimized);
-        btnSize(isMinimized);
-        
-        int panelWidth = isMinimized ? 250 : 60;
-        setPreferredSize(new Dimension(panelWidth,getPreferredSize().height));
-        
-        revalidate();
-        repaint();
-    }
-    
     private JButton[] menuButtons() {
         return new JButton[] { home, notes, files, widgets, settings };
     }
     
+    public void Minimize(boolean isMinimized){
+        int targetWidth = isMinimized ? 60 : 250;
+        int btnWidth = isMinimized ? 42 : 115;
 
-    private void btnTextField(boolean isMinimized) {
+        setPreferredSize(new Dimension(targetWidth, getPreferredSize().height));
+
+        for (JButton btn : menuButtons()) {
+            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
+        }
+
         if (isMinimized) {
+            for (JButton btn : menuButtons()) {
+                btn.setText("");
+            }
+        } else {
             home.setText("Home");
             notes.setText("Notes");
             files.setText("Files");
             widgets.setText("Widgets");
             settings.setText("Settings");
-        } else {
+        }
+
+        revalidate();
+        repaint();
+    }
+
+    public void animateToWidth(int currentWidth, boolean willBeMinimized) {
+        setPreferredSize(new Dimension(currentWidth, getPreferredSize().height));
+
+        int btnWidth = 42 + (115 - 42) * (currentWidth - 60) / (250 - 60);
+        for (JButton btn : menuButtons()) {
+            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
+        }
+
+        if (willBeMinimized && currentWidth < 155) {
             for (JButton btn : menuButtons()) {
                 btn.setText("");
             }
+        } else if (!willBeMinimized && currentWidth > 155) {
+            home.setText("Home");
+            notes.setText("Notes");
+            files.setText("Files");
+            widgets.setText("Widgets");
+            settings.setText("Settings");
         }
-    }
-
-    private void btnSize(boolean isMinimized) {
-        for (JButton btn : menuButtons()) {
-            int width = isMinimized ? 115 : 42;
-            btn.setPreferredSize(new Dimension(width, btn.getHeight()));
-        }    
     }
 }

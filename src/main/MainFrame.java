@@ -1,8 +1,7 @@
 package main;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import java.awt.CardLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import javax.swing.*;
 
 
@@ -40,7 +39,7 @@ public class MainFrame extends javax.swing.JFrame {
         container = new javax.swing.JPanel();
         menu = new main.interfaces.Menu();
         btnContainer = new javax.swing.JPanel();
-        minimize = new javax.swing.JButton();
+        minimize = new main.component.Button();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(100, 32), new java.awt.Dimension(20, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,29 +63,30 @@ public class MainFrame extends javax.swing.JFrame {
         container.setMinimumSize(new java.awt.Dimension(0, 0));
         container.setPreferredSize(new java.awt.Dimension(250, 810));
         container.setLayout(new java.awt.BorderLayout());
-        container.add(menu, java.awt.BorderLayout.CENTER);
+        container.add(menu, java.awt.BorderLayout.LINE_END);
 
         btnContainer.setBackground(new java.awt.Color(102, 102, 102));
         btnContainer.setMinimumSize(new java.awt.Dimension(100, 100));
         btnContainer.setLayout(new java.awt.GridBagLayout());
 
-        minimize.setBackground(new java.awt.Color(51, 51, 51));
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrow-left.png"))); // NOI18N
-        minimize.setToolTipText("");
-        minimize.setBorderPainted(false);
-        minimize.setFocusPainted(false);
-        minimize.setPreferredSize(new java.awt.Dimension(35, 35));
+        minimize.setNormalColor(new java.awt.Color(102, 102, 102));
+        minimize.setOpaque(true);
         minimize.addActionListener(this::minimizeActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 15, 5);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
         btnContainer.add(minimize, gridBagConstraints);
 
+        filler1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         filler1.setOpaque(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 1.0;
         btnContainer.add(filler1, gridBagConstraints);
 
@@ -114,29 +114,47 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeActionPerformed
-        int expandedWidth = 250;
-        int collapsedWidth = 60;
-        int minWidth = 0;
-        
-        int width = isMinimized ? expandedWidth : collapsedWidth;
-        int min = isMinimized ? minWidth: width;
-        // Only change width, keep height the same
-        container.setPreferredSize(new Dimension(width, getPreferredSize().height));
-        container.setMinimumSize(new Dimension(min, 0));
-        
-        // Change minimize icon
-        String iconPath = isMinimized
-                ? "/main/resource/arrow-left.png"
-                : "/main/resource/arrow-right.png";
-        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource(iconPath)));
+        final int bigWidth = 250;
+        final int smallWidth = 60;
+        final int targetWidth = isMinimized ? bigWidth : smallWidth;
+        final int startWidth = container.getWidth();
 
-        // Flip flag
-        menu.Minimize(isMinimized); // update menu panel
-        isMinimized = !isMinimized;
-        
-        // Refresh layout
-        container.revalidate();
-        container.repaint();
+        javax.swing.Timer timer = new javax.swing.Timer(8, null);
+        final int[] step = {0};
+        final int totalSteps = 30;
+
+        timer.addActionListener((java.awt.event.ActionEvent e) -> {
+            step[0]++;
+
+            // Calculate width
+            int width = startWidth + (targetWidth - startWidth) * step[0] / totalSteps;
+
+            // Update BOTH container and menu
+            container.setPreferredSize(new Dimension(width, container.getHeight()));
+            menu.animateToWidth(width, !isMinimized);
+
+            // Single revalidate
+            getContentPane().revalidate();
+
+            // When animation finishes
+            if (step[0] >= totalSteps) {
+                timer.stop();
+
+                // Final state
+                container.setPreferredSize(new Dimension(targetWidth, container.getHeight()));
+                menu.Minimize(!isMinimized); // This now just sets final state
+
+                // Update icon
+                minimize.setIcon(new ImageIcon(getClass().getResource(
+                    isMinimized ? "/main/resource/arrow-left.png" 
+                               : "/main/resource/arrow-right.png"
+                )));
+
+                isMinimized = !isMinimized;
+            }
+        });
+
+        timer.start();
     }//GEN-LAST:event_minimizeActionPerformed
 
     public static void main(String args[]) {
@@ -146,9 +164,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException ex) {
         }
         //</editor-fold>
-        UIManager.put("Button.arc", 20); // rounded buttons
-        UIManager.put("Component.arc", 20); // rounded components
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }
@@ -161,7 +177,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private main.interfaces.Home home;
     public static main.interfaces.Menu menu;
-    private javax.swing.JButton minimize;
+    private main.component.Button minimize;
     private main.interfaces.Notes notes;
     private main.interfaces.Settings settings;
     private main.interfaces.Widgets widgets;
