@@ -129,7 +129,7 @@ public class MainFrame extends javax.swing.JFrame {
             // Calculate width
             int width = startWidth + (targetWidth - startWidth) * step[0] / totalSteps;
 
-            // Update BOTH container and menu
+            // Update BOTH container and menux  
             container.setPreferredSize(new Dimension(width, container.getHeight()));
             menu.animateToWidth(width, !isMinimized);
 

@@ -2,10 +2,7 @@ package main.interfaces;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.Timer;
 import main.MainFrame;
 
 public class Menu extends javax.swing.JPanel {
