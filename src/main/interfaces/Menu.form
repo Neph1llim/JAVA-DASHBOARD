@@ -91,18 +91,9 @@
             </Property>
             <Property name="hideActionText" type="boolean" value="true"/>
             <Property name="horizontalAlignment" type="int" value="10"/>
-            <Property name="hoverColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="40" green="3b" red="39" type="rgb"/>
-            </Property>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[2, 6, 3, 14]"/>
-            </Property>
-            <Property name="normalColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="4a" green="45" red="43" type="rgb"/>
-            </Property>
-            <Property name="pressedColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="38" green="36" red="35" type="rgb"/>
             </Property>
           </Properties>
           <Events>
@@ -129,18 +120,9 @@
             </Property>
             <Property name="hideActionText" type="boolean" value="true"/>
             <Property name="horizontalAlignment" type="int" value="10"/>
-            <Property name="hoverColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="40" green="3b" red="39" type="rgb"/>
-            </Property>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[2, 6, 3, 14]"/>
-            </Property>
-            <Property name="normalColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="4a" green="45" red="43" type="rgb"/>
-            </Property>
-            <Property name="pressedColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="38" green="36" red="35" type="rgb"/>
             </Property>
           </Properties>
           <Events>
@@ -167,18 +149,9 @@
             </Property>
             <Property name="hideActionText" type="boolean" value="true"/>
             <Property name="horizontalAlignment" type="int" value="10"/>
-            <Property name="hoverColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="40" green="3b" red="39" type="rgb"/>
-            </Property>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[2, 6, 3, 14]"/>
-            </Property>
-            <Property name="normalColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="4a" green="45" red="43" type="rgb"/>
-            </Property>
-            <Property name="pressedColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="38" green="36" red="35" type="rgb"/>
             </Property>
           </Properties>
           <Events>
@@ -209,18 +182,9 @@
             </Property>
             <Property name="hideActionText" type="boolean" value="true"/>
             <Property name="horizontalAlignment" type="int" value="10"/>
-            <Property name="hoverColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="40" green="3b" red="39" type="rgb"/>
-            </Property>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[2, 6, 3, 14]"/>
-            </Property>
-            <Property name="normalColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="4a" green="45" red="43" type="rgb"/>
-            </Property>
-            <Property name="pressedColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="38" green="36" red="35" type="rgb"/>
             </Property>
           </Properties>
           <AccessibilityProperties>
@@ -250,18 +214,9 @@
             </Property>
             <Property name="hideActionText" type="boolean" value="true"/>
             <Property name="horizontalAlignment" type="int" value="10"/>
-            <Property name="hoverColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="40" green="3b" red="39" type="rgb"/>
-            </Property>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[2, 6, 3, 14]"/>
-            </Property>
-            <Property name="normalColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="4a" green="45" red="43" type="rgb"/>
-            </Property>
-            <Property name="pressedColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="38" green="36" red="35" type="rgb"/>
             </Property>
           </Properties>
           <Events>

@@ -1,30 +1,28 @@
 package main;
 
+/* Import files location */
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import javax.swing.*;
 
 
 public class MainFrame extends javax.swing.JFrame {
-    
+    /* Properties */
     boolean isMinimized = false;
     private final CardLayout card;
     
+    /* Constructors for OOP */
     public MainFrame() {
         initComponents();
         
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
-        setLocationRelativeTo(null); // Centers on screen
-        
         
         // default Interface set to home 
         card = (CardLayout) Interface.getLayout();
         card.show(Interface,"home");
-        
-        minimize.putClientProperty("JButton.buttonType", "roundRect");
-        minimize.putClientProperty("JComponent.roundRect.arc", 100);
     }
-    
+
+    /* Built-in codes and functions */    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -77,7 +75,7 @@ public class MainFrame extends javax.swing.JFrame {
         minimize.setBackground(new java.awt.Color(27, 27, 28));
         minimize.setForeground(new java.awt.Color(27, 27, 28));
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrow-left.png"))); // NOI18N
-        minimize.setArc(50);
+        minimize.setArc(100);
         minimize.setBorderColor(new java.awt.Color(67, 69, 74));
         minimize.setHoverColor(new java.awt.Color(67, 69, 74));
         minimize.setNormalColor(new java.awt.Color(27, 27, 28));
@@ -120,22 +118,22 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeActionPerformed
-        final int bigWidth = 250;
-        final int smallWidth = 60;
-        final int targetWidth = isMinimized ? bigWidth : smallWidth;
-        final int startWidth = container.getWidth();
+        final int maxWidth = 250;
+        final int minWidth = 60;
+        final int targetWidth = isMinimized ? maxWidth : minWidth; // ternary operator
+        final int currentWidth = container.getWidth();
 
         javax.swing.Timer timer = new javax.swing.Timer(8, null);
         final int[] step = {0};
-        final int totalSteps = 30;
+        final int totalSteps = 30; // adjust for collapse speed
 
         timer.addActionListener((java.awt.event.ActionEvent e) -> {
             step[0]++;
 
             // Calculate width
-            int width = startWidth + (targetWidth - startWidth) * step[0] / totalSteps;
+            int width = currentWidth + (targetWidth - currentWidth) * step[0] / totalSteps;
 
-            // Update BOTH container and menux  
+            // Update BOTH container and menu
             container.setPreferredSize(new Dimension(width, container.getHeight()));
             menu.animateToWidth(width, !isMinimized);
 
@@ -156,14 +154,15 @@ public class MainFrame extends javax.swing.JFrame {
                                : "/main/resource/arrow-right.png"
                 )));
 
-                isMinimized = !isMinimized;
+                isMinimized = !isMinimized; // inverts the state
             }
         });
 
         timer.start();
     }//GEN-LAST:event_minimizeActionPerformed
 
-    public static void main(String args[]) {
+    /* Main Class Code */ 
+     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code">
         try{UIManager.setLookAndFeel(new FlatDarkLaf());

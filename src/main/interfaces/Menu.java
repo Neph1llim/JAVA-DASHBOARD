@@ -1,5 +1,6 @@
 package main.interfaces;
 
+/* import statements */
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -7,6 +8,7 @@ import main.MainFrame;
 
 public class Menu extends javax.swing.JPanel {
   
+    /* Constructors */
     public Menu() {
         initComponents();
         // to round the menu panel
@@ -14,6 +16,67 @@ public class Menu extends javax.swing.JPanel {
         putClientProperty("JComponent.roundRect.arc", 25);
     }
          
+    /* Methods */   
+    private void showPanel(String name){
+        CardLayout card = (CardLayout) MainFrame.Interface.getLayout();
+        card.show(MainFrame.Interface, name);
+    }
+    
+    private JButton[] menuButtons() {
+        return new JButton[] { home, notes, files, widgets, settings };
+    }
+    
+    public void Minimize(boolean isMinimized){
+        int targetWidth = isMinimized ? 60 : 250; // ternary operator
+        int btnWidth = isMinimized ? 42 : 115; // ternary operator
+
+        setPreferredSize(new Dimension(targetWidth, getPreferredSize().height));
+
+        for (JButton btn : menuButtons()) {
+            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
+        }
+
+        if (isMinimized) {
+            for (JButton btn : menuButtons()) {
+                btn.setText("");
+            }
+        } else {
+            home.setText("Home");
+            notes.setText("Notes");
+            files.setText("Files");
+            widgets.setText("Widgets");
+            settings.setText("Settings");
+        }
+
+        //refresh the panel
+        revalidate();
+        repaint();
+    }
+
+    public void animateToWidth(int currentWidth, boolean minimize) {
+        setPreferredSize(new Dimension(currentWidth, getPreferredSize().height));
+
+        int btnWidth = 42 + (115 - 42) * (currentWidth - 60) / (250 - 60);
+        for (JButton btn : menuButtons()) {
+            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
+        }
+
+        if (minimize && currentWidth < 155) {
+            for (JButton btn : menuButtons()) {
+                btn.setText("");
+            }
+        } 
+        
+        if (!minimize && currentWidth > 155) {
+            home.setText("Home");
+            notes.setText("Notes");
+            files.setText("Files");
+            widgets.setText("Widgets");
+            settings.setText("Settings");
+        }
+    }
+
+    /* Built-in codes and functions */
         @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -42,11 +105,8 @@ public class Menu extends javax.swing.JPanel {
         home.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         home.setHideActionText(true);
         home.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        home.setHoverColor(new java.awt.Color(57, 59, 64));
         home.setIconTextGap(12);
         home.setMargin(new java.awt.Insets(2, 6, 3, 14));
-        home.setNormalColor(new java.awt.Color(67, 69, 74));
-        home.setPressedColor(new java.awt.Color(53, 54, 56));
         home.addActionListener(this::homeActionPerformed);
 
         notes.setBackground(new java.awt.Color(51, 51, 51));
@@ -57,11 +117,8 @@ public class Menu extends javax.swing.JPanel {
         notes.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         notes.setHideActionText(true);
         notes.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        notes.setHoverColor(new java.awt.Color(57, 59, 64));
         notes.setIconTextGap(12);
         notes.setMargin(new java.awt.Insets(2, 6, 3, 14));
-        notes.setNormalColor(new java.awt.Color(67, 69, 74));
-        notes.setPressedColor(new java.awt.Color(53, 54, 56));
         notes.addActionListener(this::notesActionPerformed);
 
         files.setBackground(new java.awt.Color(51, 51, 51));
@@ -72,11 +129,8 @@ public class Menu extends javax.swing.JPanel {
         files.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         files.setHideActionText(true);
         files.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        files.setHoverColor(new java.awt.Color(57, 59, 64));
         files.setIconTextGap(12);
         files.setMargin(new java.awt.Insets(2, 6, 3, 14));
-        files.setNormalColor(new java.awt.Color(67, 69, 74));
-        files.setPressedColor(new java.awt.Color(53, 54, 56));
         files.addActionListener(this::filesActionPerformed);
         files.addActionListener(this::filesActionPerformed);
 
@@ -88,11 +142,8 @@ public class Menu extends javax.swing.JPanel {
         widgets.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         widgets.setHideActionText(true);
         widgets.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        widgets.setHoverColor(new java.awt.Color(57, 59, 64));
         widgets.setIconTextGap(12);
         widgets.setMargin(new java.awt.Insets(2, 6, 3, 14));
-        widgets.setNormalColor(new java.awt.Color(67, 69, 74));
-        widgets.setPressedColor(new java.awt.Color(53, 54, 56));
         widgets.addActionListener(this::widgetsActionPerformed);
 
         settings.setBackground(new java.awt.Color(51, 51, 51));
@@ -103,11 +154,8 @@ public class Menu extends javax.swing.JPanel {
         settings.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         settings.setHideActionText(true);
         settings.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        settings.setHoverColor(new java.awt.Color(57, 59, 64));
         settings.setIconTextGap(12);
         settings.setMargin(new java.awt.Insets(2, 6, 3, 14));
-        settings.setNormalColor(new java.awt.Color(67, 69, 74));
-        settings.setPressedColor(new java.awt.Color(53, 54, 56));
         settings.addActionListener(this::settingsActionPerformed);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
@@ -146,20 +194,24 @@ public class Menu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
-        showPanel("home");    }//GEN-LAST:event_homeActionPerformed
-
-    private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
-        showPanel("settings");    }//GEN-LAST:event_settingsActionPerformed
+        showPanel("home");
+    }//GEN-LAST:event_homeActionPerformed
 
     private void notesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notesActionPerformed
-        showPanel("notes");    }//GEN-LAST:event_notesActionPerformed
-
-    private void widgetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_widgetsActionPerformed
-        showPanel("widgets");    }//GEN-LAST:event_widgetsActionPerformed
+        showPanel("notes");
+    }//GEN-LAST:event_notesActionPerformed
 
     private void filesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filesActionPerformed
         showPanel("files");
     }//GEN-LAST:event_filesActionPerformed
+
+    private void widgetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_widgetsActionPerformed
+        showPanel("widgets");
+    }//GEN-LAST:event_widgetsActionPerformed
+
+    private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
+        showPanel("settings");
+    }//GEN-LAST:event_settingsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.component.Button files;
@@ -169,62 +221,4 @@ public class Menu extends javax.swing.JPanel {
     private main.component.Button settings;
     private main.component.Button widgets;
     // End of variables declaration//GEN-END:variables
-
-// Codes area    
-    private void showPanel(String name){
-        CardLayout card = (CardLayout) MainFrame.Interface.getLayout();
-        card.show(MainFrame.Interface, name);
-    }
-    
-    private JButton[] menuButtons() {
-        return new JButton[] { home, notes, files, widgets, settings };
-    }
-    
-    public void Minimize(boolean isMinimized){
-        int targetWidth = isMinimized ? 60 : 250;
-        int btnWidth = isMinimized ? 42 : 115;
-
-        setPreferredSize(new Dimension(targetWidth, getPreferredSize().height));
-
-        for (JButton btn : menuButtons()) {
-            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
-        }
-
-        if (isMinimized) {
-            for (JButton btn : menuButtons()) {
-                btn.setText("");
-            }
-        } else {
-            home.setText("Home");
-            notes.setText("Notes");
-            files.setText("Files");
-            widgets.setText("Widgets");
-            settings.setText("Settings");
-        }
-
-        revalidate();
-        repaint();
-    }
-
-    public void animateToWidth(int currentWidth, boolean willBeMinimized) {
-        setPreferredSize(new Dimension(currentWidth, getPreferredSize().height));
-
-        int btnWidth = 42 + (115 - 42) * (currentWidth - 60) / (250 - 60);
-        for (JButton btn : menuButtons()) {
-            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
-        }
-
-        if (willBeMinimized && currentWidth < 155) {
-            for (JButton btn : menuButtons()) {
-                btn.setText("");
-            }
-        } else if (!willBeMinimized && currentWidth > 155) {
-            home.setText("Home");
-            notes.setText("Notes");
-            files.setText("Files");
-            widgets.setText("Widgets");
-            settings.setText("Settings");
-        }
-    }
 }
-
