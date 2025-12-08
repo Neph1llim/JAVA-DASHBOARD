@@ -1,12 +1,16 @@
 package main.interfaces;
 
+/* Import Statements */
+
 public class Home extends javax.swing.JPanel {
 
+    /* Constructors */
     public Home() {
         initComponents();
 
     }
 
+    /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

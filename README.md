@@ -1,10 +1,11 @@
-## DASHv0.5
+## DASHv0.6
 
 ---
 ### UPDATE: 
 
-- Created a class to handle custom properties of Buttons objects and Panel objects
-- Created methods to handle collapse animation for Mainframe panels.
+- Fixed collaboration Issues and github repository bugs
+- minor builds to settings panel
+- Commnents and code structure
 
 ---
 ### IN PROGRESS:
@@ -13,6 +14,8 @@
 - Settings UI
 - Themes and Theme handler
 - Database to handle save files
+- documentation
+- fix comments and code readability
 
 ---
 ### TO DO:
@@ -24,3 +27,32 @@
 - [ ] theme handler
 - [ ] database
 - [ ] back-end 
+
+---
+
+# Documentation 
+
+#### Code Structure 
+
+    - Package name 
+    - Import statements
+    - Class
+        - Properties
+        - Constructors
+        - Methods 
+        - Built-in Components (Netbeans)
+            - auto generated codes
+            - auto generated functions(events)
+            - auto generated variables
+
+
+#### Code examples
+1. Ternary - simplified if else statement
+
+variable = condition ? true : false;
+
+
+---
+
+## Cloning the repository
+// kayo na mag tuloy

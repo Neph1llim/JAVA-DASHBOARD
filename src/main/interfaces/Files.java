@@ -1,23 +1,18 @@
-/*
-To do:
-
-make the container so that child components dynamically resize with the containers dimension
-
-
-*/
-
 package main.interfaces;
 
+/* import statements */
 import java.awt.*;
 import javax.swing.*;
 import main.component.Button;
 
 public class Files extends javax.swing.JPanel {
 
+    /* Contructors */
     public Files() {
         initComponents();
     }
-
+    
+    /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
