@@ -27,11 +27,11 @@ public class Files extends javax.swing.JPanel {
         filePanel = new javax.swing.JPanel();
         addFile = new javax.swing.JButton();
 
-        files.setBackground(new java.awt.Color(153, 153, 153));
+        files.setBackground(new java.awt.Color(21, 21, 23));
         files.setPreferredSize(new java.awt.Dimension(1230, 860));
         files.setLayout(new java.awt.GridBagLayout());
 
-        filePanel.setBackground(new java.awt.Color(204, 204, 204));
+        filePanel.setBackground(new java.awt.Color(27, 27, 28));
         filePanel.setPreferredSize(new java.awt.Dimension(750, 540));
 
         javax.swing.GroupLayout filePanelLayout = new javax.swing.GroupLayout(filePanel);
@@ -56,7 +56,6 @@ public class Files extends javax.swing.JPanel {
         files.add(filePanel, gridBagConstraints);
 
         addFile.setBackground(new java.awt.Color(102, 102, 102));
-        addFile.setForeground(new java.awt.Color(0, 0, 0));
         addFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
         addFile.setBorderPainted(false);
         addFile.setFocusPainted(false);
