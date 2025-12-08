@@ -18,9 +18,9 @@ public class Button extends JButton {
 
     // default properties
     private int arc = 25;
-    private Color normalColor = new Color(220, 220, 220);
-    private Color hoverColor = new Color(200, 200, 200);
-    private Color pressedColor = new Color(180, 180, 180);
+    private Color normalColor = new Color(67, 69, 74);
+    private Color hoverColor = new Color(57, 59, 64);
+    private Color pressedColor = new Color(53, 54, 56);
     private Color borderColor = new Color(150, 150, 150);
     private int borderThickness = 0;
 

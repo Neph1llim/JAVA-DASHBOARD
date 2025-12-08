@@ -25,11 +25,11 @@ public class Notes extends javax.swing.JPanel {
         notePanel = new javax.swing.JPanel();
         change = new javax.swing.JButton();
 
-        notes.setBackground(new java.awt.Color(153, 153, 153));
+        notes.setBackground(new java.awt.Color(21, 21, 23));
         notes.setPreferredSize(new java.awt.Dimension(1230, 860));
         notes.setLayout(new java.awt.GridBagLayout());
 
-        notePanel.setBackground(new java.awt.Color(204, 204, 204));
+        notePanel.setBackground(new java.awt.Color(27, 27, 28));
         notePanel.setPreferredSize(new java.awt.Dimension(750, 540));
 
         javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
@@ -54,7 +54,6 @@ public class Notes extends javax.swing.JPanel {
         notes.add(notePanel, gridBagConstraints);
 
         change.setBackground(new java.awt.Color(102, 102, 102));
-        change.setForeground(new java.awt.Color(0, 0, 0));
         change.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
         change.setBorderPainted(false);
         change.setFocusPainted(false);

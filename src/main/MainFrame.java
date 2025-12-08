@@ -31,11 +31,11 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         Interface = new javax.swing.JPanel();
+        files = new main.interfaces.Files();
+        home = new main.interfaces.Home();
         widgets = new main.interfaces.Widgets();
         notes = new main.interfaces.Notes();
         settings = new main.interfaces.Settings();
-        files = new main.interfaces.Files();
-        home = new main.interfaces.Home();
         container = new javax.swing.JPanel();
         menu = new main.interfaces.Menu();
         btnContainer = new javax.swing.JPanel();
@@ -54,32 +54,38 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.setMinimumSize(new java.awt.Dimension(500, 270));
         Interface.setPreferredSize(new java.awt.Dimension(1200, 810));
         Interface.setLayout(new java.awt.CardLayout());
-        Interface.add(widgets, "widgets");
-        Interface.add(notes, "notes");
-        Interface.add(settings, "settings");
         Interface.add(files, "files");
         Interface.add(home, "home");
+
+        widgets.setBackground(new java.awt.Color(21, 21, 23));
+        widgets.setForeground(new java.awt.Color(27, 27, 28));
+        Interface.add(widgets, "widgets");
+
+        notes.setBackground(new java.awt.Color(255, 255, 255));
+        Interface.add(notes, "notes");
+        Interface.add(settings, "settings");
 
         container.setMinimumSize(new java.awt.Dimension(0, 0));
         container.setPreferredSize(new java.awt.Dimension(250, 810));
         container.setLayout(new java.awt.BorderLayout());
         container.add(menu, java.awt.BorderLayout.LINE_END);
 
-        btnContainer.setBackground(new java.awt.Color(102, 102, 102));
+        btnContainer.setBackground(new java.awt.Color(27, 27, 28));
         btnContainer.setMinimumSize(new java.awt.Dimension(100, 100));
         btnContainer.setLayout(new java.awt.GridBagLayout());
 
+        minimize.setBackground(new java.awt.Color(27, 27, 28));
+        minimize.setForeground(new java.awt.Color(27, 27, 28));
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrow-left.png"))); // NOI18N
-        minimize.setNormalColor(new java.awt.Color(102, 102, 102));
-        minimize.setOpaque(true);
+        minimize.setArc(50);
+        minimize.setBorderColor(new java.awt.Color(67, 69, 74));
+        minimize.setHoverColor(new java.awt.Color(67, 69, 74));
+        minimize.setNormalColor(new java.awt.Color(27, 27, 28));
+        minimize.setPressedColor(new java.awt.Color(27, 27, 28));
         minimize.addActionListener(this::minimizeActionPerformed);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-        btnContainer.add(minimize, gridBagConstraints);
+        btnContainer.add(minimize, new java.awt.GridBagConstraints());
 
+        filler1.setBackground(new java.awt.Color(27, 27, 28));
         filler1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         filler1.setOpaque(true);
         gridBagConstraints = new java.awt.GridBagConstraints();

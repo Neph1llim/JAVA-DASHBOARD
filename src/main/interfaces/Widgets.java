@@ -13,7 +13,7 @@ public class Widgets extends javax.swing.JPanel {
 
         Widgets = new javax.swing.JPanel();
 
-        Widgets.setBackground(new java.awt.Color(153, 153, 153));
+        Widgets.setBackground(new java.awt.Color(21, 21, 23));
 
         javax.swing.GroupLayout WidgetsLayout = new javax.swing.GroupLayout(Widgets);
         Widgets.setLayout(WidgetsLayout);
