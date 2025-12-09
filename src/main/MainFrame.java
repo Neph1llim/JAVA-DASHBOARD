@@ -43,6 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnContainer = new javax.swing.JPanel();
         minimize = new main.component.Button();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(100, 32), new java.awt.Dimension(20, 32767));
+        login = new javax.swing.JPanel();
         Interface = new javax.swing.JPanel();
         home = new main.interfaces.Home();
         widgets = new main.interfaces.Widgets();
