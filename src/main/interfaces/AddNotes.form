@@ -39,14 +39,14 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
       <SubComponents>
-        <Component class="main.component.Button" name="button8">
+        <Component class="main.component.Button" name="back">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/main/resource/fluent--arrow-reply-20-filled.png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button8ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -209,7 +209,7 @@
                           <EmptySpace pref="390" max="32767" attributes="0"/>
                           <Component id="button1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="button2" min="-2" max="-2" attributes="0"/>
+                          <Component id="save" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -222,7 +222,7 @@
                               <Component id="button5" max="32767" attributes="0"/>
                               <Component id="button4" max="32767" attributes="0"/>
                               <Component id="button1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="button2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="save" alignment="0" max="32767" attributes="0"/>
                               <Component id="button3" alignment="0" max="32767" attributes="0"/>
                               <Component id="button6" max="32767" attributes="0"/>
                               <Component id="button7" alignment="0" max="32767" attributes="0"/>
@@ -241,18 +241,21 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="main.component.Button" name="button2">
+                <Component class="main.component.Button" name="save">
                   <Properties>
                     <Property name="label" type="java.lang.String" value="Save"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="main.component.Button" name="button3">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/main/resource/fa--bold.png"/>
+                      <Image iconType="3" name="/main/resource/settings.png"/>
                     </Property>
                     <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/main/resource/fa--bold.png"/>
+                      <Image iconType="3" name="/main/resource/settings.png"/>
                     </Property>
                   </Properties>
                 </Component>

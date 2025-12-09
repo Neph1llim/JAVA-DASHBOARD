@@ -44,11 +44,11 @@ public class Notes extends javax.swing.JPanel {
         notePanel.setLayout(notePanelLayout);
         notePanelLayout.setHorizontalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 899, Short.MAX_VALUE)
         );
         notePanelLayout.setVerticalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 632, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -58,6 +58,8 @@ public class Notes extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 400;
         gridBagConstraints.ipady = 300;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
         notes.add(notePanel, gridBagConstraints);
 
@@ -84,22 +86,12 @@ public class Notes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeActionPerformed
-        JPanel round1 = new Panel(35, new Color(50,50,50));
-        round1.setPreferredSize(new Dimension(250, 250));
-        
-       showPanel("addNote"); 
-        
-        notePanel.add(round1);
-        
-        // Configuration for panels
-        notePanel.setLayout(new FlowLayout());
-        notePanel.revalidate();
-        notePanel.repaint();
+        showPanel("addNote");
     }//GEN-LAST:event_changeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton change;
-    private javax.swing.JPanel notePanel;
+    public static javax.swing.JPanel notePanel;
     private javax.swing.JPanel notes;
     // End of variables declaration//GEN-END:variables
 }

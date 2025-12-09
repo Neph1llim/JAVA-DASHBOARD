@@ -1,18 +1,28 @@
 package main.interfaces;
 
+import java.awt.*;
+import javax.swing.*;
+import main.MainFrame;
+import main.component.Panel;
+
 public class AddNotes extends javax.swing.JPanel {
 
     public AddNotes() {
         initComponents();
     }
 
+    /* Methods */
+    private void showPanel(String name){
+        CardLayout card = (CardLayout) MainFrame.Interface.getLayout();
+        card.show(MainFrame.Interface, name);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         panel1 = new main.component.Panel();
-        button8 = new main.component.Button();
+        back = new main.component.Button();
         jPanel1 = new javax.swing.JPanel();
         panel2 = new main.component.Panel();
         jTextField1 = new javax.swing.JTextField();
@@ -21,7 +31,7 @@ public class AddNotes extends javax.swing.JPanel {
         jTextArea1 = new javax.swing.JTextArea();
         panel4 = new main.component.Panel();
         button1 = new main.component.Button();
-        button2 = new main.component.Button();
+        save = new main.component.Button();
         button3 = new main.component.Button();
         button4 = new main.component.Button();
         button5 = new main.component.Button();
@@ -32,8 +42,8 @@ public class AddNotes extends javax.swing.JPanel {
         panel1.setPanelBackground(new java.awt.Color(0, 0, 0));
         panel1.setLayout(new java.awt.GridBagLayout());
 
-        button8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fluent--arrow-reply-20-filled.png"))); // NOI18N
-        button8.addActionListener(this::button8ActionPerformed);
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fluent--arrow-reply-20-filled.png"))); // NOI18N
+        back.addActionListener(this::backActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -41,7 +51,7 @@ public class AddNotes extends javax.swing.JPanel {
         gridBagConstraints.ipady = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 25, 0, 0);
-        panel1.add(button8, gridBagConstraints);
+        panel1.add(back, gridBagConstraints);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -127,10 +137,11 @@ public class AddNotes extends javax.swing.JPanel {
         button1.setLabel("Cancel");
         button1.addActionListener(this::button1ActionPerformed);
 
-        button2.setLabel("Save");
+        save.setLabel("Save");
+        save.addActionListener(this::saveActionPerformed);
 
-        button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fa--bold.png"))); // NOI18N
-        button3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fa--bold.png"))); // NOI18N
+        button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/settings.png"))); // NOI18N
+        button3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/settings.png"))); // NOI18N
 
         button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/zondicons--format-italic.png"))); // NOI18N
 
@@ -159,7 +170,7 @@ public class AddNotes extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 390, Short.MAX_VALUE)
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
         panel4Layout.setVerticalGroup(
@@ -170,7 +181,7 @@ public class AddNotes extends javax.swing.JPanel {
                     .addComponent(button5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -201,12 +212,12 @@ public class AddNotes extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE)
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 993, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+            .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -222,20 +233,38 @@ public class AddNotes extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void button8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button8ActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+         showPanel("notes");
+    }//GEN-LAST:event_backActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        // add logic here
+        
+        
+        // change this to instance
+        JPanel round1 = new Panel(35, new Color(50,50,50));
+        round1.setPreferredSize(new Dimension(250, 250));
+
+        Notes.notePanel.add(round1);
+        
+        // Configuration for panels
+        Notes.notePanel.setLayout(new FlowLayout());
+        Notes.notePanel.revalidate();
+        Notes.notePanel.repaint();
+        
+        //return to notes page
+        showPanel("notes");
+    }//GEN-LAST:event_saveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private main.component.Button back;
     private main.component.Button button1;
-    private main.component.Button button2;
     private main.component.Button button3;
     private main.component.Button button4;
     private main.component.Button button5;
     private main.component.Button button6;
     private main.component.Button button7;
-    private main.component.Button button8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
@@ -244,5 +273,6 @@ public class AddNotes extends javax.swing.JPanel {
     private main.component.Panel panel2;
     private main.component.Panel panel3;
     private main.component.Panel panel4;
+    private main.component.Button save;
     // End of variables declaration//GEN-END:variables
 }
