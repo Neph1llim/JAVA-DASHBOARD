@@ -39,14 +39,14 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
       <SubComponents>
-        <Component class="main.component.Button" name="button8">
+        <Component class="main.component.Button" name="back">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/main/resource/fluent--arrow-reply-20-filled.png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button8ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -85,7 +85,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="jTextField1" min="-2" pref="750" max="-2" attributes="0"/>
+                          <Component id="title" min="-2" pref="750" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -94,14 +94,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField1" pref="37" max="32767" attributes="0"/>
+                          <Component id="title" pref="37" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="title">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="66" green="66" red="66" type="rgb"/>
@@ -118,7 +118,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="titleActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -209,7 +209,7 @@
                           <EmptySpace pref="390" max="32767" attributes="0"/>
                           <Component id="button1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="button2" min="-2" max="-2" attributes="0"/>
+                          <Component id="save" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -222,7 +222,7 @@
                               <Component id="button5" max="32767" attributes="0"/>
                               <Component id="button4" max="32767" attributes="0"/>
                               <Component id="button1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="button2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="save" alignment="0" max="32767" attributes="0"/>
                               <Component id="button3" alignment="0" max="32767" attributes="0"/>
                               <Component id="button6" max="32767" attributes="0"/>
                               <Component id="button7" alignment="0" max="32767" attributes="0"/>
@@ -241,15 +241,21 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="main.component.Button" name="button2">
+                <Component class="main.component.Button" name="save">
                   <Properties>
                     <Property name="label" type="java.lang.String" value="Save"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="main.component.Button" name="button3">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/main/resource/carbon--text-bold.png"/>
+                    </Property>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[3, 0, 0, 0]"/>
                     </Property>
                     <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/main/resource/carbon--text-bold.png"/>
@@ -261,12 +267,18 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/main/resource/ic--round-format-italic.png"/>
                     </Property>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[3, 0, 0, 0]"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="main.component.Button" name="button5">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/main/resource/ic--round-format-underlined.png"/>
+                    </Property>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[3, 0, 0, 0]"/>
                     </Property>
                   </Properties>
                   <Events>
@@ -278,12 +290,18 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/main/resource/ci--font.png"/>
                     </Property>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[3, 0, 0, 0]"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="main.component.Button" name="button7">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/main/resource/ri--font-color.png"/>
+                    </Property>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[3, 0, 0, 0]"/>
                     </Property>
                   </Properties>
                 </Component>
