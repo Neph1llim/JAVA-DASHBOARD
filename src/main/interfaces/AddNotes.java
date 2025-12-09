@@ -129,15 +129,15 @@ public class AddNotes extends javax.swing.JPanel {
 
         button2.setLabel("Save");
 
-        button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fa--bold.png"))); // NOI18N
-        button3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fa--bold.png"))); // NOI18N
+        button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/carbon--text-bold.png"))); // NOI18N
+        button3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/carbon--text-bold.png"))); // NOI18N
 
-        button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/zondicons--format-italic.png"))); // NOI18N
+        button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ic--round-format-italic.png"))); // NOI18N
 
-        button5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fa--underline.png"))); // NOI18N
+        button5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ic--round-format-underlined.png"))); // NOI18N
         button5.addActionListener(this::button5ActionPerformed);
 
-        button6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/qlementine-icons--font-16.png"))); // NOI18N
+        button6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ci--font.png"))); // NOI18N
 
         button7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ri--font-color.png"))); // NOI18N
 
