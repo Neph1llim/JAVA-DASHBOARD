@@ -90,7 +90,7 @@
             <Property name="horizontalAlignment" type="int" value="10"/>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[2, 6, 3, 14]"/>
+              <Insets value="[2, 6, 2, 2]"/>
             </Property>
           </Properties>
           <Events>
@@ -116,7 +116,7 @@
             <Property name="horizontalAlignment" type="int" value="10"/>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[2, 6, 3, 14]"/>
+              <Insets value="[2, 6, 2, 2]"/>
             </Property>
           </Properties>
           <Events>
@@ -142,7 +142,7 @@
             <Property name="horizontalAlignment" type="int" value="10"/>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[2, 6, 3, 14]"/>
+              <Insets value="[2, 6, 2, 2]"/>
             </Property>
           </Properties>
           <Events>
@@ -172,7 +172,7 @@
             <Property name="horizontalAlignment" type="int" value="10"/>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[2, 6, 3, 14]"/>
+              <Insets value="[2, 6, 2, 2]"/>
             </Property>
           </Properties>
           <AccessibilityProperties>
@@ -201,7 +201,7 @@
             <Property name="horizontalAlignment" type="int" value="10"/>
             <Property name="iconTextGap" type="int" value="12"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[2, 6, 3, 14]"/>
+              <Insets value="[2, 6, 2, 2]"/>
             </Property>
           </Properties>
           <Events>

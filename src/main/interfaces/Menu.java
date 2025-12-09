@@ -112,7 +112,7 @@ public class Menu extends javax.swing.JPanel {
         home.setHideActionText(true);
         home.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         home.setIconTextGap(12);
-        home.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        home.setMargin(new java.awt.Insets(2, 6, 2, 2));
         home.addActionListener(this::homeActionPerformed);
 
         notes.setBackground(new java.awt.Color(51, 51, 51));
@@ -123,7 +123,7 @@ public class Menu extends javax.swing.JPanel {
         notes.setHideActionText(true);
         notes.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         notes.setIconTextGap(12);
-        notes.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        notes.setMargin(new java.awt.Insets(2, 6, 2, 2));
         notes.addActionListener(this::notesActionPerformed);
 
         files.setBackground(new java.awt.Color(51, 51, 51));
@@ -134,7 +134,7 @@ public class Menu extends javax.swing.JPanel {
         files.setHideActionText(true);
         files.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         files.setIconTextGap(12);
-        files.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        files.setMargin(new java.awt.Insets(2, 6, 2, 2));
         files.addActionListener(this::filesActionPerformed);
         files.addActionListener(this::filesActionPerformed);
 
@@ -146,7 +146,7 @@ public class Menu extends javax.swing.JPanel {
         widgets.setHideActionText(true);
         widgets.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         widgets.setIconTextGap(12);
-        widgets.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        widgets.setMargin(new java.awt.Insets(2, 6, 2, 2));
         widgets.addActionListener(this::widgetsActionPerformed);
 
         settings.setBackground(new java.awt.Color(51, 51, 51));
@@ -157,7 +157,7 @@ public class Menu extends javax.swing.JPanel {
         settings.setHideActionText(true);
         settings.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         settings.setIconTextGap(12);
-        settings.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        settings.setMargin(new java.awt.Insets(2, 6, 2, 2));
         settings.addActionListener(this::settingsActionPerformed);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
