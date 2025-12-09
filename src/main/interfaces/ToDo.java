@@ -31,6 +31,7 @@ public class ToDo extends javax.swing.JPanel {
         jLabel21.setText("To Do List");
 
         add.setText("ADD");
+        add.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         add.addActionListener(this::addActionPerformed);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
