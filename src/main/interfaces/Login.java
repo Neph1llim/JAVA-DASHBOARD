@@ -80,7 +80,7 @@ public class Login extends javax.swing.JPanel {
 
         emailLabel.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         emailLabel.setForeground(new java.awt.Color(255, 255, 255));
-        emailLabel.setText("Email");
+        emailLabel.setText("Email/Username");
 
         emailTextField.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         emailTextField.setText("24-XXXXX@g.batstate-u.edu.ph");
