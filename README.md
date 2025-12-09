@@ -1,9 +1,9 @@
-## DASHv0.6
+## DASHv0.7
 
 ---
 ### UPDATE: 
 
-- Fixed collaboration Issues and github repository bugs
+- Created methods to change the color of focused buttons in menu
 - minor builds to settings panel
 - Commnents and code structure
 
