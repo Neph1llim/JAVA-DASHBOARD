@@ -34,14 +34,13 @@ public class MainFrame extends javax.swing.JFrame {
         btnContainer = new javax.swing.JPanel();
         minimize = new main.component.Button();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(100, 32), new java.awt.Dimension(20, 32767));
+        login = new javax.swing.JPanel();
         Interface = new javax.swing.JPanel();
         home = new main.interfaces.Home();
         widgets = new main.interfaces.Widgets();
         notes = new main.interfaces.Notes();
         settings = new main.interfaces.Settings();
         files = new main.interfaces.Files();
-        login = new javax.swing.JPanel();
-        login1 = new main.interfaces.Login();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
@@ -84,6 +83,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         container.add(btnContainer, java.awt.BorderLayout.PAGE_START);
 
+        login.setLayout(new java.awt.CardLayout());
+        container.add(login, java.awt.BorderLayout.LINE_END);
+
         homePage.add(container, java.awt.BorderLayout.LINE_START);
 
         Interface.setBackground(new java.awt.Color(102, 102, 102));
@@ -105,11 +107,6 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.getAccessibleContext().setAccessibleName("");
 
         getContentPane().add(homePage, "card2");
-
-        login.setLayout(new java.awt.CardLayout());
-        login.add(login1, "login");
-
-        getContentPane().add(login, "card3");
 
         pack();
         setLocationRelativeTo(null);
@@ -182,7 +179,6 @@ public class MainFrame extends javax.swing.JFrame {
     private main.interfaces.Home home;
     private javax.swing.JPanel homePage;
     private javax.swing.JPanel login;
-    private main.interfaces.Login login1;
     public static main.interfaces.Menu menu;
     private main.component.Button minimize;
     private main.interfaces.Notes notes;
