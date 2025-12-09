@@ -9,7 +9,7 @@ import javax.swing.*;
 public class MainFrame extends javax.swing.JFrame {
     /* Properties */
     boolean isMinimized = false;
-    private final CardLayout card;
+    private final CardLayout cardLayout;
     
     /* Constructors for OOP */
     public MainFrame() {
@@ -17,18 +17,27 @@ public class MainFrame extends javax.swing.JFrame {
         
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
         
-        // default Interface set to home 
-        card = (CardLayout) Interface.getLayout();
-        card.show(Interface,"home");
+        // Set the MainFrame reference in Login panel
+        login.setMainFrame(this);  // ADD THIS
+    
+        // default Interface set to Login
+        cardLayout = (CardLayout) getContentPane().getLayout();
+        cardLayout.show(getContentPane(), "Login");
     }
 
+    public void showCard(String cardName) {
+        cardLayout.show(getContentPane(), cardName);
+    }
     /* Built-in codes and functions */    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        homePage = new javax.swing.JPanel();
+        Login = new javax.swing.JPanel();
+        login = new main.interfaces.Login();
+        signup = new main.interfaces.Signup();
+        HomePage = new javax.swing.JPanel();
         container = new javax.swing.JPanel();
         menu = new main.interfaces.Menu();
         btnContainer = new javax.swing.JPanel();
@@ -40,8 +49,6 @@ public class MainFrame extends javax.swing.JFrame {
         notes = new main.interfaces.Notes();
         settings = new main.interfaces.Settings();
         files = new main.interfaces.Files();
-        addNotes = new main.interfaces.AddNotes();
-        login = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
@@ -52,7 +59,13 @@ public class MainFrame extends javax.swing.JFrame {
         setName("MainFrame"); // NOI18N
         getContentPane().setLayout(new java.awt.CardLayout());
 
-        homePage.setLayout(new java.awt.BorderLayout());
+        Login.setLayout(new java.awt.CardLayout());
+        Login.add(login, "login");
+        Login.add(signup, "signup");
+
+        getContentPane().add(Login, "Login");
+
+        HomePage.setLayout(new java.awt.BorderLayout());
 
         container.setMinimumSize(new java.awt.Dimension(0, 0));
         container.setPreferredSize(new java.awt.Dimension(250, 810));
@@ -84,7 +97,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         container.add(btnContainer, java.awt.BorderLayout.PAGE_START);
 
-        homePage.add(container, java.awt.BorderLayout.LINE_START);
+        HomePage.add(container, java.awt.BorderLayout.LINE_START);
 
         Interface.setBackground(new java.awt.Color(102, 102, 102));
         Interface.setMinimumSize(new java.awt.Dimension(500, 270));
@@ -100,25 +113,11 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.add(notes, "notes");
         Interface.add(settings, "settings");
         Interface.add(files, "files");
-        Interface.add(addNotes, "addNote");
 
-        homePage.add(Interface, java.awt.BorderLayout.CENTER);
+        HomePage.add(Interface, java.awt.BorderLayout.CENTER);
         Interface.getAccessibleContext().setAccessibleName("");
 
-        getContentPane().add(homePage, "card2");
-
-        javax.swing.GroupLayout loginLayout = new javax.swing.GroupLayout(login);
-        login.setLayout(loginLayout);
-        loginLayout.setHorizontalGroup(
-            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1146, Short.MAX_VALUE)
-        );
-        loginLayout.setVerticalGroup(
-            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 735, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(login, "card3");
+        getContentPane().add(HomePage, "HomePage");
 
         pack();
         setLocationRelativeTo(null);
@@ -183,19 +182,20 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JPanel HomePage;
     public static javax.swing.JPanel Interface;
-    private main.interfaces.AddNotes addNotes;
+    public static javax.swing.JPanel Login;
     private javax.swing.JPanel btnContainer;
     private javax.swing.JPanel container;
     private main.interfaces.Files files;
     private javax.swing.Box.Filler filler1;
     private main.interfaces.Home home;
-    private javax.swing.JPanel homePage;
-    private javax.swing.JPanel login;
+    private main.interfaces.Login login;
     public static main.interfaces.Menu menu;
     private main.component.Button minimize;
     private main.interfaces.Notes notes;
     private main.interfaces.Settings settings;
+    private main.interfaces.Signup signup;
     private main.interfaces.Widgets widgets;
     // End of variables declaration//GEN-END:variables
 }
