@@ -139,7 +139,7 @@ public class AddNotes extends javax.swing.JPanel {
 
         button6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/qlementine-icons--font-16.png"))); // NOI18N
 
-        button7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/font.png"))); // NOI18N
+        button7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ri--font-color.png"))); // NOI18N
 
         javax.swing.GroupLayout panel4Layout = new javax.swing.GroupLayout(panel4);
         panel4.setLayout(panel4Layout);
@@ -201,12 +201,12 @@ public class AddNotes extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 993, Short.MAX_VALUE)
+                .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, Short.MAX_VALUE)
+            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
