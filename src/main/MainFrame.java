@@ -49,6 +49,7 @@ public class MainFrame extends javax.swing.JFrame {
         notes = new main.interfaces.Notes();
         settings = new main.interfaces.Settings();
         files = new main.interfaces.Files();
+        addNotes = new main.interfaces.AddNotes();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
@@ -113,6 +114,7 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.add(notes, "notes");
         Interface.add(settings, "settings");
         Interface.add(files, "files");
+        Interface.add(addNotes, "addNote");
 
         HomePage.add(Interface, java.awt.BorderLayout.CENTER);
         Interface.getAccessibleContext().setAccessibleName("");
@@ -185,6 +187,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static javax.swing.JPanel HomePage;
     public static javax.swing.JPanel Interface;
     public static javax.swing.JPanel Login;
+    private main.interfaces.AddNotes addNotes;
     private javax.swing.JPanel btnContainer;
     private javax.swing.JPanel container;
     private main.interfaces.Files files;

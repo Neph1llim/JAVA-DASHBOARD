@@ -43,9 +43,11 @@ public class Login extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1440, 810));
         setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBackground(new java.awt.Color(53, 54, 56));
-        jPanel1.setPreferredSize(new java.awt.Dimension(500, 550));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 525));
         jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        loginLabelPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         loginLabel.setFont(new java.awt.Font("Segoe UI Variable", 1, 36)); // NOI18N
         loginLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,6 +76,8 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(loginLabelPanel, gridBagConstraints);
 
+        loginFields.setBackground(new java.awt.Color(51, 51, 51));
+
         emailLabel.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         emailLabel.setForeground(new java.awt.Color(255, 255, 255));
         emailLabel.setText("Email");
@@ -95,18 +99,17 @@ public class Login extends javax.swing.JPanel {
         loginFieldsLayout.setHorizontalGroup(
             loginFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginFieldsLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(62, 62, 62)
                 .addGroup(loginFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(emailLabel)
                     .addComponent(passwordLabel)
                     .addComponent(passwordTextField)
-                    .addComponent(emailTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         loginFieldsLayout.setVerticalGroup(
             loginFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginFieldsLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(emailLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -114,7 +117,7 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(passwordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -124,6 +127,8 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         jPanel1.add(loginFields, gridBagConstraints);
+
+        loginPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         login.setBackground(new java.awt.Color(122, 134, 254));
         login.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
@@ -135,16 +140,15 @@ public class Login extends javax.swing.JPanel {
         loginPanelLayout.setHorizontalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(156, 156, 156)
                 .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         loginPanelLayout.setVerticalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPanelLayout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -153,6 +157,8 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(loginPanel, gridBagConstraints);
+
+        orPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         orLabel.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         orLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -163,24 +169,22 @@ public class Login extends javax.swing.JPanel {
         orPanelLayout.setHorizontalGroup(
             orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(orPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(62, 62, 62)
                 .addComponent(separatorLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(orLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separatorRight, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         orPanelLayout.setVerticalGroup(
             orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(orPanelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orPanelLayout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
                 .addGroup(orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(separatorLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(separatorRight, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(orLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                    .addComponent(separatorRight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(orLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(separatorLeft, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -191,6 +195,8 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         jPanel1.add(orPanel, gridBagConstraints);
+
+        signupPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         signupLabel.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         signupLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -210,20 +216,19 @@ public class Login extends javax.swing.JPanel {
         signupPanelLayout.setHorizontalGroup(
             signupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(signupPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(62, 62, 62)
                 .addComponent(signupLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(signupButton)
-                .addContainerGap())
+                .addContainerGap(231, Short.MAX_VALUE))
         );
         signupPanelLayout.setVerticalGroup(
             signupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(signupPanelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signupPanelLayout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
                 .addGroup(signupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signupLabel)
-                    .addComponent(signupButton))
-                .addContainerGap())
+                    .addComponent(signupButton)))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
