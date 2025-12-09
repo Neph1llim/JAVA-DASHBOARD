@@ -1,18 +1,19 @@
-## DASHv0.5
+## DASHv0.7
 
 ---
 ### UPDATE: 
 
-- Created a class to handle custom properties of Buttons objects and Panel objects
-- Created methods to handle collapse animation for Mainframe panels.
+- Created methods to change the color of focused buttons in menu
+- fixed the .form to remove the previous uneccessary properties of Button.java
 
 ---
 ### IN PROGRESS:
 
 - Rework of design to properly utilize the new panels and button configs
-- Settings UI
-- Themes and Theme handler
-- Database to handle save files
+- Login and Signup page
+- Notes / Addnotes
+- Database
+- documentation
 
 ---
 ### TO DO:
@@ -24,3 +25,32 @@
 - [ ] theme handler
 - [ ] database
 - [ ] back-end 
+
+---
+
+# Documentation 
+
+#### Code Structure 
+
+    - Package name 
+    - Import statements
+    - Class
+        - Properties
+        - Constructors
+        - Methods 
+        - Built-in Components (Netbeans)
+            - auto generated codes
+            - auto generated functions(events)
+            - auto generated variables
+
+
+#### Code examples
+1. Ternary - simplified if else statement
+
+variable = condition ? true : false;
+
+
+---
+
+## Cloning the repository
+// kayo na mag tuloy

@@ -1,11 +1,6 @@
 /*
 TODO:
 
-rename variables
-clean up UI
-clean up code
-create functions 
-shii idk
 */
 
 package main.interfaces;
@@ -14,16 +9,13 @@ public class Settings extends javax.swing.JPanel {
 
     public Settings() {
         initComponents();
-        
-        Options.putClientProperty("JComponent.roundRect", true);
-        Options.putClientProperty("JComponent.roundRect.arc", 100);
     }
 
+    /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSpinner1 = new javax.swing.JSpinner();
         Settings = new javax.swing.JPanel();
         Options = new main.component.Panel();
         jPanel1 = new javax.swing.JPanel();
@@ -65,7 +57,7 @@ public class Settings extends javax.swing.JPanel {
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setAlignmentY(0.1F);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Account Settings");
 
@@ -86,9 +78,6 @@ public class Settings extends javax.swing.JPanel {
         button3.setText("Login");
         button3.setArc(15);
         button3.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        button3.setHoverColor(new java.awt.Color(86, 144, 255));
-        button3.setNormalColor(new java.awt.Color(86, 134, 254));
-        button3.setPressedColor(new java.awt.Color(86, 150, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,22 +129,16 @@ public class Settings extends javax.swing.JPanel {
         button1.setText("Apply");
         button1.setArc(15);
         button1.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        button1.setHoverColor(new java.awt.Color(86, 145, 255));
-        button1.setNormalColor(new java.awt.Color(86, 134, 254));
-        button1.setPressedColor(new java.awt.Color(60, 95, 255));
         button1.addActionListener(this::button1ActionPerformed);
 
         button2.setForeground(new java.awt.Color(255, 255, 255));
         button2.setText("Save");
         button2.setArc(15);
         button2.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        button2.setHoverColor(new java.awt.Color(86, 145, 255));
-        button2.setNormalColor(new java.awt.Color(86, 134, 254));
-        button2.setPressedColor(new java.awt.Color(60, 95, 255));
 
         jPanel2.setBackground(new java.awt.Color(53, 54, 56));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Customize");
 
@@ -370,7 +353,6 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

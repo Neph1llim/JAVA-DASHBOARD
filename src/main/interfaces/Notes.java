@@ -1,5 +1,9 @@
+/* TO DO:
+- change add button to button.java
+*/
 package main.interfaces;
 
+/* Import statements */
 import main.component.Panel;
 import java.awt.*;
 import javax.swing.*;
@@ -7,15 +11,17 @@ import javax.swing.*;
 
 public class Notes extends javax.swing.JPanel {
 
+    /* Constructors*/
     public Notes() {
         initComponents();
         
-        // to round the add button
+        // to round the add button 
         change.putClientProperty("JButton.buttonType", "roundRect");
-        change.putClientProperty("JComponent.roundRect.arc", 100);        
+        change.putClientProperty("JComponent.roundRect.arc", 25);        
         
     }
 
+    /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -86,7 +92,6 @@ public class Notes extends javax.swing.JPanel {
         notePanel.revalidate();
         notePanel.repaint();
     }//GEN-LAST:event_changeActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton change;

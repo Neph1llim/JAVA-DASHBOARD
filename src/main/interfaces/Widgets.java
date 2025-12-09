@@ -2,11 +2,13 @@ package main.interfaces;
 
 public class Widgets extends javax.swing.JPanel {
 
+    /* Constructors */
     public Widgets() {
         initComponents();
         
     }
 
+    /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -37,7 +39,6 @@ public class Widgets extends javax.swing.JPanel {
             .addComponent(Widgets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Widgets;
