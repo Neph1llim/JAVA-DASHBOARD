@@ -7,6 +7,7 @@ package main.interfaces;
 import main.component.Panel;
 import java.awt.*;
 import javax.swing.*;
+import main.MainFrame;
 
 
 public class Notes extends javax.swing.JPanel {
@@ -21,6 +22,11 @@ public class Notes extends javax.swing.JPanel {
         
     }
 
+    private void showPanel(String name){
+        CardLayout card = (CardLayout) MainFrame.Interface.getLayout();
+        card.show(MainFrame.Interface, name);
+    }
+    
     /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -84,7 +90,9 @@ public class Notes extends javax.swing.JPanel {
     private void changeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeActionPerformed
         JPanel round1 = new Panel(35, new Color(50,50,50));
         round1.setPreferredSize(new Dimension(250, 250));
-
+        
+       showPanel("addNote"); 
+        
         notePanel.add(round1);
         
         // Configuration for panels

@@ -40,6 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
         notes = new main.interfaces.Notes();
         settings = new main.interfaces.Settings();
         files = new main.interfaces.Files();
+        addNotes = new main.interfaces.AddNotes();
         login = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -99,6 +100,7 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.add(notes, "notes");
         Interface.add(settings, "settings");
         Interface.add(files, "files");
+        Interface.add(addNotes, "addNote");
 
         homePage.add(Interface, java.awt.BorderLayout.CENTER);
         Interface.getAccessibleContext().setAccessibleName("");
@@ -182,6 +184,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel Interface;
+    private main.interfaces.AddNotes addNotes;
     private javax.swing.JPanel btnContainer;
     private javax.swing.JPanel container;
     private main.interfaces.Files files;
