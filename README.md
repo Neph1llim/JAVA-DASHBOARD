@@ -4,18 +4,16 @@
 ### UPDATE: 
 
 - Created methods to change the color of focused buttons in menu
-- minor builds to settings panel
-- Commnents and code structure
+- fixed the .form to remove the previous uneccessary properties of Button.java
 
 ---
 ### IN PROGRESS:
 
 - Rework of design to properly utilize the new panels and button configs
-- Settings UI
-- Themes and Theme handler
-- Database to handle save files
+- Login and Signup page
+- Notes / Addnotes
+- Database
 - documentation
-- fix comments and code readability
 
 ---
 ### TO DO:
