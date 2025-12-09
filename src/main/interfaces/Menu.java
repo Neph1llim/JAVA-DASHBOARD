@@ -10,6 +10,9 @@ public class Menu extends javax.swing.JPanel {
     /* Constructors */
     public Menu() {
         initComponents();
+        
+        // default highlighted button
+        focusButton(home);
     }
          
     /* Methods */   
