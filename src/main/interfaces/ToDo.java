@@ -14,129 +14,87 @@ public class ToDo extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel10 = new main.component.Panel();
-        jLabel19 = new javax.swing.JLabel();
-        TaskName9 = new javax.swing.JTextField();
-        AddTask9 = new main.component.Button();
-        jLabel20 = new javax.swing.JLabel();
+        panel11 = new main.component.Panel();
+        panel12 = new main.component.Panel();
+        panel1 = new main.component.Panel();
+        jLabel21 = new javax.swing.JLabel();
+        add = new main.component.Button();
 
         setLayout(new java.awt.CardLayout());
 
-        panel10.setArc(0);
-        panel10.setPanelBackground(new java.awt.Color(0, 0, 0));
-        panel10.setPreferredSize(new java.awt.Dimension(600, 600));
+        panel12.setPanelBackground(new java.awt.Color(67, 69, 74));
 
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("To Do List");
+        panel1.setPanelBackground(new java.awt.Color(27, 27, 28));
 
-        TaskName9.addActionListener(this::TaskNameActionPerformed);
+        jLabel21.setFont(new java.awt.Font("Segoe UI Variable", 1, 23)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("To Do List");
 
-        AddTask9.setText("ADD");
-        AddTask9.addActionListener(this::AddTaskActionPerformed);
+        add.setText("ADD");
+        add.addActionListener(this::addActionPerformed);
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Task List");
-
-        javax.swing.GroupLayout panel10Layout = new javax.swing.GroupLayout(panel10);
-        panel10.setLayout(panel10Layout);
-        panel10Layout.setHorizontalGroup(
-            panel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel10Layout.createSequentialGroup()
-                .addContainerGap(149, Short.MAX_VALUE)
-                .addGroup(panel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel10Layout.createSequentialGroup()
-                        .addGroup(panel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel10Layout.createSequentialGroup()
-                                .addGap(104, 104, 104)
-                                .addComponent(jLabel19))
-                            .addGroup(panel10Layout.createSequentialGroup()
-                                .addComponent(TaskName9, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(AddTask9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(131, 131, 131))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel10Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addGap(261, 261, 261))))
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addGap(245, 245, 245)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                        .addGap(245, 245, 245))))
         );
-        panel10Layout.setVerticalGroup(
-            panel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel10Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel19)
-                .addGap(18, 18, 18)
-                .addGroup(panel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TaskName9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddTask9, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel20)
-                .addContainerGap(443, Short.MAX_VALUE))
+        panel1Layout.setVerticalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        add(panel10, "card2");
+        javax.swing.GroupLayout panel12Layout = new javax.swing.GroupLayout(panel12);
+        panel12.setLayout(panel12Layout);
+        panel12Layout.setHorizontalGroup(
+            panel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panel12Layout.setVerticalGroup(
+            panel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel12Layout.createSequentialGroup()
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 480, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panel11Layout = new javax.swing.GroupLayout(panel11);
+        panel11.setLayout(panel11Layout);
+        panel11Layout.setHorizontalGroup(
+            panel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panel11Layout.setVerticalGroup(
+            panel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        add(panel11, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void AddTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddTaskActionPerformed
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_AddTaskActionPerformed
-
-    private void TaskNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TaskNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TaskNameActionPerformed
+    }//GEN-LAST:event_addActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private main.component.Button AddTask;
-    private main.component.Button AddTask1;
-    private main.component.Button AddTask2;
-    private main.component.Button AddTask3;
-    private main.component.Button AddTask4;
-    private main.component.Button AddTask5;
-    private main.component.Button AddTask6;
-    private main.component.Button AddTask7;
-    private main.component.Button AddTask8;
-    private main.component.Button AddTask9;
-    private javax.swing.JTextField TaskName;
-    private javax.swing.JTextField TaskName1;
-    private javax.swing.JTextField TaskName2;
-    private javax.swing.JTextField TaskName3;
-    private javax.swing.JTextField TaskName4;
-    private javax.swing.JTextField TaskName5;
-    private javax.swing.JTextField TaskName6;
-    private javax.swing.JTextField TaskName7;
-    private javax.swing.JTextField TaskName8;
-    private javax.swing.JTextField TaskName9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private main.component.Button add;
+    private javax.swing.JLabel jLabel21;
     private main.component.Panel panel1;
-    private main.component.Panel panel10;
-    private main.component.Panel panel2;
-    private main.component.Panel panel3;
-    private main.component.Panel panel4;
-    private main.component.Panel panel5;
-    private main.component.Panel panel6;
-    private main.component.Panel panel7;
-    private main.component.Panel panel8;
-    private main.component.Panel panel9;
+    private main.component.Panel panel11;
+    private main.component.Panel panel12;
     // End of variables declaration//GEN-END:variables
 
 }
