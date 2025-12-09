@@ -100,7 +100,6 @@ public class Menu extends javax.swing.JPanel {
         home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/home.png"))); // NOI18N
         home.setText("Home");
         home.setToolTipText("");
-        home.setBorderColor(new java.awt.Color(0, 0, 0));
         home.setDisabledIcon(null);
         home.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         home.setHideActionText(true);
@@ -113,7 +112,6 @@ public class Menu extends javax.swing.JPanel {
         notes.setForeground(new java.awt.Color(255, 255, 255));
         notes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/notes.png"))); // NOI18N
         notes.setText("Notes");
-        notes.setBorderColor(new java.awt.Color(0, 0, 0));
         notes.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         notes.setHideActionText(true);
         notes.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
@@ -125,7 +123,6 @@ public class Menu extends javax.swing.JPanel {
         files.setForeground(new java.awt.Color(255, 255, 255));
         files.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/folder.png"))); // NOI18N
         files.setText("Files");
-        files.setBorderColor(new java.awt.Color(0, 0, 0));
         files.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         files.setHideActionText(true);
         files.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
@@ -138,7 +135,6 @@ public class Menu extends javax.swing.JPanel {
         widgets.setForeground(new java.awt.Color(255, 255, 255));
         widgets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/plugin.png"))); // NOI18N
         widgets.setText("Widgets");
-        widgets.setBorderColor(new java.awt.Color(0, 0, 0));
         widgets.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         widgets.setHideActionText(true);
         widgets.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
@@ -150,7 +146,6 @@ public class Menu extends javax.swing.JPanel {
         settings.setForeground(new java.awt.Color(255, 255, 255));
         settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/settings.png"))); // NOI18N
         settings.setText("Settings");
-        settings.setBorderColor(new java.awt.Color(0, 0, 0));
         settings.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         settings.setHideActionText(true);
         settings.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);

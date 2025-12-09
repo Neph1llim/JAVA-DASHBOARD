@@ -78,9 +78,6 @@ public class Settings extends javax.swing.JPanel {
         button3.setText("Login");
         button3.setArc(15);
         button3.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        button3.setHoverColor(new java.awt.Color(86, 144, 255));
-        button3.setNormalColor(new java.awt.Color(86, 134, 254));
-        button3.setPressedColor(new java.awt.Color(86, 150, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,18 +129,12 @@ public class Settings extends javax.swing.JPanel {
         button1.setText("Apply");
         button1.setArc(15);
         button1.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        button1.setHoverColor(new java.awt.Color(86, 145, 255));
-        button1.setNormalColor(new java.awt.Color(86, 134, 254));
-        button1.setPressedColor(new java.awt.Color(60, 95, 255));
         button1.addActionListener(this::button1ActionPerformed);
 
         button2.setForeground(new java.awt.Color(255, 255, 255));
         button2.setText("Save");
         button2.setArc(15);
         button2.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        button2.setHoverColor(new java.awt.Color(86, 145, 255));
-        button2.setNormalColor(new java.awt.Color(86, 134, 254));
-        button2.setPressedColor(new java.awt.Color(60, 95, 255));
 
         jPanel2.setBackground(new java.awt.Color(53, 54, 56));
 
