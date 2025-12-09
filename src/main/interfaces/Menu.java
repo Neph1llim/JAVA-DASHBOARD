@@ -1,19 +1,15 @@
 package main.interfaces;
 
 /* import statements */
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import javax.swing.JButton;
+import java.awt.*;
 import main.MainFrame;
+import main.component.Button;
 
 public class Menu extends javax.swing.JPanel {
   
     /* Constructors */
     public Menu() {
         initComponents();
-        // to round the menu panel
-        putClientProperty("JComponent.roundRect", true);
-        putClientProperty("JComponent.roundRect.arc", 25);
     }
          
     /* Methods */   
@@ -22,8 +18,8 @@ public class Menu extends javax.swing.JPanel {
         card.show(MainFrame.Interface, name);
     }
     
-    private JButton[] menuButtons() {
-        return new JButton[] { home, notes, files, widgets, settings };
+    private Button[] menuButtons() {
+        return new Button[] { home, notes, files, widgets, settings };
     }
     
     public void Minimize(boolean isMinimized){
@@ -32,12 +28,12 @@ public class Menu extends javax.swing.JPanel {
 
         setPreferredSize(new Dimension(targetWidth, getPreferredSize().height));
 
-        for (JButton btn : menuButtons()) {
+        for (Button btn : menuButtons()) {
             btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
         }
 
         if (isMinimized) {
-            for (JButton btn : menuButtons()) {
+            for (Button btn : menuButtons()) {
                 btn.setText("");
             }
         } else {
@@ -57,12 +53,12 @@ public class Menu extends javax.swing.JPanel {
         setPreferredSize(new Dimension(currentWidth, getPreferredSize().height));
 
         int btnWidth = 42 + (115 - 42) * (currentWidth - 60) / (250 - 60);
-        for (JButton btn : menuButtons()) {
+        for (Button btn : menuButtons()) {
             btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
         }
 
         if (minimize && currentWidth < 155) {
-            for (JButton btn : menuButtons()) {
+            for (Button btn : menuButtons()) {
                 btn.setText("");
             }
         } 
@@ -75,7 +71,15 @@ public class Menu extends javax.swing.JPanel {
             settings.setText("Settings");
         }
     }
-
+    
+        private void focusButton(Button selectedButton) {
+        for (Button btn : menuButtons()) {
+            btn.setHighlighted(btn == selectedButton);
+        }
+        revalidate();
+        repaint();
+    }
+    
     /* Built-in codes and functions */
         @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -190,22 +194,27 @@ public class Menu extends javax.swing.JPanel {
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         showPanel("home");
+        focusButton(home);
     }//GEN-LAST:event_homeActionPerformed
 
     private void notesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notesActionPerformed
         showPanel("notes");
+        focusButton(notes);
     }//GEN-LAST:event_notesActionPerformed
 
     private void filesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filesActionPerformed
         showPanel("files");
+        focusButton(files);
     }//GEN-LAST:event_filesActionPerformed
 
     private void widgetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_widgetsActionPerformed
         showPanel("widgets");
+        focusButton(widgets);
     }//GEN-LAST:event_widgetsActionPerformed
 
     private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
         showPanel("settings");
+        focusButton(settings);
     }//GEN-LAST:event_settingsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

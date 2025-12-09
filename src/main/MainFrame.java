@@ -66,7 +66,6 @@ public class MainFrame extends javax.swing.JFrame {
         minimize.setForeground(new java.awt.Color(27, 27, 28));
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrow-left.png"))); // NOI18N
         minimize.setArc(100);
-        minimize.setNormalColor(new java.awt.Color(27, 27, 28));
         minimize.setOpaque(true);
         minimize.addActionListener(this::minimizeActionPerformed);
         btnContainer.add(minimize, new java.awt.GridBagConstraints());
@@ -110,11 +109,11 @@ public class MainFrame extends javax.swing.JFrame {
         login.setLayout(loginLayout);
         loginLayout.setHorizontalGroup(
             loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1456, Short.MAX_VALUE)
+            .addGap(0, 1146, Short.MAX_VALUE)
         );
         loginLayout.setVerticalGroup(
             loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGap(0, 735, Short.MAX_VALUE)
         );
 
         getContentPane().add(login, "card3");
