@@ -15,11 +15,7 @@ public class Notes extends javax.swing.JPanel {
     /* Constructors*/
     public Notes() {
         initComponents();
-        
-        // to round the add button 
-        change.putClientProperty("JButton.buttonType", "roundRect");
-        change.putClientProperty("JComponent.roundRect.arc", 25);        
-        
+     
     }
 
     private void showPanel(String name){
