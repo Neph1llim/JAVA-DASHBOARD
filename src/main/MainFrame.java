@@ -18,8 +18,8 @@ public class MainFrame extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
         
         // default Interface set to home 
-        card = (CardLayout) Interface.getLayout();
-        card.show(Interface,"home");
+        card = (CardLayout) login.getLayout();
+        card.show(login,"login");
     }
 
     /* Built-in codes and functions */    
@@ -40,8 +40,8 @@ public class MainFrame extends javax.swing.JFrame {
         notes = new main.interfaces.Notes();
         settings = new main.interfaces.Settings();
         files = new main.interfaces.Files();
-        addNotes = new main.interfaces.AddNotes();
         login = new javax.swing.JPanel();
+        login1 = new main.interfaces.Login();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
@@ -100,23 +100,14 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.add(notes, "notes");
         Interface.add(settings, "settings");
         Interface.add(files, "files");
-        Interface.add(addNotes, "addNote");
 
         homePage.add(Interface, java.awt.BorderLayout.CENTER);
         Interface.getAccessibleContext().setAccessibleName("");
 
         getContentPane().add(homePage, "card2");
 
-        javax.swing.GroupLayout loginLayout = new javax.swing.GroupLayout(login);
-        login.setLayout(loginLayout);
-        loginLayout.setHorizontalGroup(
-            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1146, Short.MAX_VALUE)
-        );
-        loginLayout.setVerticalGroup(
-            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 735, Short.MAX_VALUE)
-        );
+        login.setLayout(new java.awt.CardLayout());
+        login.add(login1, "login");
 
         getContentPane().add(login, "card3");
 
@@ -184,7 +175,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel Interface;
-    private main.interfaces.AddNotes addNotes;
     private javax.swing.JPanel btnContainer;
     private javax.swing.JPanel container;
     private main.interfaces.Files files;
@@ -192,6 +182,7 @@ public class MainFrame extends javax.swing.JFrame {
     private main.interfaces.Home home;
     private javax.swing.JPanel homePage;
     private javax.swing.JPanel login;
+    private main.interfaces.Login login1;
     public static main.interfaces.Menu menu;
     private main.component.Button minimize;
     private main.interfaces.Notes notes;
