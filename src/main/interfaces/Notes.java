@@ -1,13 +1,10 @@
-/* TO DO:
-- change add button to button.java
-*/
 package main.interfaces;
 
 /* Import statements */
 import main.component.Panel;
 import java.awt.*;
-import javax.swing.*;
 import main.MainFrame;
+import main.component.Button;
 
 
 public class Notes extends javax.swing.JPanel {
@@ -15,7 +12,6 @@ public class Notes extends javax.swing.JPanel {
     /* Constructors*/
     public Notes() {
         initComponents();
-     
     }
 
     private void showPanel(String name){
@@ -31,20 +27,20 @@ public class Notes extends javax.swing.JPanel {
 
         notes = new javax.swing.JPanel();
         notePanel = new javax.swing.JPanel();
-        change = new javax.swing.JButton();
+        button1 = new main.component.Button();
 
         notes.setBackground(new java.awt.Color(21, 21, 23));
         notes.setPreferredSize(new java.awt.Dimension(1230, 860));
         notes.setLayout(new java.awt.GridBagLayout());
 
-        notePanel.setBackground(new java.awt.Color(27, 27, 28));
+        notePanel.setBackground(new java.awt.Color(21, 21, 23));
         notePanel.setPreferredSize(new java.awt.Dimension(750, 540));
 
         javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
         notePanel.setLayout(notePanelLayout);
         notePanelLayout.setHorizontalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 899, Short.MAX_VALUE)
+            .addGap(0, 857, Short.MAX_VALUE)
         );
         notePanelLayout.setVerticalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -63,15 +59,21 @@ public class Notes extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
         notes.add(notePanel, gridBagConstraints);
 
-        change.setBackground(new java.awt.Color(102, 102, 102));
-        change.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
-        change.setBorderPainted(false);
-        change.setFocusPainted(false);
-        change.addActionListener(this::changeActionPerformed);
+        button1.setForeground(new java.awt.Color(0, 0, 0));
+        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
+        button1.setText("ADD ");
+        button1.setArc(50);
+        button1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        button1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        button1.setMargin(new java.awt.Insets(0, 5, 0, 0));
+        button1.setMaximumSize(new java.awt.Dimension(84, 42));
+        button1.setMinimumSize(new java.awt.Dimension(84, 42));
+        button1.setPreferredSize(new java.awt.Dimension(84, 42));
+        button1.addActionListener(this::button1ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 20, 20);
-        notes.add(change, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 25, 25);
+        notes.add(button1, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -85,12 +87,12 @@ public class Notes extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void changeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeActionPerformed
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         showPanel("addNote");
-    }//GEN-LAST:event_changeActionPerformed
+    }//GEN-LAST:event_button1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton change;
+    private main.component.Button button1;
     public static javax.swing.JPanel notePanel;
     private javax.swing.JPanel notes;
     // End of variables declaration//GEN-END:variables

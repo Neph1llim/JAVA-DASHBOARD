@@ -25,7 +25,7 @@ public class AddNotes extends javax.swing.JPanel {
         back = new main.component.Button();
         jPanel1 = new javax.swing.JPanel();
         panel2 = new main.component.Panel();
-        jTextField1 = new javax.swing.JTextField();
+        title = new javax.swing.JTextField();
         panel3 = new main.component.Panel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -58,12 +58,12 @@ public class AddNotes extends javax.swing.JPanel {
 
         panel2.setPanelBackground(new java.awt.Color(102, 102, 102));
 
-        jTextField1.setBackground(new java.awt.Color(102, 102, 102));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField1.setText("Title");
-        jTextField1.setBorder(null);
-        jTextField1.setHighlighter(null);
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        title.setBackground(new java.awt.Color(102, 102, 102));
+        title.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        title.setText("Title");
+        title.setBorder(null);
+        title.setHighlighter(null);
+        title.addActionListener(this::titleActionPerformed);
 
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
         panel2.setLayout(panel2Layout);
@@ -71,14 +71,14 @@ public class AddNotes extends javax.swing.JPanel {
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -140,17 +140,22 @@ public class AddNotes extends javax.swing.JPanel {
         save.setLabel("Save");
         save.addActionListener(this::saveActionPerformed);
 
-        button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/settings.png"))); // NOI18N
-        button3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/settings.png"))); // NOI18N
+        button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/carbon--text-bold.png"))); // NOI18N
+        button3.setMargin(new java.awt.Insets(3, 0, 0, 0));
+        button3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/carbon--text-bold.png"))); // NOI18N
 
-        button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/zondicons--format-italic.png"))); // NOI18N
+        button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ic--round-format-italic.png"))); // NOI18N
+        button4.setMargin(new java.awt.Insets(3, 0, 0, 0));
 
-        button5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fa--underline.png"))); // NOI18N
+        button5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ic--round-format-underlined.png"))); // NOI18N
+        button5.setMargin(new java.awt.Insets(3, 0, 0, 0));
         button5.addActionListener(this::button5ActionPerformed);
 
-        button6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/qlementine-icons--font-16.png"))); // NOI18N
+        button6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ci--font.png"))); // NOI18N
+        button6.setMargin(new java.awt.Insets(3, 0, 0, 0));
 
         button7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ri--font-color.png"))); // NOI18N
+        button7.setMargin(new java.awt.Insets(3, 0, 0, 0));
 
         javax.swing.GroupLayout panel4Layout = new javax.swing.GroupLayout(panel4);
         panel4.setLayout(panel4Layout);
@@ -229,9 +234,9 @@ public class AddNotes extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_button5ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_titleActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
          showPanel("notes");
@@ -268,11 +273,11 @@ public class AddNotes extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private main.component.Panel panel1;
     private main.component.Panel panel2;
     private main.component.Panel panel3;
     private main.component.Panel panel4;
     private main.component.Button save;
+    private javax.swing.JTextField title;
     // End of variables declaration//GEN-END:variables
 }
