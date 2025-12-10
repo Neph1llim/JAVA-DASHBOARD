@@ -75,7 +75,7 @@ public class Menu extends javax.swing.JPanel {
         }
     }
     
-        private void focusButton(Button selectedButton) {
+    private void focusButton(Button selectedButton) {
         for (Button btn : menuButtons()) {
             btn.setHighlighted(btn == selectedButton);
         }

@@ -21,10 +21,10 @@ public class Button extends JButton {
     private int arc = 25;
 
     // theme colors 
-    private Color normalColor = new Color(67, 69, 74);
-    private Color hoverColor  = new Color(57, 59, 64);
-    private Color pressedColor= new Color(53, 54, 56);
-    private Color highlightColor = new Color(188, 188, 186);
+    public static Color normalColor = new Color(51, 51, 51);
+    public Color hoverColor  = new Color(57, 59, 64);
+    public Color pressedColor= new Color(53, 54, 56);
+    public Color highlightColor = new Color(188, 188, 186);
     private Color textColor = Color.WHITE;
     
     // state
@@ -109,6 +109,13 @@ public class Button extends JButton {
     public void setForeground(Color fg) {
         this.textColor = fg;     // store the value
         super.setForeground(fg); // apply to JButton
+        repaint();
+    }
+    
+    @Override
+    public void setBackground(Color bg){
+        this.currentColor = bg;
+        super.setBackground(bg);
         repaint();
     }
 
