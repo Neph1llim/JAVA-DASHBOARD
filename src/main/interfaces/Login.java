@@ -90,12 +90,12 @@ public class Login extends javax.swing.JPanel {
         login = new javax.swing.JButton();
         orPanel = new javax.swing.JPanel();
         orLabel = new javax.swing.JLabel();
-        separatorLeft = new javax.swing.JSeparator();
         separatorRight = new javax.swing.JSeparator();
+        jSeparator1 = new javax.swing.JSeparator();
         signupPanel = new javax.swing.JPanel();
         signupLabel = new javax.swing.JLabel();
         signupButton = new javax.swing.JLabel();
-        showpassword = new javax.swing.JCheckBox();
+        showPassword = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(21, 21, 23));
         setMinimumSize(new java.awt.Dimension(480, 255));
@@ -211,7 +211,7 @@ public class Login extends javax.swing.JPanel {
             orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(orPanelLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(separatorLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(orLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -220,12 +220,12 @@ public class Login extends javax.swing.JPanel {
         );
         orPanelLayout.setVerticalGroup(
             orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orPanelLayout.createSequentialGroup()
+            .addGroup(orPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(separatorRight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(orLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(separatorLeft, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(separatorRight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         signupPanel.setBackground(new java.awt.Color(51, 51, 51));
@@ -263,9 +263,10 @@ public class Login extends javax.swing.JPanel {
                     .addComponent(signupButton)))
         );
 
-        showpassword.setFont(new java.awt.Font("Segoe UI Variable", 1, 12)); // NOI18N
-        showpassword.setForeground(new java.awt.Color(153, 153, 153));
-        showpassword.setText("Show password");
+        showPassword.setFont(new java.awt.Font("Segoe UI Variable", 1, 12)); // NOI18N
+        showPassword.setForeground(new java.awt.Color(153, 153, 153));
+        showPassword.setText("Show password");
+        showPassword.addActionListener(this::showPasswordActionPerformed);
 
         javax.swing.GroupLayout loginCardLayout = new javax.swing.GroupLayout(loginCard);
         loginCard.setLayout(loginCardLayout);
@@ -280,7 +281,7 @@ public class Login extends javax.swing.JPanel {
                         .addComponent(loginLabelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(loginCardLayout.createSequentialGroup()
                         .addGap(62, 62, 62)
-                        .addComponent(showpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(showPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(135, 135, 135))
         );
         loginCardLayout.setVerticalGroup(
@@ -289,7 +290,7 @@ public class Login extends javax.swing.JPanel {
                 .addGap(37, 37, 37)
                 .addComponent(loginLabelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(showpassword)
+                .addComponent(showPassword)
                 .addGap(23, 23, 23)
                 .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
@@ -321,11 +322,19 @@ public class Login extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTextFieldActionPerformed
 
+    private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
+        if (showPassword.isSelected()) {
+            passwordTextField.setEchoChar((char)0);
+        } else {
+            passwordTextField.setEchoChar((char)'•');
+        }    }//GEN-LAST:event_showPasswordActionPerformed
+
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField emailTextField;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton login;
     private javax.swing.JPanel loginCard;
     private javax.swing.JPanel loginFields;
@@ -336,9 +345,8 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JPanel orPanel;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JPasswordField passwordTextField;
-    private javax.swing.JSeparator separatorLeft;
     private javax.swing.JSeparator separatorRight;
-    private javax.swing.JCheckBox showpassword;
+    private javax.swing.JCheckBox showPassword;
     private javax.swing.JLabel signupButton;
     private javax.swing.JLabel signupLabel;
     private javax.swing.JPanel signupPanel;
