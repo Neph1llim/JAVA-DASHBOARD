@@ -327,7 +327,8 @@ public class Login extends javax.swing.JPanel {
             passwordTextField.setEchoChar((char)0);
         } else {
             passwordTextField.setEchoChar((char)'•');
-        }    }//GEN-LAST:event_showPasswordActionPerformed
+        }
+    }//GEN-LAST:event_showPasswordActionPerformed
 
 
     
