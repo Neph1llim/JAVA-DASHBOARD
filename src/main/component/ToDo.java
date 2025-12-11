@@ -1,5 +1,5 @@
 
-package main.interfaces;
+package main.component;
 
 public class ToDo extends javax.swing.JPanel {
 

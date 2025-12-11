@@ -1,4 +1,4 @@
-package main.interfaces;
+package main.component;
 
 /* Import statements */
 import java.awt.*;
@@ -6,8 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import main.MainFrame;
-import main.component.Panel;
-import main.component.Button;
+import main.interfaces.Notes;
 
 public class AddNotes extends javax.swing.JPanel {
     /* Properties */
@@ -410,7 +409,7 @@ public class AddNotes extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 993, Short.MAX_VALUE)
+                .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(

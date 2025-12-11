@@ -1,18 +1,66 @@
 package main.interfaces;
 
-import java.awt.CardLayout;
+import java.awt.*;
 import main.MainFrame;
 
 public class Login extends javax.swing.JPanel {
+    /* Properties */
+    String emailPlaceholder = "24-XXXXX@g.batstate-u.edu.ph";
+    String passwordPlaceholder = "               ";
+    Color initialText = new Color(204,204, 204);
+    private final Color currentTextColor = Color.WHITE;
     private MainFrame mainFrame;
     
     public Login() {
         initComponents();
+        setupPlaceholder();
     }
     
     /* Methods */
     public void setMainFrame(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+        //passwordTextField.setEchoChar((char) 0);
+    }
+    
+    private void setupPlaceholder() {
+        emailTextField.setText(emailPlaceholder);
+        emailTextField.setForeground(initialText);     
+        
+        passwordTextField.setText(passwordPlaceholder);
+        passwordTextField.setForeground(initialText);        
+        
+        emailTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (emailTextField.getForeground().equals(initialText)) {
+                    emailTextField.setText("");
+                    emailTextField.setForeground(currentTextColor);
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (emailTextField.getText().trim().isEmpty()) {
+                    emailTextField.setText(emailPlaceholder);
+                    emailTextField.setForeground(initialText);
+                }
+            }
+        });
+        passwordTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (passwordTextField.getForeground().equals(initialText)) {
+                    passwordTextField.setText("");
+                    passwordTextField.setForeground(currentTextColor);
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (passwordTextField.getText().trim().isEmpty()) {
+                    passwordTextField.setText(passwordPlaceholder);
+                    passwordTextField.setForeground(initialText);
+                }
+            }
+        });
     }
     
     @SuppressWarnings("unchecked")
@@ -20,7 +68,17 @@ public class Login extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        loginCard = new javax.swing.JPanel(){
+            private int corner = 25;
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), corner, corner);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
         loginLabelPanel = new javax.swing.JPanel();
         loginLabel = new javax.swing.JLabel();
         loginFields = new javax.swing.JPanel();
@@ -43,9 +101,11 @@ public class Login extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1440, 810));
         setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel1.setPreferredSize(new java.awt.Dimension(500, 525));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        loginCard.setBackground(new java.awt.Color(51, 51, 51));
+        loginCard.setForeground(new java.awt.Color(51, 51, 51));
+        loginCard.setOpaque(false);
+        loginCard.setPreferredSize(new java.awt.Dimension(500, 525));
+        loginCard.setLayout(new java.awt.GridBagLayout());
 
         loginLabelPanel.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -66,7 +126,7 @@ public class Login extends javax.swing.JPanel {
             loginLabelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginLabelPanelLayout.createSequentialGroup()
                 .addComponent(loginLabel)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -74,7 +134,7 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        jPanel1.add(loginLabelPanel, gridBagConstraints);
+        loginCard.add(loginLabelPanel, gridBagConstraints);
 
         loginFields.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -83,7 +143,7 @@ public class Login extends javax.swing.JPanel {
         emailLabel.setText("Email/Username");
 
         emailTextField.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
-        emailTextField.setText("24-XXXXX@g.batstate-u.edu.ph");
+        emailTextField.setText("\n");
         emailTextField.addActionListener(this::emailTextFieldActionPerformed);
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
@@ -91,7 +151,6 @@ public class Login extends javax.swing.JPanel {
         passwordLabel.setText("Password");
 
         passwordTextField.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
-        passwordTextField.setText("jPasswordField1");
         passwordTextField.addActionListener(this::passwordTextFieldActionPerformed);
 
         javax.swing.GroupLayout loginFieldsLayout = new javax.swing.GroupLayout(loginFields);
@@ -117,7 +176,7 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(passwordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -126,7 +185,7 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
-        jPanel1.add(loginFields, gridBagConstraints);
+        loginCard.add(loginFields, gridBagConstraints);
 
         loginPanel.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -147,7 +206,7 @@ public class Login extends javax.swing.JPanel {
         loginPanelLayout.setVerticalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPanelLayout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -156,7 +215,7 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        jPanel1.add(loginPanel, gridBagConstraints);
+        loginCard.add(loginPanel, gridBagConstraints);
 
         orPanel.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -180,7 +239,7 @@ public class Login extends javax.swing.JPanel {
         orPanelLayout.setVerticalGroup(
             orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orPanelLayout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(separatorRight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(orLabel, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -194,7 +253,7 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
-        jPanel1.add(orPanel, gridBagConstraints);
+        loginCard.add(orPanel, gridBagConstraints);
 
         signupPanel.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -225,7 +284,7 @@ public class Login extends javax.swing.JPanel {
         signupPanelLayout.setVerticalGroup(
             signupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signupPanelLayout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(signupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signupLabel)
                     .addComponent(signupButton)))
@@ -236,12 +295,12 @@ public class Login extends javax.swing.JPanel {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        jPanel1.add(signupPanel, gridBagConstraints);
+        loginCard.add(signupPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        add(jPanel1, gridBagConstraints);
+        add(loginCard, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
@@ -269,8 +328,8 @@ public class Login extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField emailTextField;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton login;
+    private javax.swing.JPanel loginCard;
     private javax.swing.JPanel loginFields;
     private javax.swing.JLabel loginLabel;
     private javax.swing.JPanel loginLabelPanel;
