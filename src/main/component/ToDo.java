@@ -1,5 +1,5 @@
 
-package main.interfaces;
+package main.component;
 
 public class ToDo extends javax.swing.JPanel {
 
@@ -98,4 +98,3 @@ public class ToDo extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
 }
-

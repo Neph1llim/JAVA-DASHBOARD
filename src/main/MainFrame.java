@@ -49,7 +49,7 @@ public class MainFrame extends javax.swing.JFrame {
         notes = new main.interfaces.Notes();
         settings = new main.interfaces.Settings();
         files = new main.interfaces.Files();
-        addNotes = new main.interfaces.AddNotes();
+        addNotes = new main.component.AddNotes();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
@@ -187,7 +187,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static javax.swing.JPanel HomePage;
     public static javax.swing.JPanel Interface;
     public static javax.swing.JPanel Login;
-    private main.interfaces.AddNotes addNotes;
+    private main.component.AddNotes addNotes;
     private javax.swing.JPanel btnContainer;
     private javax.swing.JPanel container;
     private main.interfaces.Files files;
