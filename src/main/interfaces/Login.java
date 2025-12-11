@@ -95,6 +95,7 @@ public class Login extends javax.swing.JPanel {
         signupPanel = new javax.swing.JPanel();
         signupLabel = new javax.swing.JLabel();
         signupButton = new javax.swing.JLabel();
+        showpassword = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(21, 21, 23));
         setMinimumSize(new java.awt.Dimension(480, 255));
@@ -105,36 +106,12 @@ public class Login extends javax.swing.JPanel {
         loginCard.setForeground(new java.awt.Color(51, 51, 51));
         loginCard.setOpaque(false);
         loginCard.setPreferredSize(new java.awt.Dimension(500, 525));
-        loginCard.setLayout(new java.awt.GridBagLayout());
 
         loginLabelPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         loginLabel.setFont(new java.awt.Font("Segoe UI Variable", 1, 36)); // NOI18N
         loginLabel.setForeground(new java.awt.Color(255, 255, 255));
         loginLabel.setText("Login");
-
-        javax.swing.GroupLayout loginLabelPanelLayout = new javax.swing.GroupLayout(loginLabelPanel);
-        loginLabelPanel.setLayout(loginLabelPanelLayout);
-        loginLabelPanelLayout.setHorizontalGroup(
-            loginLabelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginLabelPanelLayout.createSequentialGroup()
-                .addContainerGap(205, Short.MAX_VALUE)
-                .addComponent(loginLabel)
-                .addGap(201, 201, 201))
-        );
-        loginLabelPanelLayout.setVerticalGroup(
-            loginLabelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginLabelPanelLayout.createSequentialGroup()
-                .addComponent(loginLabel)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        loginCard.add(loginLabelPanel, gridBagConstraints);
 
         loginFields.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -179,13 +156,25 @@ public class Login extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
-        loginCard.add(loginFields, gridBagConstraints);
+        javax.swing.GroupLayout loginLabelPanelLayout = new javax.swing.GroupLayout(loginLabelPanel);
+        loginLabelPanel.setLayout(loginLabelPanelLayout);
+        loginLabelPanelLayout.setHorizontalGroup(
+            loginLabelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginLabelPanelLayout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(loginLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(loginLabelPanelLayout.createSequentialGroup()
+                .addComponent(loginFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
+        );
+        loginLabelPanelLayout.setVerticalGroup(
+            loginLabelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginLabelPanelLayout.createSequentialGroup()
+                .addComponent(loginLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(loginFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         loginPanel.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -199,9 +188,9 @@ public class Login extends javax.swing.JPanel {
         loginPanelLayout.setHorizontalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPanelLayout.createSequentialGroup()
-                .addGap(156, 156, 156)
+                .addGap(157, 157, 157)
                 .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         loginPanelLayout.setVerticalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,13 +198,6 @@ public class Login extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        loginCard.add(loginPanel, gridBagConstraints);
 
         orPanel.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -234,7 +216,7 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(orLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separatorRight, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         orPanelLayout.setVerticalGroup(
             orPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,15 +227,6 @@ public class Login extends javax.swing.JPanel {
                     .addComponent(orLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(separatorLeft, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
-        loginCard.add(orPanel, gridBagConstraints);
 
         signupPanel.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -279,7 +252,7 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(signupLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(signupButton)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         signupPanelLayout.setVerticalGroup(
             signupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,26 +263,43 @@ public class Login extends javax.swing.JPanel {
                     .addComponent(signupButton)))
         );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        loginCard.add(signupPanel, gridBagConstraints);
+        showpassword.setFont(new java.awt.Font("Segoe UI Variable", 1, 12)); // NOI18N
+        showpassword.setForeground(new java.awt.Color(153, 153, 153));
+        showpassword.setText("Show password");
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        add(loginCard, gridBagConstraints);
+        javax.swing.GroupLayout loginCardLayout = new javax.swing.GroupLayout(loginCard);
+        loginCard.setLayout(loginCardLayout);
+        loginCardLayout.setHorizontalGroup(
+            loginCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginCardLayout.createSequentialGroup()
+                .addGroup(loginCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loginCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(loginPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(signupPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(loginLabelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(loginCardLayout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(showpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(135, 135, 135))
+        );
+        loginCardLayout.setVerticalGroup(
+            loginCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginCardLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(loginLabelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(showpassword)
+                .addGap(23, 23, 23)
+                .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(orPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addComponent(signupPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        add(loginCard, new java.awt.GridBagConstraints());
     }// </editor-fold>//GEN-END:initComponents
-
-    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldActionPerformed
-
-    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailTextFieldActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // add logic here
@@ -322,6 +312,14 @@ public class Login extends javax.swing.JPanel {
         CardLayout card = (CardLayout) MainFrame.Login.getLayout();
         card.show(MainFrame.Login, "signup");
     }//GEN-LAST:event_signupButtonMouseClicked
+
+    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordTextFieldActionPerformed
+
+    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailTextFieldActionPerformed
 
 
     
@@ -340,6 +338,7 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JPasswordField passwordTextField;
     private javax.swing.JSeparator separatorLeft;
     private javax.swing.JSeparator separatorRight;
+    private javax.swing.JCheckBox showpassword;
     private javax.swing.JLabel signupButton;
     private javax.swing.JLabel signupLabel;
     private javax.swing.JPanel signupPanel;

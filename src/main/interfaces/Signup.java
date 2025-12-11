@@ -89,6 +89,7 @@ public class Signup extends javax.swing.JPanel {
         jSeparator4 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         RedirectLogin = new javax.swing.JLabel();
+        showpassword = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(21, 21, 23));
         setPreferredSize(new java.awt.Dimension(1440, 810));
@@ -139,6 +140,11 @@ public class Signup extends javax.swing.JPanel {
             }
         });
 
+        showpassword.setFont(new java.awt.Font("Segoe UI Variable", 1, 12)); // NOI18N
+        showpassword.setForeground(new java.awt.Color(153, 153, 153));
+        showpassword.setText("Show password");
+        showpassword.addActionListener(this::showpasswordActionPerformed);
+
         javax.swing.GroupLayout signupCardLayout = new javax.swing.GroupLayout(signupCard);
         signupCard.setLayout(signupCardLayout);
         signupCardLayout.setHorizontalGroup(
@@ -146,14 +152,14 @@ public class Signup extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signupCardLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(154, 154, 154))
+                .addGap(157, 157, 157))
             .addGroup(signupCardLayout.createSequentialGroup()
                 .addGroup(signupCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(signupCardLayout.createSequentialGroup()
                         .addGap(185, 185, 185)
                         .addComponent(jLabel1))
                     .addGroup(signupCardLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
+                        .addGap(62, 62, 62)
                         .addGroup(signupCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(signupCardLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -169,13 +175,14 @@ public class Signup extends javax.swing.JPanel {
                                 .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)))))
-                .addContainerGap(63, Short.MAX_VALUE))
+                                .addComponent(jLabel3))
+                            .addComponent(showpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         signupCardLayout.setVerticalGroup(
             signupCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signupCardLayout.createSequentialGroup()
-                .addContainerGap(46, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
@@ -185,14 +192,15 @@ public class Signup extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(showpassword)
+                .addGap(23, 23, 23)
                 .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(20, 20, 20)
                 .addGroup(signupCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signupCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(signupCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -217,6 +225,10 @@ public class Signup extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_emailActionPerformed
 
+    private void showpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showpasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showpasswordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel RedirectLogin;
@@ -229,6 +241,7 @@ public class Signup extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JPasswordField password;
+    private javax.swing.JCheckBox showpassword;
     private javax.swing.JButton signup;
     private javax.swing.JPanel signupCard;
     // End of variables declaration//GEN-END:variables
