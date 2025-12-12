@@ -14,19 +14,21 @@ public class AddNotes extends javax.swing.JPanel {
     String textPlaceholder = "Start typing your notes here...";
     Color initialText = new Color(33, 33, 34);
     Color normalColor = Button.normalColor;
-    Color highlightColor = new Color(255, 255, 255);;
+    Color highlightColor = Color.WHITE;
     
     // Track formatting states
     private boolean boldActive = false;
     private boolean italicActive = false;
     private boolean underlineActive = false;
-    private Color currentTextColor = Color.BLACK;
+    private boolean textColorActive = false;
+    private final Color normalTextColor = Color.BLACK;
+    private Color newTextColor =  normalTextColor;
     
     /* Constructors */
     public AddNotes() {
         initComponents();
         setupPlaceholder();
-        resetFormattingButtons();
+        resetButtons();
     }
 
     /* Methods */
@@ -47,7 +49,7 @@ public class AddNotes extends javax.swing.JPanel {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 if (textArea.getForeground().equals(initialText)) {
                     textArea.setText("");
-                    textArea.setForeground(currentTextColor);
+                    textArea.setForeground(normalTextColor);
                 }
             }
             @Override
@@ -64,7 +66,7 @@ public class AddNotes extends javax.swing.JPanel {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 if (title.getForeground().equals(initialText)) {
                     title.setText("");
-                    title.setForeground(currentTextColor);
+                    title.setForeground(normalTextColor);
                 }
             }
             @Override
@@ -81,21 +83,28 @@ public class AddNotes extends javax.swing.JPanel {
         return new Button[] { back, bold, italize, underline, font, fontColor, cancel, save };
     }
     
-    private void resetFormattingButtons() {
+    private void resetButtons() {
         // Set all formatting buttons to normal state
         for(Button btn: Buttons()){
             btn.setSelected(false);
             btn.setBackground(normalColor);
         }
+        boldActive = false;
+        italicActive = false;
+        underlineActive = false;
+        textColorActive = false;
+        fontColor.setForeground(normalTextColor);
+        applyColorToSelection(normalTextColor);
     }
     
     private void updateButtonAppearance(Button button, boolean isActive) {
         if (isActive) {
-            button.setBackground(highlightColor);
+            button.setHighlightColor(highlightColor);
+            button.setHighlighted(isActive);
         } else {
-            button.setBackground(normalColor);
+            button.setHighlightColor(normalColor);
+            button.setHighlighted(isActive);
         }
-        button.repaint();
     }
     
     private void applyBold() {
@@ -189,7 +198,7 @@ public class AddNotes extends javax.swing.JPanel {
     private void applyColorToSelection(Color color) {
         if (color == null) return;
 
-        currentTextColor = color;
+        newTextColor = color;
 
         StyledDocument doc = (StyledDocument) textArea.getDocument();
         SimpleAttributeSet attrs = new SimpleAttributeSet();
@@ -206,7 +215,6 @@ public class AddNotes extends javax.swing.JPanel {
             // Apply color to selected text
             doc.setCharacterAttributes(start, end - start, attrs, false);
         }
-
         // Return focus to text area
         textArea.requestFocus();
     }
@@ -345,8 +353,13 @@ public class AddNotes extends javax.swing.JPanel {
         font.setMargin(new java.awt.Insets(3, 0, 0, 0));
         font.addActionListener(this::fontActionPerformed);
 
-        fontColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ri--font-color.png"))); // NOI18N
-        fontColor.setMargin(new java.awt.Insets(3, 0, 0, 0));
+        fontColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/letter-A.png"))); // NOI18N
+        fontColor.setText("_");
+        fontColor.setToolTipText("");
+        fontColor.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        fontColor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        fontColor.setIconTextGap(0);
+        fontColor.setMargin(new java.awt.Insets(0, 0, 0, 0));
         fontColor.addActionListener(this::fontColorActionPerformed);
 
         javax.swing.GroupLayout panel4Layout = new javax.swing.GroupLayout(panel4);
@@ -409,7 +422,7 @@ public class AddNotes extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE)
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 993, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
@@ -421,8 +434,8 @@ public class AddNotes extends javax.swing.JPanel {
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         // Keep previous file 
         showPanel("notes");
+        resetButtons();
         setupPlaceholder();
-        System.out.println("notes canceled");
     }//GEN-LAST:event_cancelActionPerformed
 
     private void underlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_underlineActionPerformed
@@ -435,8 +448,7 @@ public class AddNotes extends javax.swing.JPanel {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     textArea.requestFocus();
-                    textArea.selectAll(); // Optional: highlight text
-                    System.out.println("title added");
+                    textArea.selectAll();
                 }
             }
         });
@@ -444,7 +456,6 @@ public class AddNotes extends javax.swing.JPanel {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
          showPanel("notes");
-         System.out.println("backed");
     }//GEN-LAST:event_backActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
@@ -463,8 +474,8 @@ public class AddNotes extends javax.swing.JPanel {
         
         //return to notes page
         showPanel("notes");
+        resetButtons();
         setupPlaceholder();
-        System.out.println("note added");
     }//GEN-LAST:event_saveActionPerformed
 
     private void boldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boldActionPerformed
@@ -477,14 +488,9 @@ public class AddNotes extends javax.swing.JPanel {
         if (selectedFont != null) {
             // Apply the selected font to text area
             textArea.setFont(selectedFont);
-            
             // Also apply to title with larger size
             Font titleFont = selectedFont.deriveFont(24f);
             title.setFont(titleFont);
-            
-            System.out.println("Font changed to: " + selectedFont.getFamily());
-        } else {
-            System.out.println("Font selection cancelled");
         }
         
         // Reset button appearance
@@ -496,20 +502,22 @@ public class AddNotes extends javax.swing.JPanel {
         Color selectedColor = JColorChooser.showDialog(
             this, 
             "Choose Text Color", 
-            currentTextColor
+            newTextColor
         );
         
         if (selectedColor != null) {
             applyColorToSelection(selectedColor);
+            updateButtonAppearance(fontColor, textColorActive);
+            fontColor.setForeground(selectedColor);
         }
         
         // Reset button appearance
         fontColor.setSelected(false);
-        updateButtonAppearance(fontColor, false);
     }//GEN-LAST:event_fontColorActionPerformed
 
     private void italizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_italizeActionPerformed
         applyItalic();
+        updateButtonAppearance(italize, italicActive);
     }//GEN-LAST:event_italizeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

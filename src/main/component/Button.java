@@ -127,6 +127,10 @@ public class Button extends JButton {
         repaint();
     }
 
+    public void setHighlightColor(Color color){
+        this.highlightColor = color;
+    }
+    
     public boolean isHighlighted() {
         return highlighted;
     }
