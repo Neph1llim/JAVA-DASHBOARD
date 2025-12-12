@@ -15,6 +15,40 @@ public class Grades extends javax.swing.JPanel {
      */
     public Grades() {
         initComponents();
+        subject1.setText("button1");
+        subject1.addActionListener(e -> showTab("sub1Tab"));
+
+        subject2.setText("button2");
+        subject2.addActionListener(e -> showTab("sub2Tab"));
+
+        subject3.setText("button3");
+        subject3.addActionListener(e -> showTab("sub3Tab"));
+
+        subject4.setText("button4");
+        subject4.addActionListener(e -> showTab("sub4Tab"));
+
+        subject5.setText("button5");
+        subject5.addActionListener(e -> showTab("sub5Tab"));
+
+        subject6.setText("button6");
+        subject6.addActionListener(e -> showTab("sub6Tab"));
+
+        subject7.setText("button7");
+        subject7.addActionListener(e -> showTab("sub7Tab"));
+
+        subject8.setText("button8");
+        subject8.addActionListener(e -> showTab("sub8Tab"));
+
+        subject9.setText("button9");
+        subject9.addActionListener(e -> showTab("sub9Tab"));
+
+        subject10.setText("button10");
+        subject10.addActionListener(e -> showTab("sub10Tab"));
+        
+        showTab("mathTab");
+    }
+    private void showTab(String tabName) {
+    ((java.awt.CardLayout)panel2.getLayout()).show(panel2, tabName);
     }
 
     /**
@@ -29,11 +63,16 @@ public class Grades extends javax.swing.JPanel {
         panel1 = new main.component.Panel();
         subject1 = new main.component.Button();
         panel2 = new main.component.Panel();
-        addgrade = new main.component.Button();
-        panel4 = new main.component.Panel();
-        panel5 = new main.component.Panel();
-        panel7 = new main.component.Panel();
-        panel3 = new main.component.Panel();
+        sub1Tab = new main.interfaces.GradeTab();
+        sub2Tab = new main.interfaces.GradeTab();
+        sub3Tab = new main.interfaces.GradeTab();
+        sub4Tab = new main.interfaces.GradeTab();
+        sub5Tab = new main.interfaces.GradeTab();
+        sub6Tab = new main.interfaces.GradeTab();
+        sub7Tab = new main.interfaces.GradeTab();
+        sub8Tab = new main.interfaces.GradeTab();
+        sub9Tab = new main.interfaces.GradeTab();
+        sub10Tab = new main.interfaces.GradeTab();
         subject2 = new main.component.Button();
         subject3 = new main.component.Button();
         subject4 = new main.component.Button();
@@ -52,115 +91,44 @@ public class Grades extends javax.swing.JPanel {
         subject1.addActionListener(this::subject1ActionPerformed);
 
         panel2.setPanelBackground(new java.awt.Color(102, 102, 102));
-
-        addgrade.setBackground(new java.awt.Color(153, 153, 153));
-        addgrade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
-
-        panel4.setArc(0);
-        panel4.setPanelBackground(new java.awt.Color(153, 153, 153));
-
-        javax.swing.GroupLayout panel4Layout = new javax.swing.GroupLayout(panel4);
-        panel4.setLayout(panel4Layout);
-        panel4Layout.setHorizontalGroup(
-            panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 248, Short.MAX_VALUE)
-        );
-        panel4Layout.setVerticalGroup(
-            panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        panel5.setArc(0);
-        panel5.setPanelBackground(new java.awt.Color(51, 51, 51));
-
-        javax.swing.GroupLayout panel5Layout = new javax.swing.GroupLayout(panel5);
-        panel5.setLayout(panel5Layout);
-        panel5Layout.setHorizontalGroup(
-            panel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 248, Short.MAX_VALUE)
-        );
-        panel5Layout.setVerticalGroup(
-            panel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        panel7.setArc(0);
-        panel7.setPanelBackground(new java.awt.Color(153, 153, 153));
-
-        javax.swing.GroupLayout panel7Layout = new javax.swing.GroupLayout(panel7);
-        panel7.setLayout(panel7Layout);
-        panel7Layout.setHorizontalGroup(
-            panel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 248, Short.MAX_VALUE)
-        );
-        panel7Layout.setVerticalGroup(
-            panel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        panel3.setArc(0);
-        panel3.setPanelBackground(new java.awt.Color(51, 51, 51));
-
-        javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
-        panel3.setLayout(panel3Layout);
-        panel3Layout.setHorizontalGroup(
-            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 226, Short.MAX_VALUE)
-        );
-        panel3Layout.setVerticalGroup(
-            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
-        panel2.setLayout(panel2Layout);
-        panel2Layout.setHorizontalGroup(
-            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel2Layout.createSequentialGroup()
-                .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(addgrade, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
-        );
-        panel2Layout.setVerticalGroup(
-            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel2Layout.createSequentialGroup()
-                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 488, Short.MAX_VALUE)
-                .addComponent(addgrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
-        );
+        panel2.setLayout(new java.awt.CardLayout());
+        panel2.add(sub1Tab, "card2");
+        panel2.add(sub2Tab, "card3");
+        panel2.add(sub3Tab, "card4");
+        panel2.add(sub4Tab, "card5");
+        panel2.add(sub5Tab, "card6");
+        panel2.add(sub6Tab, "card7");
+        panel2.add(sub7Tab, "card8");
+        panel2.add(sub8Tab, "card9");
+        panel2.add(sub9Tab, "card10");
+        panel2.add(sub10Tab, "card11");
 
         subject2.setText("button2");
+        subject2.addActionListener(this::subject2ActionPerformed);
 
         subject3.setText("button3");
+        subject3.addActionListener(this::subject3ActionPerformed);
 
         subject4.setText("button4");
+        subject4.addActionListener(this::subject4ActionPerformed);
 
         subject5.setText("button5");
+        subject5.addActionListener(this::subject5ActionPerformed);
 
         subject6.setText("button6");
+        subject6.addActionListener(this::subject6ActionPerformed);
 
         subject7.setText("button7");
+        subject7.addActionListener(this::subject7ActionPerformed);
 
         subject8.setText("button8");
+        subject8.addActionListener(this::subject8ActionPerformed);
 
         subject9.setText("button9");
         subject9.addActionListener(this::subject9ActionPerformed);
 
         subject10.setText("button10");
+        subject10.addActionListener(this::subject10ActionPerformed);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -169,7 +137,7 @@ public class Grades extends javax.swing.JPanel {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addComponent(subject1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -198,16 +166,19 @@ public class Grades extends javax.swing.JPanel {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(subject1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subject10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(subject5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(subject4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(subject6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(subject7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(subject8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(subject3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(subject2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(subject1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(subject9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(subject10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -230,22 +201,59 @@ public class Grades extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void subject1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject1ActionPerformed
-        // TODO add your handling code here:
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub1Tab");
     }//GEN-LAST:event_subject1ActionPerformed
 
     private void subject9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject9ActionPerformed
-        // TODO add your handling code here:
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub9Tab");
     }//GEN-LAST:event_subject9ActionPerformed
+
+    private void subject5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject5ActionPerformed
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub5Tab");
+    }//GEN-LAST:event_subject5ActionPerformed
+
+    private void subject2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject2ActionPerformed
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub2Tab");
+    }//GEN-LAST:event_subject2ActionPerformed
+
+    private void subject3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject3ActionPerformed
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub3Tab");
+    }//GEN-LAST:event_subject3ActionPerformed
+
+    private void subject4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject4ActionPerformed
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub4Tab");
+    }//GEN-LAST:event_subject4ActionPerformed
+
+    private void subject6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject6ActionPerformed
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub6Tab");
+    }//GEN-LAST:event_subject6ActionPerformed
+
+    private void subject7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject7ActionPerformed
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub7Tab");
+    }//GEN-LAST:event_subject7ActionPerformed
+
+    private void subject8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject8ActionPerformed
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub8Tab");
+    }//GEN-LAST:event_subject8ActionPerformed
+
+    private void subject10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subject10ActionPerformed
+((java.awt.CardLayout)panel2.getLayout()).show(panel2, "sub10Tab");
+    }//GEN-LAST:event_subject10ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private main.component.Button addgrade;
     private main.component.Panel panel1;
     private main.component.Panel panel2;
-    private main.component.Panel panel3;
-    private main.component.Panel panel4;
-    private main.component.Panel panel5;
-    private main.component.Panel panel7;
+    private main.interfaces.GradeTab sub10Tab;
+    private main.interfaces.GradeTab sub1Tab;
+    private main.interfaces.GradeTab sub2Tab;
+    private main.interfaces.GradeTab sub3Tab;
+    private main.interfaces.GradeTab sub4Tab;
+    private main.interfaces.GradeTab sub5Tab;
+    private main.interfaces.GradeTab sub6Tab;
+    private main.interfaces.GradeTab sub7Tab;
+    private main.interfaces.GradeTab sub8Tab;
+    private main.interfaces.GradeTab sub9Tab;
     private main.component.Button subject1;
     private main.component.Button subject10;
     private main.component.Button subject2;
