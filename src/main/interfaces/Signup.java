@@ -1,6 +1,8 @@
 package main.interfaces;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import main.MainFrame;
 
 public class Signup extends javax.swing.JPanel {
@@ -117,6 +119,7 @@ public class Signup extends javax.swing.JPanel {
         jLabel2.setText("Password");
 
         passwordTextField.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
+        passwordTextField.addActionListener(this::passwordTextFieldActionPerformed);
 
         signup.setBackground(new java.awt.Color(122, 134, 254));
         signup.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
@@ -213,6 +216,8 @@ public class Signup extends javax.swing.JPanel {
 
     private void RedirectLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RedirectLoginMouseClicked
         showPanel("login");
+        setupPlaceholder();
+        showPassword.setSelected(false);
     }//GEN-LAST:event_RedirectLoginMouseClicked
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
@@ -222,7 +227,15 @@ public class Signup extends javax.swing.JPanel {
     }//GEN-LAST:event_signupActionPerformed
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-        // TODO add your handling code here:
+        email.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    passwordTextField.requestFocus();
+                    passwordTextField.selectAll();
+                }
+            }
+        });
     }//GEN-LAST:event_emailActionPerformed
 
     private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
@@ -232,6 +245,17 @@ public class Signup extends javax.swing.JPanel {
             passwordTextField.setEchoChar((char)'•');
         }
     }//GEN-LAST:event_showPasswordActionPerformed
+
+    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
+        passwordTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    signup.requestFocus();
+                }
+            }
+        });
+    }//GEN-LAST:event_passwordTextFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
