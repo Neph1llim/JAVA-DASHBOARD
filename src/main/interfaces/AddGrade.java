@@ -10,12 +10,139 @@ package main.interfaces;
  */
 public class AddGrade extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AddGrade
-     */
+    private double percentageValue;
+    private double scoreValue;
+    private double maxScoreValue;
+    
     public AddGrade() {
         initComponents();
+        setupDefaults();
+        setupListeners();
     }
+    private void setupDefaults() {
+        // Set placeholder text
+        jTextField1.setText("Enter Assessment Name");
+        jTextField2.setText("0"); // Score
+        jTextField6.setText("100"); // Max Score
+        jTextField4.setText("0"); // Percentage
+        jTextField5.setText("0.0"); // Calculated Grade
+        
+        // Initialize values
+        scoreValue = 0;
+        maxScoreValue = 100;
+        percentageValue = 0;
+    }
+    
+    private void setupListeners() {
+        // Add listeners to automatically calculate when values change
+        jTextField2.addActionListener(e -> calculateGrade());
+        jTextField6.addActionListener(e -> calculateGrade());
+        jTextField4.addActionListener(e -> calculateGrade());
+    }
+    
+    private void calculateGrade() {
+        try {
+            // Get values from text fields
+            String scoreText = jTextField2.getText().trim();
+            String maxText = jTextField6.getText().trim();
+            String percentText = jTextField4.getText().trim();
+            
+            // Parse values
+            scoreValue = scoreText.isEmpty() ? 0 : Double.parseDouble(scoreText);
+            maxScoreValue = maxText.isEmpty() ? 100 : Double.parseDouble(maxText);
+            percentageValue = percentText.isEmpty() ? 0 : Double.parseDouble(percentText);
+            
+            // Validate inputs
+            if (maxScoreValue <= 0) {
+                jTextField5.setText("Error: Max <= 0");
+                return;
+            }
+            
+            if (scoreValue > maxScoreValue) {
+                jTextField5.setText("Error: Score > Max");
+                return;
+            }
+            
+            if (percentageValue < 0 || percentageValue > 100) {
+                jTextField5.setText("Error: % out of range");
+                return;
+            }
+            
+            // Calculate grade contribution for this assessment
+            // (score/max) * (percentage/100) * 100
+            double gradeContribution = (scoreValue / maxScoreValue) * (percentageValue / 100.0) * 100.0;
+            
+            // Format and display
+            jTextField5.setText(String.format("%.2f", gradeContribution));
+            
+        } catch (NumberFormatException e) {
+            jTextField5.setText("Invalid Input");
+        }
+    }
+    public String getAssessmentName() {
+        return jTextField1.getText();
+    }
+
+    public void setAssessmentName(String name) {
+        jTextField1.setText(name);
+    }
+
+    public String getScore() {
+        return jTextField2.getText();
+    }
+
+    public void setScore(String score) {
+        jTextField2.setText(score);
+        calculateGrade(); // Recalculate when score changes
+    }
+
+    public String getMaxScore() {
+        return jTextField6.getText();
+    }
+
+    public void setMaxScore(String maxScore) {
+        jTextField6.setText(maxScore);
+        calculateGrade(); // Recalculate when max changes
+    }
+
+    public String getPercentage() {
+        return jTextField4.getText();
+    }
+
+    public void setPercentage(String percentage) {
+        jTextField4.setText(percentage);
+        calculateGrade(); // Recalculate when percentage changes
+    }
+
+    public String getCalculatedGrade() {
+        return jTextField5.getText();
+    }
+    
+    public double getGradeValue() {
+        try {
+            return Double.parseDouble(jTextField5.getText());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+    
+    public double getPercentageValue() {
+        return percentageValue;
+    }
+    
+    public boolean isValidEntry() {
+        try {
+            String gradeText = jTextField5.getText();
+            if (gradeText.startsWith("Error")) {
+                return false;
+            }
+            Double.parseDouble(gradeText);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -179,11 +306,11 @@ public class AddGrade extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
+        calculateGrade();
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
+        calculateGrade();
     }//GEN-LAST:event_jTextField6ActionPerformed
 
 
