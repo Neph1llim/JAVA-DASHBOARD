@@ -33,7 +33,7 @@ public class Notes extends javax.swing.JPanel {
         notes.setPreferredSize(new java.awt.Dimension(1230, 860));
         notes.setLayout(new java.awt.GridBagLayout());
 
-        notePanel.setBackground(new java.awt.Color(21, 21, 23));
+        notePanel.setBackground(new java.awt.Color(102, 102, 102));
         notePanel.setPreferredSize(new java.awt.Dimension(750, 540));
 
         javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);

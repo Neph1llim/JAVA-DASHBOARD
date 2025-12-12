@@ -1,6 +1,8 @@
 package main.interfaces;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import main.MainFrame;
 
 public class Login extends javax.swing.JPanel {
@@ -19,7 +21,6 @@ public class Login extends javax.swing.JPanel {
     /* Methods */
     public void setMainFrame(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        //passwordTextField.setEchoChar((char) 0);
     }
     
     private void setupPlaceholder() {
@@ -309,17 +310,34 @@ public class Login extends javax.swing.JPanel {
     }//GEN-LAST:event_loginActionPerformed
 
     private void signupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupButtonMouseClicked
-        // change to signup
-        CardLayout card = (CardLayout) MainFrame.Login.getLayout();
-        card.show(MainFrame.Login, "signup");
+        
+        // change state handling 
+        mainFrame.showCard("signup"); // shows signup page
+        setupPlaceholder();                   // cleans textField
+        showPassword.setSelected(false);    // turn off the checkbox
     }//GEN-LAST:event_signupButtonMouseClicked
 
     private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
-        // TODO add your handling code here:
+        passwordTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    login.requestFocus();
+                }
+            }
+        });
     }//GEN-LAST:event_passwordTextFieldActionPerformed
 
     private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
-        // TODO add your handling code here:
+        emailTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    passwordTextField.requestFocus();
+                    passwordTextField.selectAll();
+                }
+            }
+        });
     }//GEN-LAST:event_emailTextFieldActionPerformed
 
     private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
