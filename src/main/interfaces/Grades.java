@@ -122,7 +122,7 @@ public class Grades extends javax.swing.JPanel {
         if (index < buttons.size()) {
             Button btn = buttons.get(index);
             if (btn != null) {
-                container.remove(btn);
+                buttonContainer.remove(btn);
             }
             buttons.remove(index);
         }
