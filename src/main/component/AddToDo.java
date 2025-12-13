@@ -1,9 +1,94 @@
 package main.component;
+import java.awt.event.*;
+import javax.swing.*;
+
 
 public class AddToDo extends javax.swing.JPanel {
-
+  
+    private boolean isEditing = false;
+    private JTextField editField;
+    
     public AddToDo() {
         initComponents();
+        setupEditField();
+    }
+    
+    private void setupEditField() {
+        // Creates a text field instead of using a dialog box
+        editField = new JTextField();
+        editField.setFont(new java.awt.Font("Segoe UI Variable", 1, 14));
+        editField.setForeground(new java.awt.Color(255, 255, 255));
+        editField.setBackground(new java.awt.Color(53, 54, 56));
+        editField.setBorder(null);
+        editField.setVisible(false);
+        
+        // Position it exactly where checkbox is
+        editField.setBounds(jCheckBox1.getBounds());
+        
+        // Add to panel2
+        panel2.add(editField);
+        
+        // Add Enter key listener
+        editField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    finishEditing();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    cancelEditing();
+                }
+            }
+        });
+        
+        // Focus listener
+        editField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Small delay to allow Enter key to be processed first
+                SwingUtilities.invokeLater(() -> {
+                    if (isEditing) {
+                        finishEditing();
+                    }
+                });
+            }
+        });
+    }
+    
+    private void startEditing() {
+        isEditing = true;
+        
+        editField.setText(jCheckBox1.getText());
+        
+        editField.setBounds(jCheckBox1.getBounds());
+        
+        editField.setVisible(true);
+        jCheckBox1.setVisible(false);
+        
+        editField.requestFocusInWindow();
+        editField.selectAll();
+    }
+    
+    private void finishEditing() {
+        if (!isEditing) return;
+        
+        isEditing = false;
+        String newText = editField.getText().trim();
+        
+        // Update checkbox if text is not empty
+        if (!newText.isEmpty()) {
+            jCheckBox1.setText(newText);
+        }
+        
+        // Switch back to checkbox
+        editField.setVisible(false);
+        jCheckBox1.setVisible(true);
+    }
+    
+    private void cancelEditing() {
+        isEditing = false;
+        editField.setVisible(false);
+        jCheckBox1.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -66,15 +151,26 @@ public class AddToDo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
+        // Works as is
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
+    // Delete button - removes a todo item
+    if (getParent() != null) {
+        javax.swing.JPanel parent = (javax.swing.JPanel) getParent();
+        parent.remove(this);
+        parent.revalidate();
+        parent.repaint();
+        
+        if (parent.getParent() != null) {
+            parent.getParent().revalidate();
+            parent.getParent().repaint();
+        }
+    }     
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
+        startEditing();
     }//GEN-LAST:event_button1ActionPerformed
 
 
