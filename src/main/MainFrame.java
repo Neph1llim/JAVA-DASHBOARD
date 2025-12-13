@@ -1,3 +1,4 @@
+
 package main;
 
 /* Import files location */
@@ -5,21 +6,22 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import javax.swing.*;
 
-
 public class MainFrame extends javax.swing.JFrame {
+
     /* Properties */
     boolean isMinimized = false;
     private final CardLayout cardLayout;
-    
+
     /* Constructors for OOP */
     public MainFrame() {
         initComponents();
         
+
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
-        
+
         // Set the MainFrame reference in Login panel
         login.setMainFrame(this);  // ADD THIS
-    
+
         // default Interface set to Login
         cardLayout = (CardLayout) getContentPane().getLayout();
         cardLayout.show(getContentPane(), "Login");
@@ -28,7 +30,8 @@ public class MainFrame extends javax.swing.JFrame {
     public void showCard(String cardName) {
         cardLayout.show(getContentPane(), cardName);
     }
-    /* Built-in codes and functions */    
+
+    /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,7 +56,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
-        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(480, 270));
@@ -159,8 +161,8 @@ public class MainFrame extends javax.swing.JFrame {
 
                 // Update icon
                 minimize.setIcon(new ImageIcon(getClass().getResource(
-                    isMinimized ? "/main/resource/arrow-left.png" 
-                               : "/main/resource/arrow-right.png"
+                        isMinimized ? "/main/resource/arrow-left.png"
+                                : "/main/resource/arrow-right.png"
                 )));
 
                 isMinimized = !isMinimized; // inverts the state
@@ -170,15 +172,16 @@ public class MainFrame extends javax.swing.JFrame {
         timer.start();
     }//GEN-LAST:event_minimizeActionPerformed
 
-    /* Main Class Code */ 
-     public static void main(String args[]) {
+    /* Main Class Code */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code">
-        try{UIManager.setLookAndFeel(new FlatDarkLaf());
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException ex) {
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }

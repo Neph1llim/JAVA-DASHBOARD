@@ -1,8 +1,10 @@
 package main.interfaces;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 import main.MainFrame;
 
 public class Login extends javax.swing.JPanel {
@@ -16,6 +18,8 @@ public class Login extends javax.swing.JPanel {
     public Login() {
         initComponents();
         setupPlaceholder();
+        setupListeners();
+        setBorder("both", true);
     }
     
     /* Methods */
@@ -23,51 +27,114 @@ public class Login extends javax.swing.JPanel {
         this.mainFrame = mainFrame;
     }
     
-    private void setupPlaceholder() {
-        emailTextField.setText(emailPlaceholder);
-        emailTextField.setForeground(initialText);     
+    private void setBorder(String type, boolean isValid){
+        Border normal = BorderFactory.createLineBorder(Color.GRAY,2);
+        Border red = BorderFactory.createLineBorder(Color.RED, 2);
+        Border current = !isValid ? red: normal;
         
-        passwordTextField.setText(passwordPlaceholder);
-        passwordTextField.setForeground(initialText);        
-        
-        emailTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+        switch(type){
+            case "email"-> {emailTextField.setBorder(current);break;}
+            case "pass" -> {passwordTextField.setBorder(current);break;}
+            case "both" -> {emailTextField.setBorder(current);passwordTextField.setBorder(current);break;}
+        }
+    }
+
+    private void handleSignupClick() {
+        if (mainFrame != null) {
+            CardLayout card = (CardLayout) MainFrame.Login.getLayout();
+            card.show(MainFrame.Login, "signup");
+            setupPlaceholder();
+            showPassword.setSelected(false);
+            passwordTextField.setEchoChar('•');
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: MainFrame not initialized!");
+        }
+    }
+    
+    private void setupListeners() {
+        signupButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
+            public void mouseEntered(MouseEvent e) {
+                signupButton.setForeground(new Color(135, 206, 250));
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                signupButton.setForeground(new Color(102, 204, 255));
+            }
+        });
+        
+        emailTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent evt) {
                 if (emailTextField.getForeground().equals(initialText)) {
+                    setBorder("email", true);
                     emailTextField.setText("");
                     emailTextField.setForeground(currentTextColor);
                 }
             }
+
             @Override
-            public void focusLost(java.awt.event.FocusEvent evt) {
+            public void focusLost(FocusEvent evt) {
                 if (emailTextField.getText().trim().isEmpty()) {
                     emailTextField.setText(emailPlaceholder);
                     emailTextField.setForeground(initialText);
                 }
             }
         });
-        passwordTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+
+        passwordTextField.addFocusListener(new FocusAdapter() {
             @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
+            public void focusGained(FocusEvent evt) {
                 if (passwordTextField.getForeground().equals(initialText)) {
+                    setBorder("pass", true);
                     passwordTextField.setText("");
                     passwordTextField.setForeground(currentTextColor);
+
                 }
             }
+
             @Override
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                if (passwordTextField.getText().trim().isEmpty()) {
+            public void focusLost(FocusEvent evt) {
+                if (passwordTextField.getPassword().length == 0) {
+                    passwordTextField.setEchoChar((char)0);
                     passwordTextField.setText(passwordPlaceholder);
                     passwordTextField.setForeground(initialText);
                 }
             }
         });
+        
+        emailTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    passwordTextField.requestFocus();
+                    passwordTextField.selectAll();
+                }
+            }
+        });
+        
+        passwordTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    login.requestFocus();
+                    login.doClick();
+                }
+            }
+        });
     }
     
+    private void setupPlaceholder() {
+        emailTextField.setText(emailPlaceholder);
+        emailTextField.setForeground(initialText);
+        passwordTextField.setText(passwordPlaceholder);
+        passwordTextField.setForeground(initialText);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         loginCard = new javax.swing.JPanel(){
             private int corner = 25;
@@ -122,14 +189,22 @@ public class Login extends javax.swing.JPanel {
 
         emailTextField.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         emailTextField.setText("\n");
-        emailTextField.addActionListener(this::emailTextFieldActionPerformed);
+        emailTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                emailTextFieldFocusGained(evt);
+            }
+        });
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         passwordLabel.setForeground(new java.awt.Color(255, 255, 255));
         passwordLabel.setText("Password");
 
         passwordTextField.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
-        passwordTextField.addActionListener(this::passwordTextFieldActionPerformed);
+        passwordTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordTextFieldFocusGained(evt);
+            }
+        });
 
         javax.swing.GroupLayout loginFieldsLayout = new javax.swing.GroupLayout(loginFields);
         loginFields.setLayout(loginFieldsLayout);
@@ -304,41 +379,44 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        // add logic here
-        
-        mainFrame.showCard("HomePage");
+         // Get values
+        String email = emailTextField.getText().trim();
+        String password = new String(passwordTextField.getPassword()).trim();
+
+        // Check if it's placeholder text
+        boolean isEmailPlaceholder = email.equals(emailPlaceholder);
+        boolean isPasswordPlaceholder = password.equals(passwordPlaceholder.trim());
+
+        // Validation
+        if (email.isEmpty() || isEmailPlaceholder) {
+            setBorder("email", false);
+            JOptionPane.showMessageDialog(this, "Email is Required!");
+            return;
+        }
+
+        if (password.isEmpty() || isPasswordPlaceholder) {
+            setBorder("pass", false);
+            JOptionPane.showMessageDialog(this, "Password is Required!");
+            return;
+        }
+
+        // Authentication here @Cyrus
+        if (email.equals("admin") && password.equals("admin")) {
+            setBorder("both", true);
+            if (mainFrame != null) {
+                mainFrame.showCard("HomePage");
+                setupPlaceholder();
+            }
+        } else {
+            setBorder("both", false);
+            JOptionPane.showMessageDialog(this, "Enter Correct Email or Password!");
+        }
     }//GEN-LAST:event_loginActionPerformed
 
     private void signupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupButtonMouseClicked
-        
-        // change state handling 
-        mainFrame.showCard("signup"); // shows signup page
-        setupPlaceholder();                   // cleans textField
-        showPassword.setSelected(false);    // turn off the checkbox
+        handleSignupClick(); 
+        setBorder("both", true);
     }//GEN-LAST:event_signupButtonMouseClicked
-
-    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
-        passwordTextField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    login.requestFocus();
-                }
-            }
-        });
-    }//GEN-LAST:event_passwordTextFieldActionPerformed
-
-    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
-        emailTextField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    passwordTextField.requestFocus();
-                    passwordTextField.selectAll();
-                }
-            }
-        });
-    }//GEN-LAST:event_emailTextFieldActionPerformed
 
     private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
         if (showPassword.isSelected()) {
@@ -347,6 +425,14 @@ public class Login extends javax.swing.JPanel {
             passwordTextField.setEchoChar((char)'•');
         }
     }//GEN-LAST:event_showPasswordActionPerformed
+
+    private void emailTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFieldFocusGained
+        setBorder("email", true);
+    }//GEN-LAST:event_emailTextFieldFocusGained
+
+    private void passwordTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFieldFocusGained
+        setBorder("pass", true);
+    }//GEN-LAST:event_passwordTextFieldFocusGained
 
 
     
