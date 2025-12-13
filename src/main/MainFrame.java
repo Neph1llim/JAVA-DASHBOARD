@@ -115,6 +115,9 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.add(notes, "notes");
         Interface.add(files, "files");
         Interface.add(settings, "settings");
+
+        grades.setMaximumSize(null);
+        grades.setMinimumSize(new java.awt.Dimension(1440, 810));
         Interface.add(grades, "grades");
 
         HomePage.add(Interface, java.awt.BorderLayout.CENTER);
@@ -160,8 +163,8 @@ public class MainFrame extends javax.swing.JFrame {
 
                 // Update icon
                 minimize.setIcon(new ImageIcon(getClass().getResource(
-                        isMinimized ? "/main/resource/arrow-left.png"
-                                : "/main/resource/arrow-right.png"
+                        isMinimized ? "/main/resource/arrowLeft.png"
+                                : "/main/resource/arrowRight.png"
                 )));
 
                 isMinimized = !isMinimized; // inverts the state
