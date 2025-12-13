@@ -245,7 +245,7 @@ public class AddNotes extends javax.swing.JPanel {
         panel1.setPanelBackground(new java.awt.Color(0, 0, 0));
         panel1.setLayout(new java.awt.GridBagLayout());
 
-        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fluent--arrow-reply-20-filled.png"))); // NOI18N
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrowLeft.png"))); // NOI18N
         back.setMinimumSize(new java.awt.Dimension(40, 40));
         back.setPreferredSize(new java.awt.Dimension(40, 40));
         back.addActionListener(this::backActionPerformed);
@@ -263,7 +263,6 @@ public class AddNotes extends javax.swing.JPanel {
 
         title.setBackground(new java.awt.Color(102, 102, 102));
         title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        title.setForeground(new java.awt.Color(0, 0, 0));
         title.setText("Title");
         title.setBorder(null);
         title.setHighlighter(null);
@@ -306,7 +305,6 @@ public class AddNotes extends javax.swing.JPanel {
 
         textArea.setBackground(new java.awt.Color(102, 102, 102));
         textArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        textArea.setForeground(new java.awt.Color(0, 0, 0));
         textArea.setText("TEXT HERE");
         jScrollPane3.setViewportView(textArea);
 
@@ -336,20 +334,20 @@ public class AddNotes extends javax.swing.JPanel {
         save.setLabel("Save");
         save.addActionListener(this::saveActionPerformed);
 
-        bold.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/carbon--text-bold.png"))); // NOI18N
+        bold.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fontBold.png"))); // NOI18N
         bold.setMargin(new java.awt.Insets(3, 0, 0, 0));
         bold.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/carbon--text-bold.png"))); // NOI18N
         bold.addActionListener(this::boldActionPerformed);
 
-        italize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ic--round-format-italic.png"))); // NOI18N
+        italize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fontItalic.png"))); // NOI18N
         italize.setMargin(new java.awt.Insets(3, 0, 0, 0));
         italize.addActionListener(this::italizeActionPerformed);
 
-        underline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ic--round-format-underlined.png"))); // NOI18N
+        underline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fontUnderline.png"))); // NOI18N
         underline.setMargin(new java.awt.Insets(3, 0, 0, 0));
         underline.addActionListener(this::underlineActionPerformed);
 
-        font.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ci--font.png"))); // NOI18N
+        font.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fontStyle.png"))); // NOI18N
         font.setMargin(new java.awt.Insets(3, 0, 0, 0));
         font.addActionListener(this::fontActionPerformed);
 

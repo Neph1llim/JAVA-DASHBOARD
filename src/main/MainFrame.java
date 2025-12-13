@@ -51,7 +51,6 @@ public class MainFrame extends javax.swing.JFrame {
         notes = new main.interfaces.Notes();
         files = new main.interfaces.Files();
         settings = new main.interfaces.Settings();
-        addNotes = new main.component.AddNotes();
         grades = new main.interfaces.Grades();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         minimize.setBackground(new java.awt.Color(27, 27, 28));
         minimize.setForeground(new java.awt.Color(27, 27, 28));
-        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrow-left.png"))); // NOI18N
+        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrowLeft.png"))); // NOI18N
         minimize.setArc(100);
         minimize.setOpaque(true);
         minimize.addActionListener(this::minimizeActionPerformed);
@@ -116,7 +115,6 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.add(notes, "notes");
         Interface.add(files, "files");
         Interface.add(settings, "settings");
-        Interface.add(addNotes, "addNote");
         Interface.add(grades, "grades");
 
         HomePage.add(Interface, java.awt.BorderLayout.CENTER);
@@ -191,7 +189,6 @@ public class MainFrame extends javax.swing.JFrame {
     public static javax.swing.JPanel HomePage;
     public static javax.swing.JPanel Interface;
     public static javax.swing.JPanel Login;
-    private main.component.AddNotes addNotes;
     private javax.swing.JPanel btnContainer;
     private javax.swing.JPanel container;
     private main.interfaces.Files files;

@@ -129,7 +129,7 @@ public class Menu extends javax.swing.JPanel {
 
         files.setBackground(new java.awt.Color(51, 51, 51));
         files.setForeground(new java.awt.Color(255, 255, 255));
-        files.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/folder.png"))); // NOI18N
+        files.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/folder32x32.png"))); // NOI18N
         files.setText("Files");
         files.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         files.setHideActionText(true);
