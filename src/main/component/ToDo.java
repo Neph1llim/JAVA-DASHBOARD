@@ -1,15 +1,74 @@
 
 package main.component;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class ToDo extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ToDo
-     */
+    private JPanel todoContainer;
+    private JScrollPane scrollPane;
+    
     public ToDo() {
         initComponents();
+        setupTodoContainer();
     }
     
+    private void setupTodoContainer() {
+        // For the list to go downwards instead of going right
+        todoContainer = new JPanel();
+        todoContainer.setLayout(new BoxLayout(todoContainer, BoxLayout.Y_AXIS));
+        todoContainer.setBackground(new Color(81, 84, 89));
+        
+        // Scroll bar
+        scrollPane = new JScrollPane(todoContainer);
+        scrollPane.setBorder(null);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        
+        // Clear and rebuild panel12
+        panel12.removeAll();
+        panel12.setLayout(new BorderLayout());
+        
+        // Header
+        panel12.add(panel1, BorderLayout.NORTH);
+        
+        // Scrollable list
+        panel12.add(scrollPane, BorderLayout.CENTER);
+        
+        // button at the bottom
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setBackground(new Color(81, 84, 89));
+        buttonPanel.add(Add);
+        panel12.add(buttonPanel, BorderLayout.SOUTH);
+        
+        panel12.revalidate();
+        panel12.repaint();
+    }
+    
+    private void addNewTodoItem() {
+        AddToDo newTodo = new AddToDo();
+        
+        // Set width to account for scrollbar (make it 20px narrower)
+        newTodo.setMaximumSize(new Dimension(600, 112)); // Changed from Integer.MAX_VALUE
+        newTodo.setPreferredSize(new Dimension(600, 112));
+        
+        // Add to container at top
+        todoContainer.add(newTodo, 0);
+        
+        // Adds some spacing
+        todoContainer.add(Box.createRigidArea(new Dimension(0, 5)), 1);
+        
+        todoContainer.revalidate();
+        todoContainer.repaint();
+        
+        // Scroll to top
+        SwingUtilities.invokeLater(() -> {
+            scrollPane.getVerticalScrollBar().setValue(0);
+        });
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -85,7 +144,7 @@ public class ToDo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-        // TODO add your handling code here:
+        addNewTodoItem();
     }//GEN-LAST:event_AddActionPerformed
 
 
