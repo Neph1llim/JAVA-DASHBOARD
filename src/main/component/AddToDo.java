@@ -22,10 +22,10 @@ public class AddToDo extends javax.swing.JPanel {
         jCheckBox1.setText("Type something...");
         jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
 
-        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/ri--pencil-line.png"))); // NOI18N
+        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/pencil.png"))); // NOI18N
         button1.addActionListener(this::button1ActionPerformed);
 
-        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/famicons--trash-outline.png"))); // NOI18N
+        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/trash.png"))); // NOI18N
         button2.addActionListener(this::button2ActionPerformed);
 
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);

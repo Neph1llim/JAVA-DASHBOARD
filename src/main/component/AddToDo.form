@@ -81,7 +81,7 @@
         <Component class="main.component.Button" name="button1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/main/resource/ri--pencil-line.png"/>
+              <Image iconType="3" name="/main/resource/pencil.png"/>
             </Property>
           </Properties>
           <Events>
@@ -91,7 +91,7 @@
         <Component class="main.component.Button" name="button2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/main/resource/famicons--trash-outline.png"/>
+              <Image iconType="3" name="/main/resource/trash.png"/>
             </Property>
           </Properties>
           <Events>

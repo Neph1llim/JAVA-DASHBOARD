@@ -223,12 +223,11 @@ public class Grades extends javax.swing.JPanel {
         container.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         container.setMaximumSize(null);
         container.setMinimumSize(new java.awt.Dimension(10, 50));
-        container.setPreferredSize(null);
         container.setViewportView(buttonContainer);
 
         buttonContainer.setMinimumSize(new java.awt.Dimension(100, 25));
         buttonContainer.setPanelBackground(new java.awt.Color(51, 51, 51));
-        buttonContainer.setPreferredSize(new java.awt.Dimension(0, 25));
+        buttonContainer.setPreferredSize(null);
         buttonContainer.setLayout(new javax.swing.BoxLayout(buttonContainer, javax.swing.BoxLayout.LINE_AXIS));
         container.setViewportView(buttonContainer);
 
@@ -238,7 +237,6 @@ public class Grades extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         jPanel1.add(container, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -251,7 +249,6 @@ public class Grades extends javax.swing.JPanel {
 
         gradeContainer.setMaximumSize(null);
         gradeContainer.setMinimumSize(new java.awt.Dimension(1000, 500));
-        gradeContainer.setPreferredSize(null);
 
         javax.swing.GroupLayout gradeContainerLayout = new javax.swing.GroupLayout(gradeContainer);
         gradeContainer.setLayout(gradeContainerLayout);
