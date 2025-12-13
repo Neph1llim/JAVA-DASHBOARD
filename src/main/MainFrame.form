@@ -233,13 +233,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="main.interfaces.Settings" name="settings">
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="settings"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Component class="main.interfaces.Files" name="files">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
@@ -247,10 +240,24 @@
                 </Constraint>
               </Constraints>
             </Component>
+            <Component class="main.interfaces.Settings" name="settings">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                  <CardConstraints cardName="settings"/>
+                </Constraint>
+              </Constraints>
+            </Component>
             <Component class="main.component.AddNotes" name="addNotes">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
                   <CardConstraints cardName="addNote"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="main.interfaces.Grades" name="grades">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                  <CardConstraints cardName="grades"/>
                 </Constraint>
               </Constraints>
             </Component>
