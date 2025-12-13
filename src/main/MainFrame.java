@@ -1,4 +1,3 @@
-
 package main;
 
 /* Import files location */
@@ -50,9 +49,10 @@ public class MainFrame extends javax.swing.JFrame {
         home = new main.interfaces.Home();
         widgets = new main.interfaces.Widgets();
         notes = new main.interfaces.Notes();
-        settings = new main.interfaces.Settings();
         files = new main.interfaces.Files();
+        settings = new main.interfaces.Settings();
         addNotes = new main.component.AddNotes();
+        grades = new main.interfaces.Grades();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
@@ -114,9 +114,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         notes.setBackground(new java.awt.Color(255, 255, 255));
         Interface.add(notes, "notes");
-        Interface.add(settings, "settings");
         Interface.add(files, "files");
+        Interface.add(settings, "settings");
         Interface.add(addNotes, "addNote");
+        Interface.add(grades, "grades");
 
         HomePage.add(Interface, java.awt.BorderLayout.CENTER);
         Interface.getAccessibleContext().setAccessibleName("");
@@ -195,6 +196,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel container;
     private main.interfaces.Files files;
     private javax.swing.Box.Filler filler1;
+    private main.interfaces.Grades grades;
     private main.interfaces.Home home;
     private main.interfaces.Login login;
     public static main.interfaces.Menu menu;
