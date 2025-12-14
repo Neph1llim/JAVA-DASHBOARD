@@ -1,9 +1,77 @@
 package main.interfaces;
 
+import main.component.ToDo;
+import main.component.CalendarComponent;
+import java.awt.GridBagConstraints;
+import javax.swing.Box;
+
 public class Home extends javax.swing.JPanel {
  
     public Home() {
         initComponents();
+        addToDoComponent();
+        addCalendarComponent();
+    }
+    
+    private void addToDoComponent() {
+        todoComponent = new ToDo();
+        
+        todoComponent.setPreferredSize(new java.awt.Dimension(600, 600));
+        
+        GridBagConstraints filler = new GridBagConstraints();
+        filler.gridx = 0;
+        filler.gridy = 0;
+        filler.weightx = 1;
+        filler.weighty = 0;
+        filler.fill = GridBagConstraints.BOTH;
+        jPanel1.add(Box.createGlue(), filler);
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0; 
+        gbc.weightx = 0; 
+        gbc.weighty = 0; 
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE; 
+        gbc.insets = new java.awt.Insets(0, 10, 10, 10); 
+        
+        jPanel1.add(todoComponent, gbc);
+        
+        // Refresh
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }
+    
+    private void addCalendarComponent() {
+        CalendarComponent calendarComponent = new CalendarComponent();
+        calendarComponent.setPreferredSize(new java.awt.Dimension(700, 600));
+        
+        // Add calendar to the right of ToDo
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 1;  // Next column
+        gbc.gridy = 0;  // Same row
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new java.awt.Insets(0, 10, 10, 10);
+        
+        jPanel1.add(calendarComponent, gbc);
+        
+        // Add a filler on the right to push everything left
+        GridBagConstraints rightFiller = new GridBagConstraints();
+        rightFiller.gridx = 2;
+        rightFiller.gridy = 0;
+        rightFiller.weightx = 1;
+        rightFiller.weighty = 0;
+        rightFiller.fill = GridBagConstraints.BOTH;
+        jPanel1.add(Box.createGlue(), rightFiller);
+        
+        // Refresh
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }
+
     }
     
     /* Built-in codes and functions */
