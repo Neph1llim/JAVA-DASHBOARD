@@ -1,8 +1,5 @@
 package main.interfaces;
 
-// temporary lang to see if ToDo works
-
-
 import main.component.ToDo;
 import main.component.CalendarComponent;
 import java.awt.GridBagConstraints;
