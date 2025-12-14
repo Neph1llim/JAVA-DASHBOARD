@@ -1,10 +1,8 @@
 package main.interfaces;
 
 /* Import statements */
-import main.component.Panel;
 import java.awt.*;
 import main.MainFrame;
-import main.component.Button;
 
 
 public class Notes extends javax.swing.JPanel {

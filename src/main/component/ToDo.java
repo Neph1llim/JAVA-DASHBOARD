@@ -23,6 +23,7 @@ public class ToDo extends javax.swing.JPanel {
         // Scroll bar
         scrollPane = new JScrollPane(todoContainer);
         scrollPane.setBorder(null);
+        scrollPane.setOpaque(true);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -58,7 +59,7 @@ public class ToDo extends javax.swing.JPanel {
         todoContainer.add(newTodo, 0);
         
         // Adds some spacing
-        todoContainer.add(Box.createRigidArea(new Dimension(0, 5)), 1);
+        todoContainer.add(Box.createRigidArea(new Dimension(0, 2)), 1);
         
         todoContainer.revalidate();
         todoContainer.repaint();
@@ -78,6 +79,7 @@ public class ToDo extends javax.swing.JPanel {
         jLabel21 = new javax.swing.JLabel();
         Add = new main.component.Button();
 
+        setOpaque(false);
         setLayout(new java.awt.CardLayout());
 
         panel12.setPanelBackground(new java.awt.Color(81, 84, 89));
@@ -122,7 +124,7 @@ public class ToDo extends javax.swing.JPanel {
             panel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel12Layout.createSequentialGroup()
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 404, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                 .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
