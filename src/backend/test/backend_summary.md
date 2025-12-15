@@ -1,7 +1,6 @@
+# SUMMARY OF THE TESTING PROCESS AND DEVELOPMENT PROCESS OF BACKEND
 
-#SUMMARY OF THE TESTING PROCESS AND DEVELOPMENT PROCESS OF BACKEND
-
-##TABLE OF CONTENTS
+## TABLE OF CONTENTS
 All info here are from test directory of the backend.
 -test.java
 -DatabaseChecker.java
@@ -12,7 +11,7 @@ All info here are from test directory of the backend.
 -UtilsTest.java
 -CompleteDaoTest.java
 
-##OVERALL SUMMARY
+## OVERALL SUMMARY
 Plinanout ko muna ang development structure. (Check na lang sa backend folder, ayan ang structure)
 -utils layer
 -services layer
@@ -23,8 +22,8 @@ Plinanout ko muna ang development structure. (Check na lang sa backend folder, a
     -impl (implementation layer)
     -interfaces
 
--**Para san ba yan?** Para madali basahin ang kada layer ng backend and maayos ang flow.
--**Pano sya nagana?** Check ang baba may nilagay ako na parang flowchart
+- **Para san ba yan?** Para madali basahin ang kada layer ng backend and maayos ang flow.
+- **Pano sya nagana?** Check ang baba may nilagay ako na parang flowchart
 
 ```graphql
 
@@ -138,35 +137,35 @@ Data Flow Graph Example
    └─────────────────────────────────────┘
 
 ```
-##test.java
+## test.java
 -test file lang wherein tinest and basic database connectvity. Unang test na ginawa right after ma connect ang mysql_connector (check libraries folder)
 -Nag test connection, chineck and database schema na pinag coconectan, required na tables, tsaka verification ng database setup kung tama.
 
-##DatabaseChecker.java
+## DatabaseChecker.java
 -check ulti ng database if nag istore ba ang mga ininput while testing (turns out yes, run mo na lang ung file para makita mo output. If ayaw, install ka ng XAMPP and lagay ka ng mysql-connector. Sa xampp paste mo ung schema.sql sa loob ng db.
 
-##TestDatabasetables.java
+## TestDatabasetables.java
 -test show ng mga tables kung tama ung mga attributes para ma ensure na tama rin ang pupuntahan kapag tuampak na sa mga layers.
 
-##ExceptionTest.java
+## ExceptionTest.java
 -tinetest ung mga files sa exception folder
 -from authentication to validation sa inputs ng user
 
-##ModelTest.java
+## ModelTest.java
 -lahat ng galign sa GUI ay dine muna pupunta.
 -getter and setter nandito rin
 -after nan punta ng service layer to catch and verify bago dalhin sa service layer then sa DAO
 
-##ServiceTest.java
+## ServiceTest.java
 -test lang na nagana lahat ng nasa service folder
 -ensuring that model can transfer data to the service ng maayos pa punta sa DAO then eventually lalagay sa database
 
-##UtilsTest.java
+## UtilsTest.java
 -Password, validation, session, security
 -logic ng validation andito, logic gn security andito rin na eventually binabasa naman ng exception
 -password hashing (salt algorithm, search na lang if d alam nasa internet naman yan. Basta nag gegenerate yan ng unicode)
 
-##CompleteDaoTest.java
+## CompleteDaoTest.java
 -testing lahat ng nasa DAO or Data Access Object layer.
 -dito muna dadalhin then tsaka pupunta ng database ang mga data to distribute sa kanya-kanyang tables.
 
