@@ -1,12 +1,13 @@
 package main.component;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.*;
 import javax.swing.*;
 
-
 public class AddToDo extends javax.swing.JPanel {
-  
+    
+    private ToDo toDo;
     private boolean isEditing = false;
     private JTextField editField;
     
@@ -23,6 +24,10 @@ public class AddToDo extends javax.swing.JPanel {
         panel2.setMinimumSize(new Dimension(100, 60));
         panel2.setPreferredSize(new Dimension(400, 60));
         panel2.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+    }
+    
+    public void setMainFrame(ToDo toDo) {
+        this.toDo = toDo;
     }
     
     private void setupEditField() {
@@ -106,7 +111,8 @@ public class AddToDo extends javax.swing.JPanel {
         editField.setVisible(false);
         jCheckBox1.setVisible(true);
     }
-
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -117,11 +123,12 @@ public class AddToDo extends javax.swing.JPanel {
         button1 = new main.component.Button();
         button2 = new main.component.Button();
 
-        setMinimumSize(new java.awt.Dimension(200, 50));
+        setMinimumSize(new java.awt.Dimension(200, 80));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(300, 100));
+        setPreferredSize(new java.awt.Dimension(300, 80));
+        setLayout(new java.awt.GridBagLayout());
 
-        panel2.setMinimumSize(new java.awt.Dimension(250, 80));
+        panel2.setMinimumSize(new java.awt.Dimension(250, 0));
         panel2.setPanelBackground(new java.awt.Color(53, 54, 56));
         panel2.setPreferredSize(new java.awt.Dimension(250, 70));
         panel2.setLayout(new java.awt.GridBagLayout());
@@ -160,16 +167,17 @@ public class AddToDo extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 6, 5, 9);
         panel2.add(button2, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.ipady = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 3, 0);
+        add(panel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -177,7 +185,7 @@ public class AddToDo extends javax.swing.JPanel {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // Delete button - removes a todo item
+    // Delete button - removes a todo item
         if (getParent() != null) {
             javax.swing.JPanel parent = (javax.swing.JPanel) getParent();
             parent.remove(this);
@@ -188,7 +196,8 @@ public class AddToDo extends javax.swing.JPanel {
                 parent.getParent().revalidate();
                 parent.getParent().repaint();
             }
-        }
+        }    
+        toDo.bawasanNotes(1);
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed

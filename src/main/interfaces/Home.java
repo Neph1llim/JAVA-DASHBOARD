@@ -6,6 +6,8 @@ public class Home extends javax.swing.JPanel {
     public Home() {
         initComponents();
     }
+    
+    
 
     /* Built-in codes and functions */
     @SuppressWarnings("unchecked")

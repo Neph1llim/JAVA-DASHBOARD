@@ -18,8 +18,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
 
-        // Set the MainFrame reference in Login panel
-        login.setMainFrame(this);  // ADD THIS
+        // Set the MainFrame reference in some panel
+        login.setMainFrame(this);
 
         // default Interface set to Login
         cardLayout = (CardLayout) getContentPane().getLayout();
