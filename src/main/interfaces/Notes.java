@@ -5,7 +5,9 @@ import main.component.AddNotes;
 import main.component.Note;
 import javax.swing.*;
 import java.awt.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.text.StyledDocument;
 
 public class Notes extends javax.swing.JPanel {
     private static final int CARD_WIDTH = 250;  // Fixed width
@@ -15,6 +17,8 @@ public class Notes extends javax.swing.JPanel {
     
     private JPanel cardsContainer;
     private JScrollPane scrollPane;
+    private List<Note> noteCards = new ArrayList<>();
+    private Note noteToEdit = null; // Track which note is being edited
     
     /* Constructors*/
     public Notes() {
@@ -23,20 +27,37 @@ public class Notes extends javax.swing.JPanel {
     }
     
     private void setupNotePanel() {
-        // Use FlowLayout with wrapping for automatic grid-like layout
-        cardsContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, HORIZONTAL_GAP, VERTICAL_GAP));
-        cardsContainer.setBackground(new Color(102, 102, 102));
+        // Use FlowLayout with wrapping
+        cardsContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, HORIZONTAL_GAP, VERTICAL_GAP)) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.setColor(new Color(21, 21, 23));
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        cardsContainer.setBackground(new Color(21, 21, 23)); // Match your dark theme
         cardsContainer.setOpaque(true);
-        
+
+        // Create scroll pane
         scrollPane = new JScrollPane(cardsContainer);
         scrollPane.setBorder(null);
+        scrollPane.setOpaque(true);
+        scrollPane.getViewport().setOpaque(true);
+        scrollPane.getViewport().setBackground(new Color(21, 21, 23)); // Match dark theme
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        
+
+        // Clear and setup notePanel
         notePanel.removeAll();
+        notePanel.setOpaque(true);
+        notePanel.setBackground(new Color(21, 21, 23)); // Match dark theme
         notePanel.setLayout(new BorderLayout());
         notePanel.add(scrollPane, BorderLayout.CENTER);
+
+        notePanel.revalidate();
+        notePanel.repaint();
     }
     
     /**
@@ -48,8 +69,17 @@ public class Notes extends javax.swing.JPanel {
             noteCard.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
             noteCard.setMaximumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
             
-            // Add to container - FlowLayout will handle positioning
+            // Add click listener for editing
+            noteCard.setNoteClickListener(new Note.NoteClickListener() {
+                @Override
+                public void onNoteClicked(Note note) {
+                    editNoteCard(note);
+                }
+            });
+            
+            // Add to container and list
             cardsContainer.add(noteCard);
+            noteCards.add(noteCard);
             
             // Refresh layout
             cardsContainer.revalidate();
@@ -63,15 +93,68 @@ public class Notes extends javax.swing.JPanel {
         }
     }
     
-    private void showAddNoteEditor(AddNotes editor) {
-        // This depends on how you switch between panels in your app
-        // Example using CardLayout:
-        getParent().add(editor, "addNoteEditor");
-        CardLayout cl = (CardLayout) getParent().getLayout();
-        cl.show(getParent(), "addNoteEditor");
+    /**
+     * Opens editor to edit an existing note
+     */
+    private void editNoteCard(Note noteCard) {
+        // Store reference to note being edited
+        noteToEdit = noteCard;
+        
+        // Create editor with existing note content
+        AddNotes editNoteEditor = new AddNotes(this, noteCard);
+        
+        // Show editor
+        showAddNoteEditor(editNoteEditor);
     }
-        
-        
+    
+    /**
+     * Updates an existing note card
+     */
+    public void updateNoteCard(String newTitle, String newContent, StyledDocument styledDoc) {
+         if (noteToEdit != null) {
+            // Update the existing note directly
+            noteToEdit.updateContent(newTitle, newContent, styledDoc);
+
+            // Clear reference
+            noteToEdit = null;
+
+            // Refresh container
+            cardsContainer.revalidate();
+            cardsContainer.repaint();
+        }
+    }
+    
+    /**
+     * Cancels editing without changes
+     */
+    public void cancelEdit() {
+        noteToEdit = null;
+    }
+    
+    /**
+     * Removes a note card
+     */
+    public void removeNoteCard(Note noteCard) {
+        if (cardsContainer != null && noteCards.contains(noteCard)) {
+            cardsContainer.remove(noteCard);
+            noteCards.remove(noteCard);
+            
+            // Refresh layout
+            cardsContainer.revalidate();
+            cardsContainer.repaint();
+        }
+    }
+    
+    private void showAddNoteEditor(AddNotes editor) {
+        // Add to parent container with CardLayout
+        Container parent = getParent();
+        if (parent != null) {
+            parent.add(editor, "addNoteEditor");
+            CardLayout cl = (CardLayout) parent.getLayout();
+            cl.show(parent, "addNoteEditor");
+        }
+    }
+    
     /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
