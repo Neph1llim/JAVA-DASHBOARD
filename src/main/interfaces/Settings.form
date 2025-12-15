@@ -140,7 +140,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="button3" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="changeAccoutBtn" min="-2" pref="100" max="-2" attributes="0"/>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -149,9 +149,9 @@
                                           </Group>
                                           <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jPasswordField1" min="-2" pref="599" max="-2" attributes="0"/>
-                                              <Component id="jTextField1" min="-2" pref="599" max="-2" attributes="0"/>
-                                              <Component id="jTextField2" min="-2" pref="599" max="-2" attributes="0"/>
+                                              <Component id="settingsPassword" min="-2" pref="599" max="-2" attributes="0"/>
+                                              <Component id="settingsEmail" min="-2" pref="599" max="-2" attributes="0"/>
+                                              <Component id="settingsUsername" min="-2" pref="599" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -168,21 +168,21 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField2" alignment="3" pref="40" max="32767" attributes="0"/>
+                              <Component id="settingsUsername" alignment="3" pref="40" max="32767" attributes="0"/>
                               <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="settingsEmail" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jPasswordField1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="settingsPassword" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="button3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="changeAccoutBtn" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -200,13 +200,16 @@
                     <Property name="text" type="java.lang.String" value="Account Settings"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="settingsEmail">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI Variable" size="18" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="ianChTzy@gmail.coems"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsEmailActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
@@ -230,12 +233,15 @@
                     <Property name="text" type="java.lang.String" value="Password"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+                <Component class="javax.swing.JPasswordField" name="settingsPassword">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="ZALZALAKOUH"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsPasswordActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="main.component.Button" name="button3">
+                <Component class="main.component.Button" name="changeAccoutBtn">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -246,6 +252,9 @@
                       <Font name="Segoe UI Variable" size="18" style="1"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeAccoutBtnActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel7">
                   <Properties>
@@ -258,7 +267,7 @@
                     <Property name="text" type="java.lang.String" value="Username"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField2">
+                <Component class="javax.swing.JTextField" name="settingsUsername">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="1"/>
@@ -266,7 +275,7 @@
                     <Property name="text" type="java.lang.String" value="Add username..."/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsUsernameActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
