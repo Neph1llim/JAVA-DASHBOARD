@@ -24,6 +24,12 @@ public class User {
         this.passwordHash = passwordHash;
     }
     
+    public User(String email, String passwordHash){
+        this();
+        this.email = email;
+        this.passwordHash = passwordHash;
+    }
+    
     // Getters and Setters
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
