@@ -25,9 +25,7 @@ public class IntegrationTest {
             
             User user = userService.register(
             // Test registration
-                username,
                 emailFirst + "@test.com",
-                "TestPass123",
                 "TestPass123",
                 null
             );
