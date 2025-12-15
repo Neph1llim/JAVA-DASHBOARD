@@ -19,12 +19,22 @@ public class Files extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         files = new javax.swing.JPanel();
-        filePanel = new javax.swing.JPanel();
         addFile = new javax.swing.JButton();
+        filePanel = new javax.swing.JPanel();
 
         files.setBackground(new java.awt.Color(21, 21, 23));
         files.setPreferredSize(new java.awt.Dimension(1230, 860));
         files.setLayout(new java.awt.GridBagLayout());
+
+        addFile.setBackground(new java.awt.Color(102, 102, 102));
+        addFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/add.png"))); // NOI18N
+        addFile.setBorderPainted(false);
+        addFile.setFocusPainted(false);
+        addFile.addActionListener(this::addFileActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 20, 20);
+        files.add(addFile, gridBagConstraints);
 
         filePanel.setBackground(new java.awt.Color(27, 27, 28));
         filePanel.setPreferredSize(new java.awt.Dimension(750, 540));
@@ -49,16 +59,6 @@ public class Files extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
         files.add(filePanel, gridBagConstraints);
-
-        addFile.setBackground(new java.awt.Color(102, 102, 102));
-        addFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
-        addFile.setBorderPainted(false);
-        addFile.setFocusPainted(false);
-        addFile.addActionListener(this::addFileActionPerformed);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 20, 20);
-        files.add(addFile, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

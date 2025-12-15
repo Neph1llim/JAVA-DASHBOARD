@@ -5,21 +5,22 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import javax.swing.*;
 
-
 public class MainFrame extends javax.swing.JFrame {
+
     /* Properties */
     boolean isMinimized = false;
     private final CardLayout cardLayout;
-    
+
     /* Constructors for OOP */
     public MainFrame() {
         initComponents();
         
+
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
-        
-        // Set the MainFrame reference in Login panel
-        login.setMainFrame(this);  // ADD THIS
-    
+
+        // Set the MainFrame reference in some panel
+        login.setMainFrame(this);
+
         // default Interface set to Login
         cardLayout = (CardLayout) getContentPane().getLayout();
         cardLayout.show(getContentPane(), "Login");
@@ -28,7 +29,8 @@ public class MainFrame extends javax.swing.JFrame {
     public void showCard(String cardName) {
         cardLayout.show(getContentPane(), cardName);
     }
-    /* Built-in codes and functions */    
+
+    /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -47,13 +49,12 @@ public class MainFrame extends javax.swing.JFrame {
         home = new main.interfaces.Home();
         widgets = new main.interfaces.Widgets();
         notes = new main.interfaces.Notes();
-        settings = new main.interfaces.Settings();
         files = new main.interfaces.Files();
-        addNotes = new main.interfaces.AddNotes();
+        settings = new main.interfaces.Settings();
+        grades = new main.interfaces.Grades();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
-        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(480, 270));
@@ -79,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         minimize.setBackground(new java.awt.Color(27, 27, 28));
         minimize.setForeground(new java.awt.Color(27, 27, 28));
-        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrow-left.png"))); // NOI18N
+        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/arrowLeft.png"))); // NOI18N
         minimize.setArc(100);
         minimize.setOpaque(true);
         minimize.addActionListener(this::minimizeActionPerformed);
@@ -112,9 +113,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         notes.setBackground(new java.awt.Color(255, 255, 255));
         Interface.add(notes, "notes");
-        Interface.add(settings, "settings");
         Interface.add(files, "files");
-        Interface.add(addNotes, "addNote");
+        Interface.add(settings, "settings");
+
+        grades.setMaximumSize(null);
+        grades.setMinimumSize(new java.awt.Dimension(1440, 810));
+        Interface.add(grades, "grades");
 
         HomePage.add(Interface, java.awt.BorderLayout.CENTER);
         Interface.getAccessibleContext().setAccessibleName("");
@@ -159,8 +163,8 @@ public class MainFrame extends javax.swing.JFrame {
 
                 // Update icon
                 minimize.setIcon(new ImageIcon(getClass().getResource(
-                    isMinimized ? "/main/resource/arrow-left.png" 
-                               : "/main/resource/arrow-right.png"
+                        isMinimized ? "/main/resource/icons/arrowLeft.png"
+                                : "/main/resource/icons/arrowRight.png"
                 )));
 
                 isMinimized = !isMinimized; // inverts the state
@@ -170,15 +174,16 @@ public class MainFrame extends javax.swing.JFrame {
         timer.start();
     }//GEN-LAST:event_minimizeActionPerformed
 
-    /* Main Class Code */ 
-     public static void main(String args[]) {
+    /* Main Class Code */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code">
-        try{UIManager.setLookAndFeel(new FlatDarkLaf());
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException ex) {
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }
@@ -187,11 +192,11 @@ public class MainFrame extends javax.swing.JFrame {
     public static javax.swing.JPanel HomePage;
     public static javax.swing.JPanel Interface;
     public static javax.swing.JPanel Login;
-    private main.interfaces.AddNotes addNotes;
     private javax.swing.JPanel btnContainer;
     private javax.swing.JPanel container;
     private main.interfaces.Files files;
     private javax.swing.Box.Filler filler1;
+    private main.interfaces.Grades grades;
     private main.interfaces.Home home;
     private main.interfaces.Login login;
     public static main.interfaces.Menu menu;

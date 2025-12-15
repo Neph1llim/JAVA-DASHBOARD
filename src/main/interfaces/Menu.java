@@ -14,7 +14,7 @@ public class Menu extends javax.swing.JPanel {
         // default highlighted button
         focusButton(home);
     }
-         
+      
     /* Methods */   
     private void showPanel(String name){
         CardLayout card = (CardLayout) MainFrame.Interface.getLayout();
@@ -70,12 +70,13 @@ public class Menu extends javax.swing.JPanel {
             home.setText("Home");
             notes.setText("Notes");
             files.setText("Files");
-            widgets.setText("Widgets");
+            widgets.setText("widgets");
             settings.setText("Settings");
+            
         }
     }
     
-        private void focusButton(Button selectedButton) {
+    private void focusButton(Button selectedButton) {
         for (Button btn : menuButtons()) {
             btn.setHighlighted(btn == selectedButton);
         }
@@ -104,60 +105,59 @@ public class Menu extends javax.swing.JPanel {
 
         home.setBackground(new java.awt.Color(51, 51, 51));
         home.setForeground(new java.awt.Color(255, 255, 255));
-        home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/home.png"))); // NOI18N
+        home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/home.png"))); // NOI18N
         home.setText("Home");
         home.setToolTipText("");
-        home.setDisabledIcon(null);
         home.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         home.setHideActionText(true);
         home.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         home.setIconTextGap(12);
-        home.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        home.setMargin(new java.awt.Insets(2, 6, 2, 2));
         home.addActionListener(this::homeActionPerformed);
 
         notes.setBackground(new java.awt.Color(51, 51, 51));
         notes.setForeground(new java.awt.Color(255, 255, 255));
-        notes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/notes.png"))); // NOI18N
+        notes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/notes.png"))); // NOI18N
         notes.setText("Notes");
         notes.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         notes.setHideActionText(true);
         notes.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         notes.setIconTextGap(12);
-        notes.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        notes.setMargin(new java.awt.Insets(2, 6, 2, 2));
         notes.addActionListener(this::notesActionPerformed);
 
         files.setBackground(new java.awt.Color(51, 51, 51));
         files.setForeground(new java.awt.Color(255, 255, 255));
-        files.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/folder.png"))); // NOI18N
+        files.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/folder32x32.png"))); // NOI18N
         files.setText("Files");
         files.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         files.setHideActionText(true);
         files.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         files.setIconTextGap(12);
-        files.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        files.setMargin(new java.awt.Insets(2, 6, 2, 2));
         files.addActionListener(this::filesActionPerformed);
         files.addActionListener(this::filesActionPerformed);
 
         widgets.setBackground(new java.awt.Color(51, 51, 51));
         widgets.setForeground(new java.awt.Color(255, 255, 255));
-        widgets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/plugin.png"))); // NOI18N
-        widgets.setText("Widgets");
+        widgets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/plugin.png"))); // NOI18N
+        widgets.setText("Grades");
         widgets.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         widgets.setHideActionText(true);
         widgets.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         widgets.setIconTextGap(12);
-        widgets.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        widgets.setMargin(new java.awt.Insets(2, 6, 2, 2));
         widgets.addActionListener(this::widgetsActionPerformed);
 
         settings.setBackground(new java.awt.Color(51, 51, 51));
         settings.setForeground(new java.awt.Color(255, 255, 255));
-        settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/settings.png"))); // NOI18N
+        settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/settings.png"))); // NOI18N
         settings.setText("Settings");
         settings.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         settings.setHideActionText(true);
         settings.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         settings.setIconTextGap(12);
-        settings.setMargin(new java.awt.Insets(2, 6, 3, 14));
+        settings.setMargin(new java.awt.Insets(2, 6, 2, 2));
         settings.addActionListener(this::settingsActionPerformed);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
@@ -167,9 +167,9 @@ public class Menu extends javax.swing.JPanel {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(settings, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(widgets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(settings, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(files, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(widgets, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(notes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -211,7 +211,7 @@ public class Menu extends javax.swing.JPanel {
     }//GEN-LAST:event_filesActionPerformed
 
     private void widgetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_widgetsActionPerformed
-        showPanel("widgets");
+        showPanel("grades");
         focusButton(widgets);
     }//GEN-LAST:event_widgetsActionPerformed
 

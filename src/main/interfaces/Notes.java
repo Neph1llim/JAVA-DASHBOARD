@@ -1,13 +1,8 @@
-/* TO DO:
-- change add button to button.java
-*/
 package main.interfaces;
 
 /* Import statements */
-import main.component.Panel;
 import java.awt.*;
-import javax.swing.*;
-import main.MainFrame;
+import main.component.AddNotes;
 
 
 public class Notes extends javax.swing.JPanel {
@@ -15,12 +10,11 @@ public class Notes extends javax.swing.JPanel {
     /* Constructors*/
     public Notes() {
         initComponents();
-     
     }
 
     private void showPanel(String name){
-        CardLayout card = (CardLayout) MainFrame.Interface.getLayout();
-        card.show(MainFrame.Interface, name);
+        CardLayout card = (CardLayout) getLayout();
+        card.show(this, name);
     }
     
     /* Built-in codes and functions */
@@ -30,25 +24,44 @@ public class Notes extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         notes = new javax.swing.JPanel();
+        button1 = new main.component.Button();
         notePanel = new javax.swing.JPanel();
-        change = new javax.swing.JButton();
+        addnote = new javax.swing.JPanel();
+
+        setLayout(new java.awt.CardLayout());
 
         notes.setBackground(new java.awt.Color(21, 21, 23));
         notes.setPreferredSize(new java.awt.Dimension(1230, 860));
         notes.setLayout(new java.awt.GridBagLayout());
 
-        notePanel.setBackground(new java.awt.Color(27, 27, 28));
+        button1.setForeground(new java.awt.Color(0, 0, 0));
+        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/add.png"))); // NOI18N
+        button1.setText("ADD ");
+        button1.setArc(50);
+        button1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        button1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        button1.setMargin(new java.awt.Insets(0, 5, 0, 0));
+        button1.setMaximumSize(new java.awt.Dimension(84, 42));
+        button1.setMinimumSize(new java.awt.Dimension(84, 42));
+        button1.setPreferredSize(new java.awt.Dimension(84, 42));
+        button1.addActionListener(this::button1ActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 25, 25);
+        notes.add(button1, gridBagConstraints);
+
+        notePanel.setBackground(new java.awt.Color(102, 102, 102));
         notePanel.setPreferredSize(new java.awt.Dimension(750, 540));
 
         javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
         notePanel.setLayout(notePanelLayout);
         notePanelLayout.setHorizontalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 960, Short.MAX_VALUE)
         );
         notePanelLayout.setVerticalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 632, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -58,48 +71,40 @@ public class Notes extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 400;
         gridBagConstraints.ipady = 300;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 11);
         notes.add(notePanel, gridBagConstraints);
 
-        change.setBackground(new java.awt.Color(102, 102, 102));
-        change.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
-        change.setBorderPainted(false);
-        change.setFocusPainted(false);
-        change.addActionListener(this::changeActionPerformed);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 20, 20);
-        notes.add(change, gridBagConstraints);
+        add(notes, "card2");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(notes, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE)
+        javax.swing.GroupLayout addnoteLayout = new javax.swing.GroupLayout(addnote);
+        addnote.setLayout(addnoteLayout);
+        addnoteLayout.setHorizontalGroup(
+            addnoteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 981, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(notes, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+        addnoteLayout.setVerticalGroup(
+            addnoteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 652, Short.MAX_VALUE)
         );
+
+        add(addnote, "note");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void changeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeActionPerformed
-        JPanel round1 = new Panel(35, new Color(50,50,50));
-        round1.setPreferredSize(new Dimension(250, 250));
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        //showPanel("addNote");
+        AddNotes newNote = new AddNotes();
         
-       showPanel("addNote"); 
+        addnote.add(newNote);
         
-        notePanel.add(round1);
-        
-        // Configuration for panels
-        notePanel.setLayout(new FlowLayout());
-        notePanel.revalidate();
-        notePanel.repaint();
-    }//GEN-LAST:event_changeActionPerformed
+        showPanel("newNote");
+    }//GEN-LAST:event_button1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton change;
-    private javax.swing.JPanel notePanel;
+    private javax.swing.JPanel addnote;
+    private main.component.Button button1;
+    public static javax.swing.JPanel notePanel;
     private javax.swing.JPanel notes;
     // End of variables declaration//GEN-END:variables
 }
