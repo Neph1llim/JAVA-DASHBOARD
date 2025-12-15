@@ -59,35 +59,6 @@ public class GradeTab extends javax.swing.JPanel {
         contentPanel.revalidate();
         contentPanel.repaint();
     }
-    
-    // ... rest of your code ...
-
-
-    public void calculateFinalGrade() {
-        if (centerPanel == null) return;
-
-        double totalGrade = 0;
-        int validEntries = 0;
-
-        // Loop through all AddGrade panels in centerPanel
-        for (java.awt.Component comp : centerPanel.getComponents()) {
-            if (comp instanceof AddGrade) {
-                AddGrade gradeEntry = (AddGrade) comp;
-                if (gradeEntry.isValidEntry()) {
-                    totalGrade += gradeEntry.getGradeValue();
-                    validEntries++;
-                }
-            }
-        }
-
-        if (validEntries > 0) {
-            JOptionPane.showMessageDialog(this, 
-                "Final Grade: " + String.format("%.2f", totalGrade) + "/100",
-                "Grade Calculation",
-                JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -115,7 +86,6 @@ public class GradeTab extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1440, 810));
 
         panel2.setArc(0);
-        panel2.setMaximumSize(null);
         panel2.setPanelBackground(new java.awt.Color(102, 102, 102));
         panel2.setPreferredSize(new java.awt.Dimension(1440, 810));
         panel2.setLayout(new java.awt.GridBagLayout());
@@ -125,9 +95,7 @@ public class GradeTab extends javax.swing.JPanel {
         jScrollPane1.setMinimumSize(new java.awt.Dimension(480, 255));
 
         contentPanel.setArc(0);
-        contentPanel.setMaximumSize(null);
         contentPanel.setMinimumSize(new java.awt.Dimension(1440, 735));
-        contentPanel.setPreferredSize(null);
         contentPanel.setVerifyInputWhenFocusTarget(false);
         contentPanel.setLayout(new java.awt.BorderLayout());
 
@@ -136,7 +104,7 @@ public class GradeTab extends javax.swing.JPanel {
 
         buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
+        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/add.png"))); // NOI18N
         button1.addActionListener(this::button1ActionPerformed);
         buttonPanel.add(button1);
 
@@ -317,23 +285,19 @@ public class GradeTab extends javax.swing.JPanel {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
     AddGrade newGrade = new AddGrade();
-    
-    // Make sure centerPanel is available
+        // Make sure centerPanel is available
     if (centerPanel == null) {
         setupLayout();
     }
-    
-    // Add to centerPanel
+
     centerPanel.add(newGrade);
-    
-    // Make AddGrade take full width
+
     newGrade.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, newGrade.getPreferredSize().height));
     
-    // Update layout
+    // Updates the layout
     centerPanel.revalidate();
     centerPanel.repaint();
     
-    // Scroll to show the new component
     newGrade.scrollRectToVisible(newGrade.getBounds());
     }//GEN-LAST:event_button1ActionPerformed
 

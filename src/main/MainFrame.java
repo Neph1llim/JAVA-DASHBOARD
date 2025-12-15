@@ -80,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         minimize.setBackground(new java.awt.Color(27, 27, 28));
         minimize.setForeground(new java.awt.Color(27, 27, 28));
-        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrowLeft.png"))); // NOI18N
+        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/arrowLeft.png"))); // NOI18N
         minimize.setArc(100);
         minimize.setOpaque(true);
         minimize.addActionListener(this::minimizeActionPerformed);
@@ -163,8 +163,8 @@ public class MainFrame extends javax.swing.JFrame {
 
                 // Update icon
                 minimize.setIcon(new ImageIcon(getClass().getResource(
-                        isMinimized ? "/main/resource/arrowLeft.png"
-                                : "/main/resource/arrowRight.png"
+                        isMinimized ? "/main/resource/icons/arrowLeft.png"
+                                : "/main/resource/icons/arrowRight.png"
                 )));
 
                 isMinimized = !isMinimized; // inverts the state

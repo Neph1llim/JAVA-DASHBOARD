@@ -42,7 +42,7 @@
         <Component class="main.component.Button" name="back">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/main/resource/arrowLeft.png"/>
+              <Image iconType="3" name="/main/resource/icons/back.png"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[40, 40]"/>
@@ -251,7 +251,7 @@
                 <Component class="main.component.Button" name="bold">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/main/resource/fontBold.png"/>
+                      <Image iconType="3" name="/main/resource/icons/fontBold.png"/>
                     </Property>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                       <Insets value="[3, 0, 0, 0]"/>
@@ -267,7 +267,7 @@
                 <Component class="main.component.Button" name="italize">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/main/resource/fontItalic.png"/>
+                      <Image iconType="3" name="/main/resource/icons/fontItalic.png"/>
                     </Property>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                       <Insets value="[3, 0, 0, 0]"/>
@@ -280,7 +280,7 @@
                 <Component class="main.component.Button" name="underline">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/main/resource/fontUnderline.png"/>
+                      <Image iconType="3" name="/main/resource/icons/fontUnderline.png"/>
                     </Property>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                       <Insets value="[3, 0, 0, 0]"/>
@@ -293,7 +293,7 @@
                 <Component class="main.component.Button" name="font">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/main/resource/fontStyle.png"/>
+                      <Image iconType="3" name="/main/resource/icons/fontStyle.png"/>
                     </Property>
                     <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                       <Insets value="[3, 0, 0, 0]"/>
@@ -306,7 +306,7 @@
                 <Component class="main.component.Button" name="fontColor">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/main/resource/letter-A.png"/>
+                      <Image iconType="3" name="/main/resource/icons/fontColor.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="_"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
