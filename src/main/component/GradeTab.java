@@ -59,35 +59,6 @@ public class GradeTab extends javax.swing.JPanel {
         contentPanel.revalidate();
         contentPanel.repaint();
     }
-    
-    // ... rest of your code ...
-
-
-    public void calculateFinalGrade() {
-        if (centerPanel == null) return;
-
-        double totalGrade = 0;
-        int validEntries = 0;
-
-        // Loop through all AddGrade panels in centerPanel
-        for (java.awt.Component comp : centerPanel.getComponents()) {
-            if (comp instanceof AddGrade) {
-                AddGrade gradeEntry = (AddGrade) comp;
-                if (gradeEntry.isValidEntry()) {
-                    totalGrade += gradeEntry.getGradeValue();
-                    validEntries++;
-                }
-            }
-        }
-
-        if (validEntries > 0) {
-            JOptionPane.showMessageDialog(this, 
-                "Final Grade: " + String.format("%.2f", totalGrade) + "/100",
-                "Grade Calculation",
-                JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -314,23 +285,19 @@ public class GradeTab extends javax.swing.JPanel {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
     AddGrade newGrade = new AddGrade();
-    
-    // Make sure centerPanel is available
+        // Make sure centerPanel is available
     if (centerPanel == null) {
         setupLayout();
     }
-    
-    // Add to centerPanel
+
     centerPanel.add(newGrade);
-    
-    // Make AddGrade take full width
+
     newGrade.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, newGrade.getPreferredSize().height));
     
-    // Update layout
+    // Updates the layout
     centerPanel.revalidate();
     centerPanel.repaint();
     
-    // Scroll to show the new component
     newGrade.scrollRectToVisible(newGrade.getBounds());
     }//GEN-LAST:event_button1ActionPerformed
 
