@@ -177,18 +177,18 @@ public class AddToDo extends javax.swing.JPanel {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-    // Delete button - removes a todo item
-    if (getParent() != null) {
-        javax.swing.JPanel parent = (javax.swing.JPanel) getParent();
-        parent.remove(this);
-        parent.revalidate();
-        parent.repaint();
-        
-        if (parent.getParent() != null) {
-            parent.getParent().revalidate();
-            parent.getParent().repaint();
+        // Delete button - removes a todo item
+        if (getParent() != null) {
+            javax.swing.JPanel parent = (javax.swing.JPanel) getParent();
+            parent.remove(this);
+            parent.revalidate();
+            parent.repaint();
+
+            if (parent.getParent() != null) {
+                parent.getParent().revalidate();
+                parent.getParent().repaint();
+            }
         }
-    }     
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed

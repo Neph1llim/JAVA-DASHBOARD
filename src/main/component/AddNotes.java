@@ -112,7 +112,6 @@ public class AddNotes extends javax.swing.JPanel {
         bold.setSelected(boldActive);
         updateButtonAppearance(bold, boldActive);
         
-        // Apply to selected text or prepare for next input
         applyStyleToText(StyleConstants.Bold, boldActive);
     }
     
@@ -121,7 +120,6 @@ public class AddNotes extends javax.swing.JPanel {
         italize.setSelected(italicActive);
         updateButtonAppearance(italize, italicActive);
         
-        // Apply to selected text or prepare for next input
         applyStyleToText(StyleConstants.Italic, italicActive);
     }
     
@@ -130,7 +128,6 @@ public class AddNotes extends javax.swing.JPanel {
         underline.setSelected(underlineActive);
         updateButtonAppearance(underline, underlineActive);
         
-        // Apply to selected text or prepare for next input
         applyStyleToText(StyleConstants.Underline, underlineActive);
     }
     
@@ -160,7 +157,6 @@ public class AddNotes extends javax.swing.JPanel {
             doc.setCharacterAttributes(start, end - start, attrs, false);
         }
 
-        // Return focus to text area
         textArea.requestFocus();
     }
     
@@ -175,7 +171,6 @@ public class AddNotes extends javax.swing.JPanel {
         String currentFontName = currentFont.getFamily();
         fontCombo.setSelectedItem(currentFontName);
         
-        // Show in JOptionPane
         int result = JOptionPane.showConfirmDialog(
             this,
             fontCombo,
@@ -215,7 +210,6 @@ public class AddNotes extends javax.swing.JPanel {
             // Apply color to selected text
             doc.setCharacterAttributes(start, end - start, attrs, false);
         }
-        // Return focus to text area
         textArea.requestFocus();
     }
     
@@ -430,7 +424,7 @@ public class AddNotes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-        // Keep previous file 
+        // Keeps previous file 
         showPanel("notes");
         resetButtons();
         setupPlaceholder();
@@ -457,9 +451,6 @@ public class AddNotes extends javax.swing.JPanel {
     }//GEN-LAST:event_backActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-         // add logic here
-        
-        // change this to instance
         JPanel round1 = new Panel(35, new Color(50,50,50));
         round1.setPreferredSize(new Dimension(250, 250));
 
@@ -470,7 +461,7 @@ public class AddNotes extends javax.swing.JPanel {
         Notes.notePanel.revalidate();
         Notes.notePanel.repaint();
         
-        //return to notes page
+        //returns to notes page
         showPanel("notes");
         resetButtons();
         setupPlaceholder();
@@ -484,7 +475,7 @@ public class AddNotes extends javax.swing.JPanel {
         Font selectedFont = fontChooser();
         
         if (selectedFont != null) {
-            // Apply the selected font to text area
+            // Applies the selected font to text area
             textArea.setFont(selectedFont);
             // Also apply to title with larger size
             Font titleFont = selectedFont.deriveFont(24f);
@@ -509,7 +500,6 @@ public class AddNotes extends javax.swing.JPanel {
             fontColor.setForeground(selectedColor);
         }
         
-        // Reset button appearance
         fontColor.setSelected(false);
     }//GEN-LAST:event_fontColorActionPerformed
 
