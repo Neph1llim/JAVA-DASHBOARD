@@ -115,7 +115,6 @@ public class GradeTab extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1440, 810));
 
         panel2.setArc(0);
-        panel2.setMaximumSize(null);
         panel2.setPanelBackground(new java.awt.Color(102, 102, 102));
         panel2.setPreferredSize(new java.awt.Dimension(1440, 810));
         panel2.setLayout(new java.awt.GridBagLayout());
@@ -125,9 +124,7 @@ public class GradeTab extends javax.swing.JPanel {
         jScrollPane1.setMinimumSize(new java.awt.Dimension(480, 255));
 
         contentPanel.setArc(0);
-        contentPanel.setMaximumSize(null);
         contentPanel.setMinimumSize(new java.awt.Dimension(1440, 735));
-        contentPanel.setPreferredSize(null);
         contentPanel.setVerifyInputWhenFocusTarget(false);
         contentPanel.setLayout(new java.awt.BorderLayout());
 
@@ -136,7 +133,7 @@ public class GradeTab extends javax.swing.JPanel {
 
         buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/add.png"))); // NOI18N
+        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/add.png"))); // NOI18N
         button1.addActionListener(this::button1ActionPerformed);
         buttonPanel.add(button1);
 
