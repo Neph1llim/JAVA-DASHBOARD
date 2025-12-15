@@ -363,6 +363,22 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByEmail(String email) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM users WHERE email = ?";
+        
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return mapResultSetToUser(rs);
+            }
+            return null;
+            
+        } catch (SQLException e) {
+            throw new DatabaseException("Error finding user by email: " + email, e);
+        }
     }
+   
 }
