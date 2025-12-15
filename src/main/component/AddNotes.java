@@ -4,12 +4,14 @@ package main.component;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
 import main.MainFrame;
 import main.interfaces.Notes;
 
 public class AddNotes extends javax.swing.JPanel {
-    /* Properties */
+   /* Properties */
     String titlePlaceholder = "Untitled note";
     String textPlaceholder = "Start typing your notes here...";
     Color initialText = new Color(33, 33, 34);
@@ -24,13 +26,17 @@ public class AddNotes extends javax.swing.JPanel {
     private final Color normalTextColor = Color.BLACK;
     private Color newTextColor = normalTextColor;
     
-    // Reference to Notes panel to add cards
+    // Reference to Notes panel
     private Notes notesPanel;
+    private boolean isEditing = false;
+    private Note noteBeingEdited = null;
     
     /* Constructors */
     public AddNotes(Notes notesPanel) {
         this.notesPanel = notesPanel;
+        this.isEditing = false;
         initComponents();
+        setupTextArea();
         setupPlaceholder();
         resetButtons();
     }
@@ -41,24 +47,119 @@ public class AddNotes extends javax.swing.JPanel {
         card.show(MainFrame.Interface, name);
     }
     
+    public AddNotes(Notes notesPanel, Note noteToEdit) {
+        this.notesPanel = notesPanel;
+        this.noteBeingEdited = noteToEdit;
+        this.isEditing = true;
+        initComponents();
+        setupTextArea();
+        loadNoteForEditing();
+        resetButtons();
+        
+        // Update button text for editing mode
+        save.setLabel("Update");
+        cancel.setLabel("Cancel Edit");
+    }
+    
+    private void loadNoteForEditing() {
+        if (noteBeingEdited != null) {
+            // Load title
+            String noteTitle = noteBeingEdited.getNoteTitle();
+            if (noteTitle != null && !noteTitle.isEmpty()) {
+                title.setText(noteTitle);
+                title.setForeground(normalTextColor);
+            }
+            
+            // Load content
+            String noteContent = noteBeingEdited.getNoteContent();
+            if (noteContent != null && !noteContent.isEmpty()) {
+                textArea.setText(noteContent);
+                textArea.setForeground(normalTextColor);
+                
+                // Try to load formatting
+                try {
+                    StyledDocument sourceDoc = noteBeingEdited.getStyledDocument();
+                    StyledDocument targetDoc = (StyledDocument) textArea.getDocument();
+                    
+                    // Clear and insert text
+                    targetDoc.remove(0, targetDoc.getLength());
+                    targetDoc.insertString(0, noteContent, null);
+                    
+                    // Copy formatting
+                    for (int i = 0; i < sourceDoc.getLength(); i++) {
+                        Element charElement = sourceDoc.getCharacterElement(i);
+                        if (charElement != null) {
+                            AttributeSet attrs = charElement.getAttributes();
+                            if (attrs != null && attrs.getAttributeCount() > 0) {
+                                targetDoc.setCharacterAttributes(i, 1, attrs, true);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // If formatting fails, just set plain text
+                    textArea.setText(noteContent);
+                }
+            }
+        }
+    }
+    
+    private void setupTextArea() {
+        // Use a simpler approach - set maximum size to force wrapping
+        textArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+
+        // Configure scroll pane
+        jScrollPane3.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        // Remove border
+        jScrollPane3.setBorder(null);
+
+        // Set margins
+        textArea.setMargin(new Insets(5, 5, 5, 5));
+
+        // Make text area non-opaque
+        textArea.setOpaque(false);
+
+        // Force word wrap by setting the text area's preferred size
+        textArea.setPreferredSize(new Dimension(100, 100)); // Small initial size
+
+        // Add listener to adjust on resize
+        jScrollPane3.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // When scroll pane resizes, adjust text area width
+                int width = jScrollPane3.getViewport().getWidth() - 20;
+                if (width > 0) {
+                    textArea.setSize(width, textArea.getHeight());
+                }
+            }
+        });
+
+    }
+     
     private void setupPlaceholder() {
-        textArea.setText(textPlaceholder);
-        textArea.setForeground(initialText);
+        // Only setup placeholder if not editing
+        if (!isEditing) {
+            textArea.setText(textPlaceholder);
+            textArea.setForeground(initialText);
+            
+            title.setText(titlePlaceholder);
+            title.setForeground(initialText);
+        }
         
-        title.setText(titlePlaceholder);
-        title.setForeground(initialText);
-        
+        // Add focus listeners
         textArea.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
-                if (textArea.getForeground().equals(initialText)) {
+                if (!isEditing && textArea.getForeground().equals(initialText)) {
                     textArea.setText("");
                     textArea.setForeground(normalTextColor);
                 }
             }
             @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
-                if (textArea.getText().trim().isEmpty()) {
+                if (!isEditing && textArea.getText().trim().isEmpty()) {
                     textArea.setText(textPlaceholder);
                     textArea.setForeground(initialText);
                 }
@@ -68,19 +169,96 @@ public class AddNotes extends javax.swing.JPanel {
         title.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
-                if (title.getForeground().equals(initialText)) {
+                if (!isEditing && title.getForeground().equals(initialText)) {
                     title.setText("");
                     title.setForeground(normalTextColor);
                 }
             }
             @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
-                if (title.getText().trim().isEmpty()) {
+                if (!isEditing && title.getText().trim().isEmpty()) {
                     title.setText(titlePlaceholder);
                     title.setForeground(initialText);
                 }
             }
         });
+    }
+    
+     private void saveNote() {
+        // Get title and content
+        String noteTitle = title.getText().trim();
+        StyledDocument styledDoc = (StyledDocument) textArea.getDocument();
+
+        // Use placeholder if empty
+        if (noteTitle.isEmpty() || (!isEditing && noteTitle.equals(titlePlaceholder))) {
+            noteTitle = "Untitled Note";
+        }
+
+        // Get text content
+        String noteContent = "";
+        try {
+            noteContent = styledDoc.getText(0, styledDoc.getLength());
+            if (noteContent.trim().isEmpty() || (!isEditing && noteContent.equals(textPlaceholder))) {
+                noteContent = "Empty Note";
+            }
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+            noteContent = "Error loading content";
+        }
+
+        if (isEditing) {
+            // Update existing note
+            notesPanel.updateNoteCard(noteTitle, noteContent, styledDoc);
+        } else {
+            // Create new note
+            Note noteCard = new Note(noteTitle, noteContent);
+
+            // Apply formatting to the new note
+            try {
+                StyledDocument noteDoc = noteCard.getStyledDocument();
+                noteDoc.remove(0, noteDoc.getLength());
+                noteDoc.insertString(0, noteContent, null);
+
+                // Copy formatting
+                for (int i = 0; i < styledDoc.getLength(); i++) {
+                    Element charElement = styledDoc.getCharacterElement(i);
+                    if (charElement != null) {
+                        AttributeSet attrs = charElement.getAttributes();
+                        if (attrs != null && attrs.getAttributeCount() > 0) {
+                            noteDoc.setCharacterAttributes(i, 1, attrs, true);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Add to notes panel
+            notesPanel.addNoteCard(noteCard);
+        }
+
+        // Return to notes view
+        showPanel("notes");
+        resetButtons();
+        
+        // Reset for next use
+        isEditing = false;
+        noteBeingEdited = null;
+    }
+     
+     private void cancelEdit() {
+        if (isEditing) {
+            // Cancel editing without saving changes
+            notesPanel.cancelEdit();
+        }
+        
+        // Return to notes view
+        showPanel("notes");
+        resetButtons();
+        
+        // Reset for next use
+        isEditing = false;
+        noteBeingEdited = null;
     }
     
     private Button[] Buttons() {
@@ -154,7 +332,6 @@ public class AddNotes extends javax.swing.JPanel {
 
         if (start == end) {
             // Apply style to the next character to be typed
-            // (affects typing from current cursor position)
             ((JTextPane)textArea).setCharacterAttributes(attrs, false);
         } else {
             // Apply to selected text
@@ -216,6 +393,7 @@ public class AddNotes extends javax.swing.JPanel {
         }
         textArea.requestFocus();
     }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -298,7 +476,7 @@ public class AddNotes extends javax.swing.JPanel {
         panel3.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane3.setBorder(null);
-        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setViewportView(textArea);
 
         textArea.setBackground(new java.awt.Color(102, 102, 102));
@@ -427,10 +605,7 @@ public class AddNotes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-        // Keeps previous file 
-        showPanel("notes");
-        resetButtons();
-        setupPlaceholder();
+        cancelEdit();
     }//GEN-LAST:event_cancelActionPerformed
 
     private void underlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_underlineActionPerformed
@@ -454,76 +629,7 @@ public class AddNotes extends javax.swing.JPanel {
     }//GEN-LAST:event_backActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-            // Get title and content
-         String noteTitle = title.getText().trim();
-         StyledDocument styledDoc = (StyledDocument) textArea.getDocument();
-
-         // Use placeholder if empty
-         if (noteTitle.isEmpty() || noteTitle.equals(titlePlaceholder)) {
-             noteTitle = "Untitled Note";
-         }
-
-         // Get text content
-         String noteContent = "";
-         try {
-             noteContent = styledDoc.getText(0, styledDoc.getLength());
-             if (noteContent.trim().isEmpty() || noteContent.equals(textPlaceholder)) {
-                 noteContent = "No content";
-             }
-         } catch (BadLocationException e) {
-             e.printStackTrace();
-             noteContent = "Error loading content";
-         }
-
-         // Create a Note with the content
-         Note noteCard = new Note(noteTitle, noteContent);
-
-         // Apply the styled formatting to the Note card
-         try {
-             // Get the Note's JTextPane document
-             StyledDocument noteDoc = noteCard.getStyledDocument();
-
-             // Clear the note document first
-             noteDoc.remove(0, noteDoc.getLength());
-
-             // Insert the text content
-             noteDoc.insertString(0, noteContent, null);
-
-             // Copy all character attributes from the editor to the note
-             for (int i = 0; i < styledDoc.getLength(); i++) {
-                 Element charElement = styledDoc.getCharacterElement(i);
-                 if (charElement != null) {
-                     AttributeSet attrs = charElement.getAttributes();
-                     if (attrs != null && attrs.getAttributeCount() > 0) {
-                         // Apply each character's attributes individually
-                         noteDoc.setCharacterAttributes(i, 1, attrs, true);
-                     }
-                 }
-             }
-
-             // Also copy paragraph attributes (for alignment, etc.)
-             Element paragraphElement = styledDoc.getParagraphElement(0);
-             if (paragraphElement != null) {
-                 AttributeSet paraAttrs = paragraphElement.getAttributes();
-                 noteDoc.setParagraphAttributes(0, noteDoc.getLength(), paraAttrs, true);
-             }
-
-         } catch (Exception e) {
-             e.printStackTrace();
-             System.err.println("Failed to copy text formatting: " + e.getMessage());
-         }
-
-         // Add the NoteCard to the Notes panel
-         if (notesPanel != null) {
-             notesPanel.addNoteCard(noteCard);
-         } else {
-             System.err.println("Notes panel reference is null!");
-         }
-
-         // Return to notes view
-         showPanel("notes");
-         resetButtons();
-         setupPlaceholder();                            
+         saveNote();                          
     }//GEN-LAST:event_saveActionPerformed
 
     private void boldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boldActionPerformed
