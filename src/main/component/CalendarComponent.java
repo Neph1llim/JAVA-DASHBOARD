@@ -1,15 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package main.component;
 
-import javax.swing.*;
-import java.awt.*;
-/**
- *
- * @author Cyrus Wilson
- */
 public class CalendarComponent extends javax.swing.JPanel {
     // Variables declaration
     private CalendarNav calendarNav;

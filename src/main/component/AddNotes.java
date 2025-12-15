@@ -245,7 +245,7 @@ public class AddNotes extends javax.swing.JPanel {
         panel1.setPanelBackground(new java.awt.Color(0, 0, 0));
         panel1.setLayout(new java.awt.GridBagLayout());
 
-        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/arrowLeft.png"))); // NOI18N
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/back.png"))); // NOI18N
         back.setMinimumSize(new java.awt.Dimension(40, 40));
         back.setPreferredSize(new java.awt.Dimension(40, 40));
         back.addActionListener(this::backActionPerformed);
@@ -334,24 +334,24 @@ public class AddNotes extends javax.swing.JPanel {
         save.setLabel("Save");
         save.addActionListener(this::saveActionPerformed);
 
-        bold.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fontBold.png"))); // NOI18N
+        bold.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontBold.png"))); // NOI18N
         bold.setMargin(new java.awt.Insets(3, 0, 0, 0));
         bold.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/carbon--text-bold.png"))); // NOI18N
         bold.addActionListener(this::boldActionPerformed);
 
-        italize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fontItalic.png"))); // NOI18N
+        italize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontItalic.png"))); // NOI18N
         italize.setMargin(new java.awt.Insets(3, 0, 0, 0));
         italize.addActionListener(this::italizeActionPerformed);
 
-        underline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fontUnderline.png"))); // NOI18N
+        underline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontUnderline.png"))); // NOI18N
         underline.setMargin(new java.awt.Insets(3, 0, 0, 0));
         underline.addActionListener(this::underlineActionPerformed);
 
-        font.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/fontStyle.png"))); // NOI18N
+        font.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontStyle.png"))); // NOI18N
         font.setMargin(new java.awt.Insets(3, 0, 0, 0));
         font.addActionListener(this::fontActionPerformed);
 
-        fontColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/letter-A.png"))); // NOI18N
+        fontColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontColor.png"))); // NOI18N
         fontColor.setText("_");
         fontColor.setToolTipText("");
         fontColor.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
