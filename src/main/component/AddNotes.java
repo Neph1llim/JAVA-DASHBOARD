@@ -22,10 +22,14 @@ public class AddNotes extends javax.swing.JPanel {
     private boolean underlineActive = false;
     private boolean textColorActive = false;
     private final Color normalTextColor = Color.BLACK;
-    private Color newTextColor =  normalTextColor;
+    private Color newTextColor = normalTextColor;
+    
+    // Reference to Notes panel to add cards
+    private Notes notesPanel;
     
     /* Constructors */
-    public AddNotes() {
+    public AddNotes(Notes notesPanel) {
+        this.notesPanel = notesPanel;
         initComponents();
         setupPlaceholder();
         resetButtons();
@@ -330,7 +334,6 @@ public class AddNotes extends javax.swing.JPanel {
 
         bold.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontBold.png"))); // NOI18N
         bold.setMargin(new java.awt.Insets(3, 0, 0, 0));
-        bold.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/carbon--text-bold.png"))); // NOI18N
         bold.addActionListener(this::boldActionPerformed);
 
         italize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontItalic.png"))); // NOI18N
@@ -451,20 +454,76 @@ public class AddNotes extends javax.swing.JPanel {
     }//GEN-LAST:event_backActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        JPanel round1 = new Panel(35, new Color(50,50,50));
-        round1.setPreferredSize(new Dimension(250, 250));
+            // Get title and content
+         String noteTitle = title.getText().trim();
+         StyledDocument styledDoc = (StyledDocument) textArea.getDocument();
 
-        Notes.notePanel.add(round1);
-        
-        // Configuration for panels
-        Notes.notePanel.setLayout(new FlowLayout());
-        Notes.notePanel.revalidate();
-        Notes.notePanel.repaint();
-        
-        //returns to notes page
-        showPanel("notes");
-        resetButtons();
-        setupPlaceholder();
+         // Use placeholder if empty
+         if (noteTitle.isEmpty() || noteTitle.equals(titlePlaceholder)) {
+             noteTitle = "Untitled Note";
+         }
+
+         // Get text content
+         String noteContent = "";
+         try {
+             noteContent = styledDoc.getText(0, styledDoc.getLength());
+             if (noteContent.trim().isEmpty() || noteContent.equals(textPlaceholder)) {
+                 noteContent = "No content";
+             }
+         } catch (BadLocationException e) {
+             e.printStackTrace();
+             noteContent = "Error loading content";
+         }
+
+         // Create a Note with the content
+         Note noteCard = new Note(noteTitle, noteContent);
+
+         // Apply the styled formatting to the Note card
+         try {
+             // Get the Note's JTextPane document
+             StyledDocument noteDoc = noteCard.getStyledDocument();
+
+             // Clear the note document first
+             noteDoc.remove(0, noteDoc.getLength());
+
+             // Insert the text content
+             noteDoc.insertString(0, noteContent, null);
+
+             // Copy all character attributes from the editor to the note
+             for (int i = 0; i < styledDoc.getLength(); i++) {
+                 Element charElement = styledDoc.getCharacterElement(i);
+                 if (charElement != null) {
+                     AttributeSet attrs = charElement.getAttributes();
+                     if (attrs != null && attrs.getAttributeCount() > 0) {
+                         // Apply each character's attributes individually
+                         noteDoc.setCharacterAttributes(i, 1, attrs, true);
+                     }
+                 }
+             }
+
+             // Also copy paragraph attributes (for alignment, etc.)
+             Element paragraphElement = styledDoc.getParagraphElement(0);
+             if (paragraphElement != null) {
+                 AttributeSet paraAttrs = paragraphElement.getAttributes();
+                 noteDoc.setParagraphAttributes(0, noteDoc.getLength(), paraAttrs, true);
+             }
+
+         } catch (Exception e) {
+             e.printStackTrace();
+             System.err.println("Failed to copy text formatting: " + e.getMessage());
+         }
+
+         // Add the NoteCard to the Notes panel
+         if (notesPanel != null) {
+             notesPanel.addNoteCard(noteCard);
+         } else {
+             System.err.println("Notes panel reference is null!");
+         }
+
+         // Return to notes view
+         showPanel("notes");
+         resetButtons();
+         setupPlaceholder();                            
     }//GEN-LAST:event_saveActionPerformed
 
     private void boldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boldActionPerformed
