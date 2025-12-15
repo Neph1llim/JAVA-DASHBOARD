@@ -10,31 +10,48 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import main.interfaces.Notes;
+import javax.swing.SwingUtilities;
 
 public class cardCarousel extends javax.swing.JPanel {
     private ArrayList<JPanel> cards = new ArrayList<>();
+    private ArrayList<Note> noteCards = new ArrayList<>(); // Store actual Note objects
     private int currentIndex = 0;
     private final int MAX_VISIBLE_CARDS = 4;
     private final int MAX_TOTAL_CARDS = 20;
     private JPanel placeholderCard;
     
+    // Reference to Notes panel
+    private Notes notesPanel;
+    
     // Card size variables
     private final int CARD_WIDTH = 250;
     private final int CARD_HEIGHT = 250;
     
-    // Reduced padding to make cards taller relative to container
-    private final int CARD_PADDING = 10;  // Reduced from 15
-    private final int CONTAINER_PADDING = 20;  // Reduced from 60
-    private final int HOLDER_PADDING = 10;  // Reduced from 30
+    // Padding
+    private final int CARD_PADDING = 10;
+    private final int CONTAINER_PADDING = 20;
+    private final int HOLDER_PADDING = 10;
     
-    // Container size calculations with reduced padding
+    // Container size calculations
     private final int CONTAINER_WIDTH = (CARD_WIDTH + CARD_PADDING) * MAX_VISIBLE_CARDS + 100;
-    private final int CONTAINER_HEIGHT = CARD_HEIGHT + CONTAINER_PADDING;  // Much closer to card height
+    private final int CONTAINER_HEIGHT = CARD_HEIGHT + CONTAINER_PADDING;
     private final int HOLDER_WIDTH = (CARD_WIDTH + CARD_PADDING) * MAX_VISIBLE_CARDS;
-    private final int HOLDER_HEIGHT = CARD_HEIGHT + HOLDER_PADDING;  // Much closer to card height
+    private final int HOLDER_HEIGHT = CARD_HEIGHT + HOLDER_PADDING;
     
+    // Constructor without Notes panel (backward compatibility)
     public cardCarousel() {
+        initComponents();
+        setupButtons();
+        createPlaceholderCard();
+        updateDisplay();
+    }
+    
+    // Constructor with Notes panel reference
+    public cardCarousel(Notes notesPanel) {
+        this.notesPanel = notesPanel;
         initComponents();
         setupButtons();
         createPlaceholderCard();
@@ -48,7 +65,7 @@ public class cardCarousel extends javax.swing.JPanel {
         placeholderCard.setBackground(new Color(240, 240, 245));
         placeholderCard.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(200, 200, 220), 2),
-            BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, CARD_PADDING, CARD_PADDING)  // Use variable
+            BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, CARD_PADDING, CARD_PADDING)
         ));
         placeholderCard.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
@@ -57,8 +74,8 @@ public class cardCarousel extends javax.swing.JPanel {
         plusLabel.setFont(new java.awt.Font("Segoe UI", 1, 64));
         plusLabel.setForeground(new Color(100, 100, 200));
         
-        // Instruction text
-        JLabel instructionLabel = new JLabel("<html><center>Click to add<br>new card</center></html>", JLabel.CENTER);
+        // Instruction text - updated to show "Add from Notes"
+        JLabel instructionLabel = new JLabel("<html><center>Click to add<br>from Notes</center></html>", JLabel.CENTER);
         instructionLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
         instructionLabel.setForeground(new Color(120, 120, 180));
         
@@ -73,8 +90,13 @@ public class cardCarousel extends javax.swing.JPanel {
         placeholderCard.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (cards.size() - 1 < MAX_TOTAL_CARDS) { // -1 because placeholder counts as a card
-                    addRealCard();
+                if (cards.size() - 1 < MAX_TOTAL_CARDS) {
+                    showNoteSelectionDialog();
+                } else {
+                    JOptionPane.showMessageDialog(cardCarousel.this,
+                        "Maximum number of cards reached (" + MAX_TOTAL_CARDS + ")",
+                        "Limit Reached",
+                        JOptionPane.WARNING_MESSAGE);
                 }
             }
             
@@ -93,14 +115,87 @@ public class cardCarousel extends javax.swing.JPanel {
         cards.add(placeholderCard);
     }
     
-    // Add a real card (to the left of placeholder)
-    private void addRealCard() {
+    /**
+     * Shows a dialog to select notes from the Notes panel
+     */
+    private void showNoteSelectionDialog() {
+        if (notesPanel == null) {
+            JOptionPane.showMessageDialog(this,
+                "Notes panel reference is not available",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Get all available notes from the Notes panel
+        // We need to add a method to Notes panel to get all notes
+        // For now, we'll assume there's a way to access them
+        
+        // Create a simple selection dialog
+        String[] options = {"Select from Existing Notes", "Cancel"};
+        int choice = JOptionPane.showOptionDialog(this,
+            "Select a note to add to carousel",
+            "Add Note to Carousel",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.INFORMATION_MESSAGE,
+            null,
+            options,
+            options[0]);
+        
+        if (choice == 0) {
+            // In a real implementation, you would show a list of notes
+            // For now, we'll simulate adding a note
+            addNoteToCarousel("Sample Note Title", "Sample content...");
+        }
+    }
+    
+    /**
+     * Adds a Note object to the carousel
+     */
+    public void addNoteToCarousel(Note note) {
+        if (note == null) return;
+        
         // Remove placeholder temporarily
         cards.remove(placeholderCard);
         
-        // Create and add new real card
-        JPanel realCard = createRealCard("Card " + (getRealCardCount() + 1));
-        cards.add(realCard);
+        // Create a carousel card from the Note
+        JPanel carouselCard = createCarouselCardFromNote(note);
+        cards.add(carouselCard);
+        
+        // Store the Note object
+        noteCards.add(note);
+        
+        // Add placeholder back at the end
+        cards.add(placeholderCard);
+        
+        // Update display
+        updateDisplay();
+        
+        // Show success message
+        SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(this,
+                "Note added to carousel: " + note.getNoteTitle(),
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE);
+        });
+    }
+    
+    /**
+     * Overloaded method for adding by title and content
+     */
+    public void addNoteToCarousel(String title, String content) {
+        // Remove placeholder temporarily
+        cards.remove(placeholderCard);
+        
+        // Create a new Note object
+        Note note = new Note(title, content);
+        
+        // Create carousel card
+        JPanel carouselCard = createCarouselCardFromNote(note);
+        cards.add(carouselCard);
+        
+        // Store the Note object
+        noteCards.add(note);
         
         // Add placeholder back at the end
         cards.add(placeholderCard);
@@ -109,34 +204,142 @@ public class cardCarousel extends javax.swing.JPanel {
         updateDisplay();
     }
     
-    // Get count of real cards (excluding placeholder)
-    private int getRealCardCount() {
-        return cards.size() - 1; // Subtract placeholder
-    }
-    
-    // Create a real card
-    private JPanel createRealCard(String title) {
+    /**
+     * Creates a carousel card from a Note object
+     */
+    private JPanel createCarouselCardFromNote(Note note) {
         JPanel card = new JPanel(new BorderLayout());
         card.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
         card.setBackground(Color.WHITE);
         card.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(150, 180, 220), 2),
-            BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, CARD_PADDING, CARD_PADDING)  // Use variable
+            BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, CARD_PADDING, CARD_PADDING)
         ));
+        card.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        // Title
-        JLabel titleLabel = new JLabel(title, JLabel.CENTER);
+        // Create a wrapper to display note content
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setBackground(Color.WHITE);
+        
+        // Title (truncated if too long)
+        String displayTitle = note.getNoteTitle();
+        if (displayTitle.length() > 20) {
+            displayTitle = displayTitle.substring(0, 17) + "...";
+        }
+        
+        JLabel titleLabel = new JLabel("<html><center>" + displayTitle + "</center></html>", JLabel.CENTER);
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 16));
         titleLabel.setForeground(new Color(60, 80, 120));
-        card.add(titleLabel, BorderLayout.CENTER);
         
-        // Card number - FIXED: Use real card count
-        JLabel numberLabel = new JLabel("#" + getRealCardCount(), JLabel.CENTER);
-        numberLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        numberLabel.setForeground(Color.GRAY);
-        card.add(numberLabel, BorderLayout.SOUTH);
+        // Content preview (truncated)
+        String contentPreview = note.getNoteContent();
+        if (contentPreview.length() > 50) {
+            contentPreview = contentPreview.substring(0, 47) + "...";
+        }
+        
+        JLabel contentLabel = new JLabel("<html><center><small>" + contentPreview + "</small></center></html>", JLabel.CENTER);
+        contentLabel.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        contentLabel.setForeground(Color.GRAY);
+        
+        // Note indicator
+        JLabel noteLabel = new JLabel("Note #" + (noteCards.size() + 1), JLabel.CENTER);
+        noteLabel.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        noteLabel.setForeground(new Color(100, 130, 200));
+        
+        contentPanel.add(titleLabel, BorderLayout.NORTH);
+        contentPanel.add(contentLabel, BorderLayout.CENTER);
+        contentPanel.add(noteLabel, BorderLayout.SOUTH);
+        
+        card.add(contentPanel, BorderLayout.CENTER);
+        
+        // Add click listener to view/edit the note
+        card.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                showNoteDetails(note);
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                card.setBackground(new Color(245, 245, 250));
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                card.setBackground(Color.WHITE);
+            }
+        });
         
         return card;
+    }
+    
+    /**
+     * Shows details of a note when clicked
+     */
+    private void showNoteDetails(Note note) {
+        String message = "<html><b>Title:</b> " + note.getNoteTitle() + 
+                        "<br><b>Content:</b> " + note.getNoteContent().substring(0, Math.min(100, note.getNoteContent().length())) + 
+                        (note.getNoteContent().length() > 100 ? "..." : "") + 
+                        "</html>";
+        
+        String[] options = {"Edit Note", "Remove from Carousel", "Close"};
+        int choice = JOptionPane.showOptionDialog(this,
+            message,
+            "Note Details",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.INFORMATION_MESSAGE,
+            null,
+            options,
+            options[2]);
+        
+        if (choice == 0) {
+            // Edit note - would open the note in editor
+            JOptionPane.showMessageDialog(this,
+                "Edit functionality would open the note editor",
+                "Edit Note",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else if (choice == 1) {
+            // Remove from carousel
+            removeCardByNote(note);
+        }
+    }
+    
+    /**
+     * Removes a card from the carousel by its Note object
+     */
+    private void removeCardByNote(Note note) {
+        int index = noteCards.indexOf(note);
+        if (index >= 0) {
+            // Remove from both lists
+            noteCards.remove(index);
+            cards.remove(index); // Same index because cards and noteCards are aligned
+            
+            // Update display
+            updateDisplay();
+            
+            JOptionPane.showMessageDialog(this,
+                "Note removed from carousel",
+                "Removed",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    // Get count of real cards (excluding placeholder)
+    private int getRealCardCount() {
+        return cards.size() - 1; // Subtract placeholder
+    }
+    
+    // Get all Note cards in the carousel
+    public ArrayList<Note> getNoteCards() {
+        return new ArrayList<>(noteCards);
+    }
+    
+    // Get a specific Note by index
+    public Note getNoteAt(int index) {
+        if (index >= 0 && index < noteCards.size()) {
+            return noteCards.get(index);
+        }
+        return null;
     }
     
     // Move left
@@ -169,7 +372,7 @@ public class cardCarousel extends javax.swing.JPanel {
         // Clear holder
         holder.removeAll();
         
-        // Set layout for holder - use consistent spacing
+        // Set layout for holder
         holder.setLayout(new FlowLayout(FlowLayout.LEFT, CARD_PADDING, CARD_PADDING));
         
         // Add visible cards (up to MAX_VISIBLE_CARDS)
@@ -214,6 +417,12 @@ public class cardCarousel extends javax.swing.JPanel {
             jButton2.setBackground(new Color(240, 240, 240));
         }
     }
+    
+    // Setter for Notes panel (can be called after construction)
+    public void setNotesPanel(Notes notesPanel) {
+        this.notesPanel = notesPanel;
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
