@@ -10,10 +10,12 @@ import java.util.List;
 import javax.swing.text.StyledDocument;
 
 public class Notes extends javax.swing.JPanel {
-    private static final int CARD_WIDTH = 250;  // Fixed width
-    private static final int CARD_HEIGHT = 250; // Fixed height
-    private static final int HORIZONTAL_GAP = 15;
-    private static final int VERTICAL_GAP = 15;
+    private static final int MIN_CARD_WIDTH = 280;  // Minimum width
+    private static final int MAX_CARD_WIDTH = 355;  // Maximum width  
+    private static final int CARD_HEIGHT = 300;     // Fixed height
+    private static final int HORIZONTAL_GAP = 3;
+    private static final int VERTICAL_GAP = 3;
+    private static final int MAX_COLUMNS = 4; // Max 4 cards horizontally
     
     private JPanel cardsContainer;
     private JScrollPane scrollPane;
@@ -27,8 +29,8 @@ public class Notes extends javax.swing.JPanel {
     }
     
     private void setupNotePanel() {
-        // Use FlowLayout with wrapping
-        cardsContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, HORIZONTAL_GAP, VERTICAL_GAP)) {
+        // Use GridBagLayout for better control over dynamic scaling
+        cardsContainer = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -36,6 +38,7 @@ public class Notes extends javax.swing.JPanel {
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
+        
         cardsContainer.setBackground(new Color(21, 21, 23)); // Match your dark theme
         cardsContainer.setOpaque(true);
 
@@ -48,6 +51,14 @@ public class Notes extends javax.swing.JPanel {
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        
+        // Add component listener to adjust layout when viewport resizes
+        scrollPane.getViewport().addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                reorganizeCards();
+            }
+        });
 
         // Clear and setup notePanel
         notePanel.removeAll();
@@ -65,10 +76,6 @@ public class Notes extends javax.swing.JPanel {
      */
     public void addNoteCard(Note noteCard) {
         if (cardsContainer != null) {
-            // Set fixed size for the card
-            noteCard.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
-            noteCard.setMaximumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
-            
             // Add click listener for editing
             noteCard.setNoteClickListener(new Note.NoteClickListener() {
                 @Override
@@ -77,13 +84,11 @@ public class Notes extends javax.swing.JPanel {
                 }
             });
             
-            // Add to container and list
-            cardsContainer.add(noteCard);
+            // Add to list
             noteCards.add(noteCard);
             
-            // Refresh layout
-            cardsContainer.revalidate();
-            cardsContainer.repaint();
+            // Reorganize all cards with dynamic sizing
+            reorganizeCards();
             
             // Scroll to show new card
             SwingUtilities.invokeLater(() -> {
@@ -91,6 +96,84 @@ public class Notes extends javax.swing.JPanel {
                 vertical.setValue(vertical.getMaximum());
             });
         }
+    }
+    
+    /**
+     * Reorganizes cards with dynamic sizing based on available space
+     */
+    private void reorganizeCards() {
+        // Clear the container
+        cardsContainer.removeAll();
+        
+        if (noteCards.isEmpty()) {
+            cardsContainer.revalidate();
+            cardsContainer.repaint();
+            return;
+        }
+        
+        // Get viewport width
+        int viewportWidth = scrollPane.getViewport().getWidth();
+        if (viewportWidth <= 0) {
+            // Use default if viewport not ready yet
+            viewportWidth = MAX_COLUMNS * (MAX_CARD_WIDTH + HORIZONTAL_GAP) + HORIZONTAL_GAP;
+        }
+        
+        // Calculate available width for cards (minus gaps)
+        int availableWidth = viewportWidth - HORIZONTAL_GAP;
+        
+        // Calculate optimal number of columns
+        int maxColumnsThatFit = availableWidth / (MIN_CARD_WIDTH + HORIZONTAL_GAP);
+        int columns = Math.min(Math.max(1, maxColumnsThatFit), MAX_COLUMNS);
+        
+        // Calculate dynamic card width
+        int cardWidth = Math.min(
+            MAX_CARD_WIDTH,
+            Math.max(
+                MIN_CARD_WIDTH,
+                (availableWidth / columns) - HORIZONTAL_GAP
+            )
+        );
+        
+        // Apply calculated size to all cards
+        for (Note note : noteCards) {
+            note.setPreferredSize(new Dimension(cardWidth, CARD_HEIGHT));
+            note.setMaximumSize(new Dimension(cardWidth, CARD_HEIGHT));
+            note.setMinimumSize(new Dimension(cardWidth, CARD_HEIGHT));
+        }
+        
+        // Arrange cards in GridBagLayout
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.insets = new Insets(VERTICAL_GAP, HORIZONTAL_GAP, VERTICAL_GAP, HORIZONTAL_GAP);
+        
+        for (int i = 0; i < noteCards.size(); i++) {
+            int row = i / columns;
+            int col = i % columns;
+            
+            gbc.gridx = col;
+            gbc.gridy = row;
+            gbc.weightx = 0;  // Don't stretch cards horizontally
+            gbc.weighty = 0;  // Don't stretch cards vertically
+            
+            cardsContainer.add(noteCards.get(i), gbc);
+        }
+        
+        // Add filler panel to take remaining space and push cards to top-left
+        gbc.gridx = 0;
+        gbc.gridy = (int) Math.ceil((double) noteCards.size() / columns);
+        gbc.gridwidth = columns;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        
+        JPanel filler = new JPanel();
+        filler.setOpaque(false);
+        cardsContainer.add(filler, gbc);
+        
+        // Refresh container
+        cardsContainer.revalidate();
+        cardsContainer.repaint();
     }
     
     /**
@@ -111,7 +194,7 @@ public class Notes extends javax.swing.JPanel {
      * Updates an existing note card
      */
     public void updateNoteCard(String newTitle, String newContent, StyledDocument styledDoc) {
-         if (noteToEdit != null) {
+        if (noteToEdit != null) {
             // Update the existing note directly
             noteToEdit.updateContent(newTitle, newContent, styledDoc);
 
@@ -119,8 +202,7 @@ public class Notes extends javax.swing.JPanel {
             noteToEdit = null;
 
             // Refresh container
-            cardsContainer.revalidate();
-            cardsContainer.repaint();
+            reorganizeCards();
         }
     }
     
@@ -136,12 +218,8 @@ public class Notes extends javax.swing.JPanel {
      */
     public void removeNoteCard(Note noteCard) {
         if (cardsContainer != null && noteCards.contains(noteCard)) {
-            cardsContainer.remove(noteCard);
             noteCards.remove(noteCard);
-            
-            // Refresh layout
-            cardsContainer.revalidate();
-            cardsContainer.repaint();
+            reorganizeCards();
         }
     }
     
@@ -155,6 +233,34 @@ public class Notes extends javax.swing.JPanel {
         }
     }
     
+    /**
+    * Gets a list of all note cards
+    */
+   public List<Note> getAllNoteCards() {
+       return new ArrayList<>(noteCards);
+   }
+
+   /**
+    * Gets a specific note by index
+    */
+   public Note getNoteCardAt(int index) {
+       if (index >= 0 && index < noteCards.size()) {
+           return noteCards.get(index);
+       }
+       return null;
+   }
+
+   /**
+    * Gets a note by title (first match)
+    */
+   public Note getNoteCardByTitle(String title) {
+       for (Note note : noteCards) {
+           if (note.getNoteTitle().equals(title)) {
+               return note;
+           }
+       }
+       return null;
+   }
     /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

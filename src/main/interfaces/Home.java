@@ -2,9 +2,12 @@ package main.interfaces;
         
         
 public class Home extends javax.swing.JPanel {
- 
+        
+    
     public Home() {
         initComponents();
+        Notes notesPanel = new Notes();
+        carousel.setNotesPanel(notesPanel);
     }
     
     
@@ -21,7 +24,7 @@ public class Home extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         calendarComponent1 = new main.component.CalendarComponent();
         jPanel4 = new javax.swing.JPanel();
-        cardCarousel2 = new main.component.cardCarousel();
+        carousel = new main.component.cardCarousel();
 
         jPanel1.setBackground(new java.awt.Color(21, 21, 23));
         jPanel1.setPreferredSize(new java.awt.Dimension(1230, 860));
@@ -56,7 +59,7 @@ public class Home extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
         jPanel4.setLayout(new java.awt.CardLayout());
-        jPanel4.add(cardCarousel2, "card2");
+        jPanel4.add(carousel, "card2");
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -84,7 +87,7 @@ public class Home extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.component.CalendarComponent calendarComponent1;
-    private main.component.cardCarousel cardCarousel2;
+    private main.component.cardCarousel carousel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
