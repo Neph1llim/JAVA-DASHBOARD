@@ -29,9 +29,7 @@ public class ServiceTest {
 
                 // 1. Register
                 testUser = userService.register(
-                    uniqueUsername, 
                     uniqueUsername + "@example.com", 
-                    "SecurePass123", 
                     "SecurePass123",
                     null
                 );
