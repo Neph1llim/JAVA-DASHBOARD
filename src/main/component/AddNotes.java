@@ -539,7 +539,7 @@ public class AddNotes extends javax.swing.JPanel {
         fontColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontColor.png"))); // NOI18N
         fontColor.setText("_");
         fontColor.setToolTipText("");
-        fontColor.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        fontColor.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         fontColor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         fontColor.setIconTextGap(0);
         fontColor.setMargin(new java.awt.Insets(0, 0, 0, 0));

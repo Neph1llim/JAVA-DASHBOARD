@@ -62,7 +62,7 @@ private void setActionButtonFonts() {
 
         actionPanel.setArc(0);
         actionPanel.setPanelBackground(new java.awt.Color(27, 27, 28));
-        actionPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        actionPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         addFile.setBackground(new java.awt.Color(102, 102, 102));
         addFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/add.png"))); // NOI18N
