@@ -23,11 +23,53 @@ public class GradeTab extends javax.swing.JPanel {
     }
     
     private void findPanels() {
-        // ... [existing code unchanged]
+        // Find centerPanel and buttonPanel from contentPanel
+        for (java.awt.Component comp : contentPanel.getComponents()) {
+            if (comp.getName() != null && comp.getName().equals("centerPanel")) {
+                centerPanel = (javax.swing.JPanel) comp;
+            }
+            if (comp.getName() != null && comp.getName().equals("buttonPanel")) {
+                buttonPanel = (javax.swing.JPanel) comp;
+            }
+        }
+        
+        // If not found by name, try by position
+        if (centerPanel == null && contentPanel.getComponentCount() > 0) {
+            java.awt.BorderLayout layout = (java.awt.BorderLayout) contentPanel.getLayout();
+            centerPanel = (javax.swing.JPanel) layout.getLayoutComponent(java.awt.BorderLayout.CENTER);
+        }
+        if (buttonPanel == null && contentPanel.getComponentCount() > 0) {
+            java.awt.BorderLayout layout = (java.awt.BorderLayout) contentPanel.getLayout();
+            buttonPanel = (javax.swing.JPanel) layout.getLayoutComponent(java.awt.BorderLayout.SOUTH);
+        }
     }
     
     private void setupLayout() {
-        // ... [existing code unchanged]
+        if (centerPanel == null) {
+            centerPanel = new javax.swing.JPanel();
+            centerPanel.setLayout(new javax.swing.BoxLayout(centerPanel, javax.swing.BoxLayout.Y_AXIS));
+            centerPanel.setOpaque(false);
+            contentPanel.add(centerPanel, java.awt.BorderLayout.CENTER);
+        }
+        
+        if (buttonPanel == null) {
+            buttonPanel = new javax.swing.JPanel();
+            buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+            buttonPanel.setOpaque(false);
+            
+            // Find and move button1 to buttonPanel
+            for (java.awt.Component comp : contentPanel.getComponents()) {
+                if (comp instanceof main.component.Button && comp.getName() != null && comp.getName().equals("button1")) {
+                    contentPanel.remove(comp);
+                    buttonPanel.add(comp);
+                    break;
+                }
+            }
+            contentPanel.add(buttonPanel, java.awt.BorderLayout.SOUTH);
+        }
+        
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
     
     private void saveAllAssessments() {
