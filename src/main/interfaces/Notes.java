@@ -76,6 +76,9 @@ public class Notes extends javax.swing.JPanel {
      */
     public void addNoteCard(Note noteCard) {
         if (cardsContainer != null) {
+            // Configure the note for display in the Notes panel
+            configureNoteForDisplay(noteCard);
+            
             // Add click listener for editing
             noteCard.setNoteClickListener(new Note.NoteClickListener() {
                 @Override
@@ -96,6 +99,25 @@ public class Notes extends javax.swing.JPanel {
                 vertical.setValue(vertical.getMaximum());
             });
         }
+    }
+    
+    /**
+     * Configures a Note for display in the Notes panel
+     */
+    private void configureNoteForDisplay(Note note) {
+        // Set size
+        note.setPreferredSize(new Dimension(MIN_CARD_WIDTH, CARD_HEIGHT));
+        note.setMaximumSize(new Dimension(MAX_CARD_WIDTH, CARD_HEIGHT));
+        note.setMinimumSize(new Dimension(MIN_CARD_WIDTH, CARD_HEIGHT));
+        
+        // Set background to match theme
+        note.setBackground(new Color(50, 50, 55)); // Slightly lighter than background
+        
+        // Make sure note is opaque
+        note.setOpaque(true);
+        
+        // Set cursor
+        note.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
     
     /**
@@ -179,7 +201,7 @@ public class Notes extends javax.swing.JPanel {
     /**
      * Opens editor to edit an existing note
      */
-    private void editNoteCard(Note noteCard) {
+    public void editNoteCard(Note noteCard) {
         // Store reference to note being edited
         noteToEdit = noteCard;
         
@@ -234,33 +256,120 @@ public class Notes extends javax.swing.JPanel {
     }
     
     /**
-    * Gets a list of all note cards
-    */
-   public List<Note> getAllNoteCards() {
-       return new ArrayList<>(noteCards);
-   }
+     * Gets a list of all note cards
+     */
+    public List<Note> getAllNoteCards() {
+        return new ArrayList<>(noteCards);
+    }
 
-   /**
-    * Gets a specific note by index
-    */
-   public Note getNoteCardAt(int index) {
-       if (index >= 0 && index < noteCards.size()) {
-           return noteCards.get(index);
-       }
-       return null;
-   }
+    /**
+     * Gets a specific note by index
+     */
+    public Note getNoteCardAt(int index) {
+        if (index >= 0 && index < noteCards.size()) {
+            return noteCards.get(index);
+        }
+        return null;
+    }
 
-   /**
-    * Gets a note by title (first match)
-    */
-   public Note getNoteCardByTitle(String title) {
-       for (Note note : noteCards) {
-           if (note.getNoteTitle().equals(title)) {
-               return note;
-           }
-       }
-       return null;
-   }
+    /**
+     * Gets a note by title (first match)
+     */
+    public Note getNoteCardByTitle(String title) {
+        for (Note note : noteCards) {
+            if (note.getNoteTitle().equals(title)) {
+                return note;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Creates and adds a sample note (for testing)
+     */
+    public void addSampleNote() {
+        Note sampleNote = new Note("Sample Note", "This is a sample note content. You can edit this note or create new ones.");
+        addNoteCard(sampleNote);
+    }
+    
+    /**
+     * Creates and adds multiple sample notes (for testing)
+     */
+    public void addSampleNotes() {
+        String[] sampleTitles = {
+            "Welcome Note",
+            "Shopping List",
+            "Meeting Notes",
+            "Project Ideas",
+            "Book Recommendations"
+        };
+        
+        String[] sampleContents = {
+            "Welcome to the Notes app! Create, edit, and organize your notes here.",
+            "1. Milk\n2. Eggs\n3. Bread\n4. Coffee\n5. Fruits",
+            "Meeting with team:\n- Discuss project timeline\n- Assign tasks\n- Set up next meeting",
+            "1. Weather app with AI predictions\n2. Task manager with gamification\n3. Recipe organizer",
+            "1. Clean Code by Robert Martin\n2. Design Patterns by Gang of Four\n3. The Pragmatic Programmer"
+        };
+        
+        for (int i = 0; i < sampleTitles.length; i++) {
+            Note note = new Note(sampleTitles[i], sampleContents[i]);
+            addNoteCard(note);
+        }
+    }
+    
+    /**
+     * Clears all notes from the panel
+     */
+    public void clearAllNotes() {
+        noteCards.clear();
+        reorganizeCards();
+    }
+    
+    /**
+     * Gets the number of notes
+     */
+    public int getNoteCount() {
+        return noteCards.size();
+    }
+    
+    /**
+     * Checks if the notes panel is empty
+     */
+    public boolean isEmpty() {
+        return noteCards.isEmpty();
+    }
+    
+    /**
+     * Refreshes the notes display
+     */
+    public void refresh() {
+        reorganizeCards();
+    }
+    
+    public boolean findAndEditNote(Note noteToFind) {
+        // Look for the note by comparing title and content
+        for (Note note : noteCards) {
+            if (note.getNoteTitle().equals(noteToFind.getNoteTitle()) &&
+                note.getNoteContent().equals(noteToFind.getNoteContent())) {
+
+                // Found it! Open for editing
+                editNoteCard(note);
+                return true;
+            }
+        }
+
+        // If exact match not found, try by content only
+        for (Note note : noteCards) {
+            if (note.getNoteContent().equals(noteToFind.getNoteContent())) {
+                editNoteCard(note);
+                return true;
+            }
+        }
+
+        return false; // Note not found
+    }
+    
     /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

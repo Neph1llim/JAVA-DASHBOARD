@@ -1,16 +1,40 @@
 package main.interfaces;
         
+import main.MainFrame;
+import main.component.cardCarousel;
+
         
 public class Home extends javax.swing.JPanel {
-        
-    
+    private MainFrame mainFrame;
+    private cardCarousel carousel; // Make it a field
+
     public Home() {
         initComponents();
-        Notes notesPanel = new Notes();
-        carousel.setNotesPanel(notesPanel);
     }
-    
-    
+
+    public void setMainFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+        connectCarousel();
+    }
+
+    private void connectCarousel() {
+        Notes notesPanel = mainFrame.getNotesPanel();
+
+        // Remove any existing components from jPanel4
+        jPanel4.removeAll();
+
+        // Create new carousel with Notes panel reference
+        carousel = new cardCarousel(notesPanel);
+
+        // Add it to the layout - CENTER position in BorderLayout
+        jPanel4.add(carousel, java.awt.BorderLayout.CENTER);
+
+        // Refresh the display
+        jPanel4.revalidate();
+        jPanel4.repaint();
+        this.revalidate();
+        this.repaint();
+    }
 
     /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
@@ -24,7 +48,6 @@ public class Home extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         calendarComponent1 = new main.component.CalendarComponent();
         jPanel4 = new javax.swing.JPanel();
-        carousel = new main.component.cardCarousel();
 
         jPanel1.setBackground(new java.awt.Color(21, 21, 23));
         jPanel1.setPreferredSize(new java.awt.Dimension(1230, 860));
@@ -40,7 +63,7 @@ public class Home extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel1.add(jPanel2, gridBagConstraints);
 
@@ -52,22 +75,21 @@ public class Home extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 2.0;
-        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel1.add(jPanel3, gridBagConstraints);
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel4.setLayout(new java.awt.CardLayout());
-        jPanel4.add(carousel, "card2");
-
+        jPanel4.setLayout(new java.awt.BorderLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel1.add(jPanel4, gridBagConstraints);
@@ -87,7 +109,6 @@ public class Home extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.component.CalendarComponent calendarComponent1;
-    private main.component.cardCarousel carousel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
