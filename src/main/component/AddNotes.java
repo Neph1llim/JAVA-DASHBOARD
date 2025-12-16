@@ -418,7 +418,7 @@ public class AddNotes extends javax.swing.JPanel {
         fontColor = new main.component.Button();
 
         panel1.setArc(0);
-        panel1.setPanelBackground(new java.awt.Color(0, 0, 0));
+        panel1.setPanelBackground(new java.awt.Color(21, 21, 23));
         panel1.setLayout(new java.awt.GridBagLayout());
 
         back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/back.png"))); // NOI18N
@@ -432,7 +432,7 @@ public class AddNotes extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(18, 25, 0, 0);
         panel1.add(back, gridBagConstraints);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(21, 21, 23));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         panel2.setPanelBackground(new java.awt.Color(102, 102, 102));
