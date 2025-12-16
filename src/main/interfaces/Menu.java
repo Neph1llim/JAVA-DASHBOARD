@@ -43,7 +43,7 @@ public class Menu extends javax.swing.JPanel {
             home.setText("Home");
             notes.setText("Notes");
             files.setText("Files");
-            widgets.setText("Widgets");
+            widgets.setText("Grades");
             settings.setText("Settings");
         }
 
@@ -70,7 +70,7 @@ public class Menu extends javax.swing.JPanel {
             home.setText("Home");
             notes.setText("Notes");
             files.setText("Files");
-            widgets.setText("widgets");
+            widgets.setText("Grades");
             settings.setText("Settings");
             
         }
