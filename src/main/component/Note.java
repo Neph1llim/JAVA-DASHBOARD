@@ -323,6 +323,14 @@ public class Note extends javax.swing.JPanel {
         }
     }
     
+    public void setNoteTitle(String title) {
+        this.noteTitle = title;
+    }
+    
+    public void setNoteContent(String content) {
+        this.noteContent = content;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

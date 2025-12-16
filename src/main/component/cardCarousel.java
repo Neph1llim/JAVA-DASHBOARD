@@ -1,348 +1,505 @@
 package main.component;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.text.StyledDocument;
 import main.interfaces.Notes;
-import javax.swing.SwingUtilities;
 
 public class cardCarousel extends javax.swing.JPanel {
-    private ArrayList<JPanel> cards = new ArrayList<>();
-    private ArrayList<Note> noteCards = new ArrayList<>(); // Store actual Note objects
+    // Store CarouselCard objects instead of Note objects
+    private ArrayList<CarouselCard> carouselCards = new ArrayList<>();
     private int currentIndex = 0;
-    private final int MAX_VISIBLE_CARDS = 4;
+    private final int MAX_VISIBLE_CARDS = 4; // CHANGED: Now showing 4 note cards + Add Card
     private final int MAX_TOTAL_CARDS = 20;
-    private JPanel placeholderCard;
+    private JPanel addCardPlaceholder;
+    private javax.swing.JPanel holder; 
     
     // Reference to Notes panel
     private Notes notesPanel;
     
     // Card size variables
-    private final int CARD_WIDTH = 250;
-    private final int CARD_HEIGHT = 250;
+    private final int CARD_WIDTH = 275;
+    private final int CARD_HEIGHT = 300;
     
-    // Padding
-    private final int CARD_PADDING = 10;
-    private final int CONTAINER_PADDING = 20;
-    private final int HOLDER_PADDING = 10;
+    // Padding - Simplified and consistent
+    private final int CARD_PADDING = 5; // Padding between cards AND inside cards
+    private final int CONTAINER_PADDING = 2; // Outer padding for the entire carousel
+    private final int INSET = 35;    
+    private final int CONTAINER_HEIGHT = CARD_HEIGHT + (CONTAINER_PADDING * 2) + INSET;
     
-    // Container size calculations
-    private final int CONTAINER_WIDTH = (CARD_WIDTH + CARD_PADDING) * MAX_VISIBLE_CARDS + 100;
-    private final int CONTAINER_HEIGHT = CARD_HEIGHT + CONTAINER_PADDING;
-    private final int HOLDER_WIDTH = (CARD_WIDTH + CARD_PADDING) * MAX_VISIBLE_CARDS;
-    private final int HOLDER_HEIGHT = CARD_HEIGHT + HOLDER_PADDING;
+    // MIN/MAX size for holder
+    private final int MAX_CARDS_WIDTH = (CARD_WIDTH + CARD_PADDING) * (MAX_VISIBLE_CARDS); // Max 5 cards width
     
-    // Constructor without Notes panel (backward compatibility)
-    public cardCarousel() {
-        initComponents();
-        setupButtons();
-        createPlaceholderCard();
-        updateDisplay();
-    }
+    // Track currently focused card
+    private CarouselCard currentlyFocusedCard = null;
     
-    // Constructor with Notes panel reference
+    // Dark theme colors - Make card colors darker than background
+    private final Color CAROUSEL_BG = new Color(81, 84, 89);
+    private final Color TRANSPARENT_BG = new Color(0, 0, 0, 0);
+    private final Color DARK_CARD_BACKGROUND = new Color(60, 63, 68);
+    private final Color ADD_CARD_BACKGROUND = new Color(60, 63, 68, 220);
+    private final Color DARK_CARD_HOVER = new Color(70, 73, 78, 240);
+    private final Color DARK_CARD_FOCUS = new Color(80, 90, 100, 240);
+    private final Color DARK_TEXT = new Color(230, 230, 230);
+    private final Color THEME_BORDER = new Color(120, 123, 128);
+    private final Color THEME_BORDER_HOVER = new Color(140, 143, 148);
+    private final Color BUTTON_BG = new Color(70, 70, 75, 200);
+    private final Color BUTTON_HOVER = new Color(90, 90, 95, 220);
+    private final Color BUTTON_INDICATOR = new Color(28, 151, 234);
+    private final Color TITLE_SEPARATOR_COLOR = new Color(100, 103, 108);
+    
+    // Constructor
     public cardCarousel(Notes notesPanel) {
         this.notesPanel = notesPanel;
+        initialize();
+    }
+
+    public cardCarousel() {
+        initialize();
+    }
+
+    private void initialize() {
         initComponents();
+        holder = new JPanel();
         setupButtons();
-        createPlaceholderCard();
+        createAddCardPlaceholder();
+        createPanel();
         updateDisplay();
     }
+
+    private void createPanel() {
+        configureHolder();
+        setupHolderMouseListener();
+        addHolderToPanel();
+        applyDarkTransparentTheme();
+    }
     
-    // Create the placeholder card
-    private void createPlaceholderCard() {
-        placeholderCard = new JPanel(new BorderLayout());
-        placeholderCard.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
-        placeholderCard.setBackground(new Color(240, 240, 245));
-        placeholderCard.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 220), 2),
-            BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, CARD_PADDING, CARD_PADDING)
-        ));
-        placeholderCard.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        // Plus icon
-        JLabel plusLabel = new JLabel("+", JLabel.CENTER);
-        plusLabel.setFont(new java.awt.Font("Segoe UI", 1, 64));
-        plusLabel.setForeground(new Color(100, 100, 200));
-        
-        // Instruction text - updated to show "Add from Notes"
-        JLabel instructionLabel = new JLabel("<html><center>Click to add<br>from Notes</center></html>", JLabel.CENTER);
-        instructionLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        instructionLabel.setForeground(new Color(120, 120, 180));
-        
-        JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.setBackground(new Color(240, 240, 245));
-        centerPanel.add(plusLabel, BorderLayout.CENTER);
-        centerPanel.add(instructionLabel, BorderLayout.SOUTH);
-        
-        placeholderCard.add(centerPanel, BorderLayout.CENTER);
-        
-        // Add click listener to placeholder
-        placeholderCard.addMouseListener(new MouseAdapter() {
+    private void configureHolder() {
+        // Use a panel with FlowLayout for proper card placement
+        holder.setLayout(new FlowLayout(FlowLayout.LEFT, CARD_PADDING, 0));
+        holder.setBackground(TRANSPARENT_BG);
+        holder.setOpaque(false);
+        holder.setPreferredSize(new Dimension(MAX_CARDS_WIDTH, CARD_HEIGHT));
+        holder.setMaximumSize(new Dimension(MAX_CARDS_WIDTH, CARD_HEIGHT));
+        holder.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));  
+    }
+    
+    private void setupHolderMouseListener() {
+        holder.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (cards.size() - 1 < MAX_TOTAL_CARDS) {
-                    showNoteSelectionDialog();
-                } else {
-                    JOptionPane.showMessageDialog(cardCarousel.this,
-                        "Maximum number of cards reached (" + MAX_TOTAL_CARDS + ")",
-                        "Limit Reached",
-                        JOptionPane.WARNING_MESSAGE);
-                }
+                loseFocusOnCards();
             }
-            
+        });
+    }
+    
+    private void addHolderToPanel() {
+        GridBagConstraints gridBagConstraints = createHolderConstraints();
+        jPanel1.add(holder, gridBagConstraints);
+    }
+    
+    private GridBagConstraints createHolderConstraints() {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.insets = new Insets(CONTAINER_PADDING + INSET, CONTAINER_PADDING, (CONTAINER_PADDING + 41), CONTAINER_PADDING);
+        gbc.anchor = GridBagConstraints.WEST;
+        return gbc;
+    }
+    
+    private void applyDarkTransparentTheme() {
+        setBackground(CAROUSEL_BG);
+        jPanel1.setBackground(CAROUSEL_BG);
+        styleNavigationButton(jButton1);
+        styleNavigationButton(jButton2);
+    }
+    
+    private void styleNavigationButton(JButton button) {
+        button.setBackground(BUTTON_BG);
+        button.setForeground(DARK_TEXT);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.setBorderPainted(false);
+        
+        button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                placeholderCard.setBackground(new Color(230, 230, 240));
+                if (button.isEnabled()) button.setBackground(BUTTON_HOVER);
             }
             
             @Override
             public void mouseExited(MouseEvent e) {
-                placeholderCard.setBackground(new Color(240, 240, 245));
+                if (button.isEnabled()) button.setBackground(BUTTON_BG);
             }
         });
-        
-        // Add placeholder to cards list
-        cards.add(placeholderCard);
     }
     
-    /**
-     * Shows a dialog to select notes from the Notes panel
-     */
+    // Create the "Add Card" placeholder panel
+    private void createAddCardPlaceholder() {
+        addCardPlaceholder = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                // Draw background with square corners
+                g2d.setColor(ADD_CARD_BACKGROUND);
+                g2d.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
+                
+                // Draw dashed border
+                g2d.setStroke(new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 
+                                              0, new float[]{5, 5}, 0));
+                g2d.setColor(THEME_BORDER);
+                g2d.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
+                
+                // Draw plus sign
+                drawPlusSign(g2d);
+                
+                // Draw text
+                drawAddCardText(g2d);
+            }
+            
+            private void drawPlusSign(Graphics2D g2d) {
+                g2d.setColor(THEME_BORDER);
+                int centerX = getWidth() / 2;
+                int centerY = getHeight() / 2;
+                int plusSize = 40;
+                int lineWidth = 4;
+                
+                g2d.setStroke(new BasicStroke(lineWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+                g2d.drawLine(centerX - plusSize/2, centerY, centerX + plusSize/2, centerY);
+                g2d.drawLine(centerX, centerY - plusSize/2, centerX, centerY + plusSize/2);
+            }
+            
+            private void drawAddCardText(Graphics2D g2d) {
+                g2d.setColor(DARK_TEXT);
+                g2d.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+                String text = "Add Card";
+                FontMetrics fm = g2d.getFontMetrics();
+                int textWidth = fm.stringWidth(text);
+                g2d.drawString(text, getWidth()/2 - textWidth/2, getHeight()/2 + 60);
+            }
+        };
+        
+        setCardSize(addCardPlaceholder);
+        addCardPlaceholder.setBackground(TRANSPARENT_BG);
+        addCardPlaceholder.setOpaque(false);
+        addCardPlaceholder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        addCardPlaceholder.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                showNoteSelectionDialog();
+                loseFocusOnCards();
+            }
+        });
+    }
+    
+    private void setCardSize(JPanel card) {
+        card.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
+        card.setMaximumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
+        card.setMinimumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
+    }
+    
+    // Show note selection dialog
     private void showNoteSelectionDialog() {
         if (notesPanel == null) {
-            JOptionPane.showMessageDialog(this,
-                "Notes panel reference is not available",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+            showErrorDialog("Notes panel reference is not available", "Error");
             return;
         }
+
+        List<Note> availableNotes = getAvailableNotes();
         
-        // Get all available notes from the Notes panel
-        // We need to add a method to Notes panel to get all notes
-        // For now, we'll assume there's a way to access them
-        
-        // Create a simple selection dialog
-        String[] options = {"Select from Existing Notes", "Cancel"};
-        int choice = JOptionPane.showOptionDialog(this,
-            "Select a note to add to carousel",
-            "Add Note to Carousel",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.INFORMATION_MESSAGE,
-            null,
-            options,
-            options[0]);
-        
-        if (choice == 0) {
-            // In a real implementation, you would show a list of notes
-            // For now, we'll simulate adding a note
-            addNoteToCarousel("Sample Note Title", "Sample content...");
+        if (availableNotes.isEmpty()) {
+            // CENTERED: Show centered "No new notes available" message
+            JOptionPane optionPane = new JOptionPane("No new notes available.", 
+                    JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, 
+                    new Object[]{}, null);
+            
+            JDialog dialog = optionPane.createDialog("No New Notes Found");
+            dialog.setLocationRelativeTo(null); // Center on screen
+            dialog.setVisible(true);
+            return;
         }
+
+        showSelectionDialog(availableNotes);
     }
     
-    /**
-     * Adds a Note object to the carousel
-     */
-    public void addNoteToCarousel(Note note) {
-        if (note == null) return;
+    private List<Note> getAvailableNotes() {
+        List<Note> allNotes = notesPanel.getAllNoteCards();
+        List<Note> availableNotes = new ArrayList<>();
         
-        // Remove placeholder temporarily
-        cards.remove(placeholderCard);
-        
-        // Create a carousel card from the Note
-        JPanel carouselCard = createCarouselCardFromNote(note);
-        cards.add(carouselCard);
-        
-        // Store the Note object
-        noteCards.add(note);
-        
-        // Add placeholder back at the end
-        cards.add(placeholderCard);
-        
-        // Update display
-        updateDisplay();
-        
-        // Show success message
-        SwingUtilities.invokeLater(() -> {
-            JOptionPane.showMessageDialog(this,
-                "Note added to carousel: " + note.getNoteTitle(),
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE);
-        });
+        for (Note note : allNotes) {
+            if (!isNoteInCarousel(note)) {
+                availableNotes.add(note);
+            }
+        }
+        return availableNotes;
     }
     
-    /**
-     * Overloaded method for adding by title and content
-     */
-    public void addNoteToCarousel(String title, String content) {
-        // Remove placeholder temporarily
-        cards.remove(placeholderCard);
+    private void showSelectionDialog(List<Note> availableNotes) {
+        JDialog dialog = new JDialog();
+        dialog.setModal(true);
+        dialog.setTitle("Add Notes to Carousel");
         
-        // Create a new Note object
-        Note note = new Note(title, content);
+        JPanel selectionPanel = createSelectionPanel();
         
-        // Create carousel card
-        JPanel carouselCard = createCarouselCardFromNote(note);
-        cards.add(carouselCard);
+        JPanel notesGrid = createNotesGrid(availableNotes);
+        JScrollPane scrollPane = new JScrollPane(notesGrid);
+        scrollPane.setPreferredSize(new Dimension(600, 400));
+        scrollPane.getViewport().setBackground(CAROUSEL_BG);
         
-        // Store the Note object
-        noteCards.add(note);
+        // Center the scroll pane
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setBackground(CAROUSEL_BG);
+        centerPanel.add(scrollPane);
         
-        // Add placeholder back at the end
-        cards.add(placeholderCard);
-        
-        // Update display
-        updateDisplay();
+        selectionPanel.add(centerPanel, BorderLayout.CENTER);
+
+        dialog.setContentPane(selectionPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setVisible(true);
     }
     
-    /**
-     * Creates a carousel card from a Note object
-     */
-    private JPanel createCarouselCardFromNote(Note note) {
-        JPanel card = new JPanel(new BorderLayout());
-        card.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
-        card.setBackground(Color.WHITE);
-        card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(150, 180, 220), 2),
-            BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, CARD_PADDING, CARD_PADDING)
+    private JPanel createSelectionPanel() {
+        JPanel selectionPanel = new JPanel(new BorderLayout(10, 10));
+        selectionPanel.setBorder(BorderFactory.createEmptyBorder(CONTAINER_PADDING, CONTAINER_PADDING, 
+                                                                 CONTAINER_PADDING, CONTAINER_PADDING));
+        selectionPanel.setBackground(CAROUSEL_BG);
+
+        JLabel titleLabel = new JLabel("Select Notes to Add to Carousel");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setForeground(DARK_TEXT);
+        selectionPanel.add(titleLabel, BorderLayout.NORTH);
+        
+        return selectionPanel;
+    }
+    
+    private JPanel createNotesGrid(List<Note> availableNotes) {
+        JPanel notesGrid = new JPanel(new GridLayout(0, 2, CARD_PADDING , CARD_PADDING));
+        notesGrid.setBorder(BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, 
+                                                            CARD_PADDING, CARD_PADDING));
+        notesGrid.setBackground(CAROUSEL_BG);
+
+        for (int i = 0; i < availableNotes.size(); i++) {
+            Note note = availableNotes.get(i);
+            notesGrid.add(createNotePreviewPanel(note, i));
+        }
+        
+        return notesGrid;
+    }
+    
+    private JPanel createNotePreviewPanel(Note note, int index) {
+        JPanel previewPanel = new JPanel(new BorderLayout(5, 5));
+        previewPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(THEME_BORDER),
+            BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, 
+                                           CARD_PADDING, CARD_PADDING)
         ));
-        card.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        previewPanel.setBackground(DARK_CARD_BACKGROUND);
+        previewPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        // Create a wrapper to display note content
-        JPanel contentPanel = new JPanel(new BorderLayout());
-        contentPanel.setBackground(Color.WHITE);
+        JLabel titleLabel = new JLabel((index + 1) + ". " + note.getNoteTitle());
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        titleLabel.setForeground(DARK_TEXT);
         
-        // Title (truncated if too long)
-        String displayTitle = note.getNoteTitle();
-        if (displayTitle.length() > 20) {
-            displayTitle = displayTitle.substring(0, 17) + "...";
-        }
+        String content = note.getNoteContent();
+        String preview = content.length() > 100 ? content.substring(0, 97) + "..." : content;
+        JTextArea contentArea = createContentArea(preview);
         
-        JLabel titleLabel = new JLabel("<html><center>" + displayTitle + "</center></html>", JLabel.CENTER);
-        titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 16));
-        titleLabel.setForeground(new Color(60, 80, 120));
+        previewPanel.add(titleLabel, BorderLayout.NORTH);
+        previewPanel.add(new JScrollPane(contentArea), BorderLayout.CENTER);
         
-        // Content preview (truncated)
-        String contentPreview = note.getNoteContent();
-        if (contentPreview.length() > 50) {
-            contentPreview = contentPreview.substring(0, 47) + "...";
-        }
-        
-        JLabel contentLabel = new JLabel("<html><center><small>" + contentPreview + "</small></center></html>", JLabel.CENTER);
-        contentLabel.setFont(new java.awt.Font("Segoe UI", 0, 12));
-        contentLabel.setForeground(Color.GRAY);
-        
-        // Note indicator
-        JLabel noteLabel = new JLabel("Note #" + (noteCards.size() + 1), JLabel.CENTER);
-        noteLabel.setFont(new java.awt.Font("Segoe UI", 0, 12));
-        noteLabel.setForeground(new Color(100, 130, 200));
-        
-        contentPanel.add(titleLabel, BorderLayout.NORTH);
-        contentPanel.add(contentLabel, BorderLayout.CENTER);
-        contentPanel.add(noteLabel, BorderLayout.SOUTH);
-        
-        card.add(contentPanel, BorderLayout.CENTER);
-        
-        // Add click listener to view/edit the note
-        card.addMouseListener(new MouseAdapter() {
+        previewPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                showNoteDetails(note);
+                addNoteToCarousel(note);
+                Window window = SwingUtilities.getWindowAncestor(previewPanel);
+                if (window != null) window.dispose();
             }
-            
+        });
+        
+        return previewPanel;
+    }
+    
+    private JTextArea createContentArea(String text) {
+        JTextArea contentArea = new JTextArea(text);
+        contentArea.setEditable(false);
+        contentArea.setLineWrap(true);
+        contentArea.setWrapStyleWord(true);
+        contentArea.setBackground(DARK_CARD_BACKGROUND);
+        contentArea.setForeground(DARK_TEXT);
+        contentArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        return contentArea;
+    }
+    
+    private void showErrorDialog(String message, String title) {
+        JOptionPane optionPane = new JOptionPane(message, 
+                JOptionPane.ERROR_MESSAGE, JOptionPane.DEFAULT_OPTION);
+        JDialog dialog = optionPane.createDialog(title);
+        dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setVisible(true);
+    }
+    
+    private boolean isNoteInCarousel(Note note) {
+        for (CarouselCard card : carouselCards) {
+            if (card.getOriginalNote() == note) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Add a note to carousel
+    public void addNoteToCarousel(Note note) {
+        if (note == null) return;
+
+        if (carouselCards.size() >= MAX_TOTAL_CARDS) {
+            JOptionPane.showMessageDialog(this, 
+                "Maximum number of cards reached (" + MAX_TOTAL_CARDS + ")", 
+                "Limit Reached", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        CarouselCard card = new CarouselCard(note.getNoteTitle(), note.getNoteContent(), note);
+        carouselCards.add(card);
+        refreshCarousel();
+    }
+    
+    // Set focused card
+    private void setFocusedCard(CarouselCard card) {
+        if (currentlyFocusedCard != null && currentlyFocusedCard != card) {
+            currentlyFocusedCard.setFocusedState(false);
+        }
+        
+        currentlyFocusedCard = card;
+        card.setFocusedState(true);
+    }
+    
+    // Lose focus on all cards
+    private void loseFocusOnCards() {
+        if (currentlyFocusedCard != null) {
+            currentlyFocusedCard.setFocusedState(false);
+            currentlyFocusedCard = null;
+        }
+    }
+    
+    // Edit card
+    private void editCard(CarouselCard card) {
+        if (notesPanel == null) {
+            return;
+        }
+        notesPanel.findAndEditNote(card.getOriginalNote());
+    }
+    
+    // Remove card
+    private void removeCard(CarouselCard card) {
+        carouselCards.remove(card);
+        if (currentlyFocusedCard == card) {
+            currentlyFocusedCard = null;
+        }
+        refreshCarousel();
+    }
+    
+    // Create action button
+    private JButton createActionButton(String text) {
+        JButton button = new JButton(text);
+        button.setBackground(BUTTON_BG);
+        button.setForeground(DARK_TEXT);
+        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                card.setBackground(new Color(245, 245, 250));
+                button.setBackground(BUTTON_HOVER);
             }
             
             @Override
             public void mouseExited(MouseEvent e) {
-                card.setBackground(Color.WHITE);
+                button.setBackground(BUTTON_BG);
             }
         });
         
-        return card;
+        return button;
     }
     
-    /**
-     * Shows details of a note when clicked
-     */
-    private void showNoteDetails(Note note) {
-        String message = "<html><b>Title:</b> " + note.getNoteTitle() + 
-                        "<br><b>Content:</b> " + note.getNoteContent().substring(0, Math.min(100, note.getNoteContent().length())) + 
-                        (note.getNoteContent().length() > 100 ? "..." : "") + 
-                        "</html>";
+    // Update display - Show 4 note cards + Add Card when possible
+    private void updateDisplay() {
+        holder.removeAll();
         
-        String[] options = {"Edit Note", "Remove from Carousel", "Close"};
-        int choice = JOptionPane.showOptionDialog(this,
-            message,
-            "Note Details",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.INFORMATION_MESSAGE,
-            null,
-            options,
-            options[2]);
+        // Calculate how many note cards to show
+        int noteCardsToShow = Math.min(MAX_VISIBLE_CARDS, carouselCards.size() - currentIndex);
         
-        if (choice == 0) {
-            // Edit note - would open the note in editor
-            JOptionPane.showMessageDialog(this,
-                "Edit functionality would open the note editor",
-                "Edit Note",
-                JOptionPane.INFORMATION_MESSAGE);
-        } else if (choice == 1) {
-            // Remove from carousel
-            removeCardByNote(note);
+        // Show note cards
+        for (int i = currentIndex; i < currentIndex + noteCardsToShow && i < carouselCards.size(); i++) {
+            holder.add(carouselCards.get(i));
+        }
+
+        // ALWAYS show Add Card when we're at the end
+        if (shouldShowAddCard()) {
+            holder.add(addCardPlaceholder);
+        }
+
+        updateButtonStates();
+        holder.revalidate();
+        holder.repaint();
+    }
+    
+    private boolean shouldShowAddCard() {
+        if (carouselCards.size() >= MAX_TOTAL_CARDS) {
+            return false;
+        }
+        
+        // Show Add Card if we're at the end of the note cards list
+        int noteCardsToShow = Math.min(MAX_VISIBLE_CARDS, carouselCards.size() - currentIndex);
+        return (currentIndex + noteCardsToShow) >= carouselCards.size();
+    }
+    
+    private int calculateNoteCardsToShow() {
+        int totalCards = carouselCards.size();
+        
+        // We can show up to MAX_VISIBLE_CARDS note cards
+        // But we need to leave room for Add Card if we're at the end
+        int maxNoteCardsToShow = MAX_VISIBLE_CARDS;
+        
+        // If we're at the end and would show Add Card, show one less note card
+        if (shouldShowAddCard(Math.min(maxNoteCardsToShow, totalCards - currentIndex))) {
+            maxNoteCardsToShow = MAX_VISIBLE_CARDS - 1;
+        }
+        
+        if (totalCards <= maxNoteCardsToShow) {
+            return totalCards;
+        } else {
+            return Math.min(maxNoteCardsToShow, totalCards - currentIndex);
         }
     }
     
-    /**
-     * Removes a card from the carousel by its Note object
-     */
-    private void removeCardByNote(Note note) {
-        int index = noteCards.indexOf(note);
-        if (index >= 0) {
-            // Remove from both lists
-            noteCards.remove(index);
-            cards.remove(index); // Same index because cards and noteCards are aligned
-            
-            // Update display
-            updateDisplay();
-            
-            JOptionPane.showMessageDialog(this,
-                "Note removed from carousel",
-                "Removed",
-                JOptionPane.INFORMATION_MESSAGE);
+    private boolean shouldShowAddCard(int noteCardsToShow) {
+        if (carouselCards.size() >= MAX_TOTAL_CARDS) {
+            return false;
         }
+        
+        // Always show Add Card when we're at the end of the list
+        boolean atEndOfList = (currentIndex + noteCardsToShow) >= carouselCards.size();
+        return atEndOfList;
     }
     
-    // Get count of real cards (excluding placeholder)
-    private int getRealCardCount() {
-        return cards.size() - 1; // Subtract placeholder
-    }
-    
-    // Get all Note cards in the carousel
-    public ArrayList<Note> getNoteCards() {
-        return new ArrayList<>(noteCards);
-    }
-    
-    // Get a specific Note by index
-    public Note getNoteAt(int index) {
-        if (index >= 0 && index < noteCards.size()) {
-            return noteCards.get(index);
-        }
-        return null;
-    }
-    
-    // Move left
+    // Move left/right
     private void moveLeft() {
         if (currentIndex > 0) {
             currentIndex--;
@@ -350,160 +507,442 @@ public class cardCarousel extends javax.swing.JPanel {
         }
     }
     
-    // Move right
     private void moveRight() {
-        if (cards.size() > MAX_VISIBLE_CARDS && currentIndex < cards.size() - MAX_VISIBLE_CARDS) {
+        int totalCards = carouselCards.size();
+        
+        // We can move right if there are more note cards to show
+        // Note: We're showing up to MAX_VISIBLE_CARDS note cards at a time
+        if (currentIndex < totalCards - MAX_VISIBLE_CARDS) {
+            currentIndex++;
+            updateDisplay();
+        }
+        // Special case: When we have exactly MAX_VISIBLE_CARDS note cards and Add Card is showing,
+        // we can still move right to show the last note card
+        else if (totalCards == MAX_VISIBLE_CARDS && currentIndex == 0) {
             currentIndex++;
             updateDisplay();
         }
     }
     
-    // Setup button listeners
     private void setupButtons() {
-        // Left button (<)
         jButton1.addActionListener(e -> moveLeft());
-        
-        // Right button (>)
         jButton2.addActionListener(e -> moveRight());
     }
     
-    // Update the display
-    private void updateDisplay() {
-        // Clear holder
-        holder.removeAll();
-        
-        // Set layout for holder
-        holder.setLayout(new FlowLayout(FlowLayout.LEFT, CARD_PADDING, CARD_PADDING));
-        
-        // Add visible cards (up to MAX_VISIBLE_CARDS)
-        int endIndex = Math.min(currentIndex + MAX_VISIBLE_CARDS, cards.size());
-        for (int i = currentIndex; i < endIndex; i++) {
-            JPanel card = cards.get(i);
-            holder.add(card);
-        }
-        
-        // Update button states
-        updateButtonStates();
-        
-        // Refresh the display
-        holder.revalidate();
-        holder.repaint();
-    }
-    
-    // Update button enabled states
     private void updateButtonStates() {
-        // Left button enabled if we can scroll left
-        jButton1.setEnabled(currentIndex > 0);
+        int totalCards = carouselCards.size();
         
-        // Right button enabled if we can scroll right
-        boolean canScrollRight = cards.size() > MAX_VISIBLE_CARDS && 
-                                currentIndex < cards.size() - MAX_VISIBLE_CARDS;
-        jButton2.setEnabled(canScrollRight);
+        // Left button: enabled if we're not at the beginning
+        boolean leftEnabled = currentIndex > 0;
         
-        // Visual feedback when buttons are disabled
-        if (!jButton1.isEnabled()) {
-            jButton1.setForeground(Color.GRAY);
-            jButton1.setBackground(new Color(220, 220, 220));
-        } else {
-            jButton1.setForeground(Color.BLACK);
-            jButton1.setBackground(new Color(240, 240, 240));
+        // Right button: enabled if:
+        // 1. We have more than MAX_VISIBLE_CARDS note cards and not at the end
+        // OR 2. We have exactly MAX_VISIBLE_CARDS note cards and Add Card is showing
+        boolean rightEnabled = false;
+        
+        if (totalCards > MAX_VISIBLE_CARDS) {
+            // More cards than we can show at once
+            rightEnabled = currentIndex < totalCards - MAX_VISIBLE_CARDS;
+        } else if (totalCards == MAX_VISIBLE_CARDS) {
+            // Exactly MAX_VISIBLE_CARDS cards - can scroll to show Add Card + last card
+            rightEnabled = currentIndex == 0;
         }
         
-        if (!jButton2.isEnabled()) {
-            jButton2.setForeground(Color.GRAY);
-            jButton2.setBackground(new Color(220, 220, 220));
+        updateButtonState(jButton1, leftEnabled);
+        updateButtonState(jButton2, rightEnabled);
+    }
+        
+    private void updateButtonState(JButton button, boolean enabled) {
+        button.setEnabled(enabled);
+        if (enabled) {
+            button.setBackground(BUTTON_INDICATOR);
+            button.setForeground(Color.WHITE);
         } else {
-            jButton2.setForeground(Color.BLACK);
-            jButton2.setBackground(new Color(240, 240, 240));
+            button.setBackground(BUTTON_BG);
+            button.setForeground(new Color(150, 150, 150));
+        }   
+    }
+    
+    // Refresh carousel
+    public void refreshCarousel() {
+        updateDisplay();
+    }
+    
+    // Refresh when notes are updated
+    public void refreshAllNotesFromPanel() {
+        if (notesPanel == null) return;
+        
+        List<Note> panelNotes = notesPanel.getAllNoteCards();
+        boolean changed = false;
+        
+        for (CarouselCard card : carouselCards) {
+            Note originalNote = card.getOriginalNote();
+            for (Note panelNote : panelNotes) {
+                if (panelNote == originalNote) {
+                    if (!card.getTitle().equals(panelNote.getNoteTitle()) ||
+                        !card.getContent().equals(panelNote.getNoteContent())) {
+                        card.updateContent(panelNote.getNoteTitle(), panelNote.getNoteContent());
+                        changed = true;
+                    }
+                    break;
+                }
+            }
+        }
+        
+        if (changed) {
+            refreshCarousel();
         }
     }
     
-    // Setter for Notes panel (can be called after construction)
-    public void setNotesPanel(Notes notesPanel) {
-        this.notesPanel = notesPanel;
+    // Getters
+    public int getRealCardCount() {
+        return carouselCards.size();
     }
     
+    public List<CarouselCard> getCarouselCards() {
+        return new ArrayList<>(carouselCards);
+    }
+    
+    // Custom Card Panel Class
+    private class CarouselCard extends JPanel {
+        private String title;
+        private String content;
+        private final Note originalNote;
+        private boolean showActions = false;
+        private JTextPane contentPane;
+        private JPanel contentWrapper;
+        
+        public CarouselCard(String title, String content, Note originalNote) {
+            this.title = title;
+            this.content = content;
+            this.originalNote = originalNote;
+            initCard();
+        }
+        
+        private void initCard() {
+            setCardSize(this);
+            setLayout(new BorderLayout(CARD_PADDING, CARD_PADDING));
+            setOpaque(false);
+            setFocusable(true);
+            setRequestFocusEnabled(true);
+            
+            JPanel cardPanel = createCardPanel(false);
+            cardPanel.setLayout(new BorderLayout());
+            cardPanel.setBorder(BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, 
+                                                                  CARD_PADDING, CARD_PADDING));
+            
+            JPanel titlePanel = createTitlePanel(title);
+            cardPanel.add(titlePanel, BorderLayout.NORTH);
+            
+            // Create content wrapper
+            contentWrapper = new JPanel(new BorderLayout());
+            contentWrapper.setOpaque(false);
+            contentWrapper.setBorder(BorderFactory.createEmptyBorder());
+
+            contentPane = createContentPane(content);
+            contentWrapper.add(contentPane, BorderLayout.CENTER);
+            contentWrapper.setBorder(BorderFactory.createEmptyBorder(8, 0, 0, 0));
+            cardPanel.add(contentWrapper, BorderLayout.CENTER);
+
+            add(cardPanel, BorderLayout.CENTER);
+            
+            addCardMouseListeners();
+        }
+        
+        private JPanel createCardPanel(boolean focused) {
+            return new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    Graphics2D g2d = (Graphics2D) g;
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    
+                    Color bgColor = focused ? DARK_CARD_FOCUS : DARK_CARD_BACKGROUND;
+                    g2d.setColor(bgColor);
+                    g2d.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
+                    
+                    Color borderColor = focused ? THEME_BORDER_HOVER : THEME_BORDER;
+                    g2d.setColor(borderColor);
+                    g2d.setStroke(new BasicStroke(focused ? 2 : 1));
+                    g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+                }
+            };
+        }
+        
+        private JPanel createTitlePanel(String titleText) {
+            JPanel titlePanel = new JPanel(new BorderLayout());
+            titlePanel.setOpaque(false);
+            
+            JLabel titleLabel = createTitleLabel(titleText);
+            titlePanel.add(titleLabel, BorderLayout.NORTH);
+            
+            JSeparator separator = createTitleSeparator();
+            titlePanel.add(separator, BorderLayout.SOUTH);
+            
+            return titlePanel;
+        }
+        
+        private JLabel createTitleLabel(String text) {
+            JLabel titleLabel = new JLabel(text);
+            
+            try {
+                if (originalNote != null) {
+                    Font originalFont = originalNote.getFont();
+                    if (originalFont != null) {
+                        titleLabel.setFont(new Font(originalFont.getName(), Font.BOLD, 16));
+                    }
+                    
+                    Color originalForeground = originalNote.getForeground();
+                    if (originalForeground != null) {
+                        titleLabel.setForeground(originalForeground);
+                    } else {
+                        titleLabel.setForeground(DARK_TEXT);
+                    }
+                } else {
+                    titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    titleLabel.setForeground(DARK_TEXT);
+                }
+            } catch (Exception e) {
+                titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                titleLabel.setForeground(DARK_TEXT);
+            }
+            
+            titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 8, 0));
+            return titleLabel;
+        }
+        
+        private JSeparator createTitleSeparator() {
+            JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+            separator.setForeground(TITLE_SEPARATOR_COLOR);
+            separator.setBackground(TITLE_SEPARATOR_COLOR);
+            separator.setPreferredSize(new Dimension(0, 2));
+            separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 2));
+            return separator;
+        }
+        
+        private JTextPane createContentPane(String text) {
+            JTextPane pane = new JTextPane() {
+                @Override
+                public boolean isFocusable() {
+                    return false;
+                }
+                
+                @Override
+                public boolean isRequestFocusEnabled() {
+                    return false;
+                }
+                
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                }
+            };
+            
+            pane.setEditable(false);
+            applyStyledContent(pane, text);
+            pane.setBackground(TRANSPARENT_BG);
+            pane.setCaretColor(DARK_TEXT);
+            pane.setFocusable(false);
+            pane.setRequestFocusEnabled(false);
+            pane.setBorder(BorderFactory.createEmptyBorder());
+            pane.setMargin(new Insets(4, 4, 4, 4));
+            
+            // Disable caret completely
+            pane.setCaret(new javax.swing.text.DefaultCaret() {
+                @Override
+                public void setSelectionVisible(boolean vis) {}
+                @Override
+                public void setVisible(boolean vis) {}
+            });
+            
+            return pane;
+        }
+        
+        private void applyStyledContent(JTextPane pane, String text) {
+            try {
+                if (originalNote != null) {
+                    // Get the basic font and color from the original note
+                    Font originalFont = originalNote.getFont();
+                    Color originalColor = originalNote.getForeground();
+
+                    pane.setText(text);
+
+                    if (originalFont != null) {
+                        pane.setFont(originalFont);
+                    } else {
+                        pane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                    }
+
+                    if (originalColor != null) {
+                        pane.setForeground(originalColor);
+                    } else {
+                        pane.setForeground(DARK_TEXT);
+                    }
+
+                    pane.setCaretPosition(0);
+                    return;
+                }
+            } catch (Exception e) {
+                System.err.println("Error applying styled content: " + e.getMessage());
+            }
+
+            // Fallback to plain text
+            pane.setText(text);
+            pane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            pane.setForeground(DARK_TEXT);
+        }
+        
+        private void addCardMouseListeners() {
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    if (currentlyFocusedCard != CarouselCard.this) {
+                        setHoverState(true);
+                    }
+                }
+                
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    if (currentlyFocusedCard != CarouselCard.this) {
+                        setHoverState(false);
+                    }
+                }
+                
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    setFocusedCard(CarouselCard.this);
+                }
+            });
+        }
+        
+        public void setHoverState(boolean hover) {
+            Component[] components = getComponents();
+            if (components.length > 0 && components[0] instanceof JPanel) {
+                JPanel cardPanel = (JPanel) components[0];
+                cardPanel.setBackground(hover ? DARK_CARD_HOVER : DARK_CARD_BACKGROUND);
+                cardPanel.repaint();
+            }
+        }
+        
+        public void setFocusedState(boolean focused) {
+            showActions = focused;
+            removeAll();
+            
+            JPanel cardPanel = createCardPanel(focused);
+            cardPanel.setLayout(new BorderLayout());
+            cardPanel.setBorder(BorderFactory.createEmptyBorder(CARD_PADDING, CARD_PADDING, 
+                                                                  CARD_PADDING, CARD_PADDING));
+            
+            JPanel titlePanel = createTitlePanel(title);
+            cardPanel.add(titlePanel, BorderLayout.NORTH);
+            
+            if (contentPane == null) {
+                contentPane = createContentPane(content);
+            }
+            
+            // Recreate the content wrapper
+            contentWrapper = new JPanel(new BorderLayout());
+            contentWrapper.setOpaque(false);
+            contentWrapper.setBorder(BorderFactory.createEmptyBorder());
+            contentWrapper.add(contentPane, BorderLayout.CENTER);
+            cardPanel.add(contentWrapper, BorderLayout.CENTER);
+            
+            if (focused) {
+                JPanel actionPanel = createActionPanel();
+                cardPanel.add(actionPanel, BorderLayout.SOUTH);
+            }
+            
+            setLayout(new BorderLayout());
+            add(cardPanel, BorderLayout.CENTER);
+            
+            revalidate();
+            repaint();
+        }
+        
+        private JPanel createActionPanel() {
+            JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+            actionPanel.setOpaque(false);
+            
+            JButton editButton = createActionButton("Edit");
+            editButton.addActionListener(e -> editCard(CarouselCard.this));
+            
+            JButton deleteButton = createActionButton("Delete");
+            deleteButton.addActionListener(e -> removeCard(CarouselCard.this));
+            
+            actionPanel.add(editButton);
+            actionPanel.add(deleteButton);
+            
+            return actionPanel;
+        }
+        
+        public String getTitle() { return title; }
+        public String getContent() { return content; }
+        public Note getOriginalNote() { return originalNote; }
+        
+        public void updateContent(String newTitle, String newContent) {
+            this.title = newTitle;
+            this.content = newContent;
+
+            if (contentPane != null) {
+                applyStyledContent(contentPane, newContent); // Use the styled content method
+            }
+
+            setFocusedState(showActions);
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        holder = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setMinimumSize(new java.awt.Dimension(CONTAINER_WIDTH, CONTAINER_HEIGHT));
-        setPreferredSize(new java.awt.Dimension(CONTAINER_WIDTH, CONTAINER_HEIGHT));
+        setMinimumSize(new java.awt.Dimension(0, CONTAINER_HEIGHT));
+        setPreferredSize(new java.awt.Dimension(0, CONTAINER_HEIGHT));
         setRequestFocusEnabled(false);
-
-        jScrollPane1.setOpaque(true);
+        setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        holder.setMinimumSize(new java.awt.Dimension(HOLDER_WIDTH, HOLDER_HEIGHT));
-        holder.setPreferredSize(new java.awt.Dimension(HOLDER_WIDTH, HOLDER_HEIGHT));
-
-        javax.swing.GroupLayout holderLayout = new javax.swing.GroupLayout(holder);
-        holder.setLayout(holderLayout);
-        holderLayout.setHorizontalGroup(
-            holderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1034, Short.MAX_VALUE)
-        );
-        holderLayout.setVerticalGroup(
-            holderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.1;
-        jPanel1.add(holder, gridBagConstraints);
-
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jButton1.setText("<");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.2;
         gridBagConstraints.weighty = 0.1;
         jPanel1.add(jButton1, gridBagConstraints);
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jButton2.setText(">");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.2;
         gridBagConstraints.weighty = 0.1;
         jPanel1.add(jButton2, gridBagConstraints);
 
-        jScrollPane1.setViewportView(jPanel1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel holder;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

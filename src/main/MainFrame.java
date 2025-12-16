@@ -4,6 +4,7 @@ package main;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import javax.swing.*;
+import main.interfaces.Notes;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -20,6 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         // Set the MainFrame reference in some panel
         login.setMainFrame(this);
+        home.setMainFrame(this);
 
         // default Interface set to Login
         cardLayout = (CardLayout) getContentPane().getLayout();
@@ -174,6 +176,9 @@ public class MainFrame extends javax.swing.JFrame {
         timer.start();
     }//GEN-LAST:event_minimizeActionPerformed
 
+    public Notes getNotesPanel() {
+        return notes;
+    }
     /* Main Class Code */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
