@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.HashSet;
 import java.util.Set;
 import java.awt.Color;
+import java.awt.Font;
+
 
 public class Files extends javax.swing.JPanel {
     private final Map<main.component.Button, File> buttonFileMap = new HashMap<>();
@@ -25,7 +27,22 @@ public class Files extends javax.swing.JPanel {
     /* Contructors */
     public Files() {
         initComponents();
+        setActionButtonFonts(); // Add this line
     }
+
+// Add this method:
+private void setActionButtonFonts() {
+    try {
+        Font segoeFont = new Font("Segoe UI Variable", Font.PLAIN, 12);
+        addFile.setFont(segoeFont);
+        deleteButton.setFont(segoeFont);
+    } catch (Exception e) {
+        // Fallback font
+        Font fallbackFont = new Font("Dialog", Font.PLAIN, 12);
+        addFile.setFont(fallbackFont);
+        deleteButton.setFont(fallbackFont);
+    }
+}
 
     /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
@@ -36,7 +53,6 @@ public class Files extends javax.swing.JPanel {
         actionPanel = new main.component.Panel();
         addFile = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
         fileScrollPane = new javax.swing.JScrollPane();
         filePanel = new javax.swing.JPanel();
 
@@ -61,19 +77,12 @@ public class Files extends javax.swing.JPanel {
         deleteButton.addActionListener(this::deleteButtonActionPerformed);
         actionPanel.add(deleteButton);
 
-        refreshButton.setBackground(new java.awt.Color(102, 102, 102));
-        refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/refresh.png"))); // NOI18N
-        refreshButton.setBorderPainted(false);
-        refreshButton.setFocusPainted(false);
-        refreshButton.addActionListener(this::refreshButtonActionPerformed);
-        actionPanel.add(refreshButton);
-
         files.add(actionPanel, java.awt.BorderLayout.PAGE_END);
 
         fileScrollPane.setBorder(null);
         fileScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        filePanel.setBackground(new java.awt.Color(27, 27, 28));
+        filePanel.setBackground(new java.awt.Color(21, 21, 23));
         filePanel.setPreferredSize(new java.awt.Dimension(750, 540));
         filePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 10));
         fileScrollPane.setViewportView(filePanel);
@@ -109,23 +118,18 @@ public class Files extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addFileActionPerformed
 
-    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-    filePanel.revalidate();
-    filePanel.repaint();
-    }//GEN-LAST:event_refreshButtonActionPerformed
-
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
     if (!selectionMode) {
         // Enter selection mode
         selectionMode = true;
-        deleteButton.setText("Cancel Selection");
         deleteButton.setBackground(new Color(214, 72, 72)); // Red color for selection mode
+        updateDeleteButtonText(); // This will set text to "Cancel Selection" initially
         
         JOptionPane.showMessageDialog(this,
             "Selection Mode Activated!\n\n" +
             "• Click files to select/deselect (turns red)\n" +
             "• Click 'Cancel Selection' to exit without deleting\n" +
-            "• Files marked in red will be deleted when confirmed",
+            "• Click 'Delete Selected' when ready to delete red files",
             "Selection Mode",
             JOptionPane.INFORMATION_MESSAGE);
     } else {
@@ -147,11 +151,11 @@ public class Files extends javax.swing.JPanel {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE);
             
-                if (confirm == JOptionPane.YES_OPTION) {
-                    deleteSelectedFiles();
-                }
+            if (confirm == JOptionPane.YES_OPTION) {
+                deleteSelectedFiles();
             }
         }
+    }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
 
@@ -162,7 +166,6 @@ public class Files extends javax.swing.JPanel {
     private javax.swing.JPanel filePanel;
     private javax.swing.JScrollPane fileScrollPane;
     private javax.swing.JPanel files;
-    private javax.swing.JButton refreshButton;
     // End of variables declaration//GEN-END:variables
 
 // Exit selection mode without deleting
@@ -170,6 +173,10 @@ private void exitSelectionMode() {
     // Deselect all selected files (reset their background)
     for (main.component.Button button : selectedButtons) {
         button.setBackground(null); // Reset to default
+        button.setOpaque(false); // Make transparent
+        button.setContentAreaFilled(false); // Don't fill area
+        button.setBorder(null); // Remove any border
+        button.repaint(); // Force repaint
     }
     
     // Clear selection
@@ -181,12 +188,24 @@ private void exitSelectionMode() {
     // Reset delete button to original state (icon only, no text)
     deleteButton.setText("");
     deleteButton.setBackground(new Color(102, 102, 102)); // Original gray color
+    deleteButton.repaint();
 }
 
 private void createFileButton(File file) {
     main.component.Button fileButton = new main.component.Button();
     fileButton.setText(file.getName());
     fileButton.setToolTipText(file.getAbsolutePath());
+    
+    // Set font to Segoe UI Variable, 14px
+    try {
+        // Try to create Segoe UI Variable font
+        Font segoeFont = new Font("Segoe UI Variable", Font.PLAIN, 14);
+        fileButton.setFont(segoeFont);
+    } catch (Exception e) {
+        // Fallback to a standard font if Segoe UI Variable is not available
+        Font fallbackFont = new Font("Dialog", Font.PLAIN, 14);
+        fileButton.setFont(fallbackFont);
+    }
     
     // Store original background color
     originalButtonColors.put(fileButton, fileButton.getBackground());
@@ -335,14 +354,24 @@ private void showFileContextMenu(main.component.Button button, File file, int x,
 // ADDED: Toggle file selection (for multi-select)
 private void toggleFileSelection(main.component.Button button) {
     if (selectedButtons.contains(button)) {
-        // Deselect
+        // Deselect - restore to original state
         selectedButtons.remove(button);
         button.setBackground(null); // Reset to default
+        button.setOpaque(false); // Make transparent
+        button.setContentAreaFilled(false); // Don't fill area
+        button.setBorder(null); // Remove any border
     } else {
-        // Select - make it bright red
+        // Select - make it bright red with border
         selectedButtons.add(button);
-        button.setBackground(new Color(255, 100, 100)); // Bright red
+        button.setBackground(new Color(255, 100, 100)); // Bright red background
+        button.setOpaque(true); // Make opaque so background shows
+        button.setContentAreaFilled(true); // Fill the area
+        button.setBorder(javax.swing.BorderFactory.createLineBorder(Color.RED, 2)); // Red border
     }
+    
+    // Update delete button text based on selection
+    updateDeleteButtonText();
+    button.repaint(); // Force repaint to show changes
 }
 
 // ADDED: Remove single file from the list
@@ -363,9 +392,20 @@ private void removeSingleFile(main.component.Button button, File file) {
         selectedButtons.remove(button);
         originalButtonColors.remove(button);
         
+        // Update delete button text
+        updateDeleteButtonText();
+        
         // Refresh display
         filePanel.revalidate();
         filePanel.repaint();
+    }
+}
+
+private void updateDeleteButtonText() {
+    if (selectedButtons.isEmpty()) {
+        deleteButton.setText("Cancel Selection");
+    } else {
+        deleteButton.setText("Delete Selected (" + selectedButtons.size() + ")");
     }
 }
 
