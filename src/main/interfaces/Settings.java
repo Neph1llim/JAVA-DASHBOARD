@@ -112,9 +112,9 @@ public class Settings extends javax.swing.JPanel {
 
         Options.setBackground(new java.awt.Color(255, 255, 255));
         Options.setMinimumSize(new java.awt.Dimension(900, 800));
-        Options.setPanelBackground(new java.awt.Color(67, 69, 74));
+        Options.setPanelBackground(new java.awt.Color(51, 51, 51));
 
-        jPanel1.setBackground(new java.awt.Color(53, 54, 56));
+        jPanel1.setBackground(new java.awt.Color(32, 32, 34));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setAlignmentY(0.1F);
 
@@ -214,7 +214,7 @@ public class Settings extends javax.swing.JPanel {
         button2.setArc(15);
         button2.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
 
-        jPanel2.setBackground(new java.awt.Color(53, 54, 56));
+        jPanel2.setBackground(new java.awt.Color(32, 32, 34));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
