@@ -101,7 +101,7 @@ public class ToDo extends javax.swing.JPanel {
         panel12.setLayout(new java.awt.GridBagLayout());
 
         panel1.setMinimumSize(new java.awt.Dimension(300, 80));
-        panel1.setPanelBackground(new java.awt.Color(27, 27, 28));
+        panel1.setPanelBackground(new java.awt.Color(53, 54, 56));
         panel1.setPreferredSize(new java.awt.Dimension(434, 75));
         panel1.setLayout(new java.awt.GridBagLayout());
 

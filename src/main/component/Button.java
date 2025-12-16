@@ -24,7 +24,7 @@ public class Button extends JButton {
     public static Color normalColor = new Color(51, 51, 51);
     public Color hoverColor  = new Color(57, 59, 64);
     public Color pressedColor= new Color(53, 54, 56);
-    public Color highlightColor = new Color(188, 188, 186);
+    public Color highlightColor = new Color(122, 134, 254);
     private Color textColor = Color.WHITE;
     
     // state
@@ -123,7 +123,7 @@ public class Button extends JButton {
     public void setHighlighted(boolean value) {
         highlighted = value;
         currentColor = value ? highlightColor : normalColor; // change bg color
-        super.setForeground(value ? Color.BLACK : Color.WHITE); // change text color
+        super.setForeground(value ? Color.WHITE : Color.WHITE); // change text color
         repaint();
     }
 

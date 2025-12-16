@@ -205,7 +205,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI Variable" size="18" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="ianChTzy@gmail.coems"/>
+                    <Property name="text" type="java.lang.String" value="XX-XXXXX@g.batstate-u.edu.ph"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsEmailActionPerformed"/>

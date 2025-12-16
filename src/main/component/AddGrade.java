@@ -54,17 +54,17 @@ public class AddGrade extends javax.swing.JPanel {
             
             // Validate inputs
             if (maxScoreValue <= 0) {
-                jTextField5.setText("Error: Max <= 0");
+                jTextField5.setText("Invalid input.");
                 return;
             }
             
             if (scoreValue > maxScoreValue) {
-                jTextField5.setText("Error: Score > Max");
+                jTextField5.setText("Invalid input.");
                 return;
             }
             
-            if (percentageValue < 0 || percentageValue > 100) {
-                jTextField5.setText("Error: % out of range");
+            if (percentageValue <= 0 || percentageValue > 100) {
+                jTextField5.setText("Invalid input.");
                 return;
             }
             
@@ -170,10 +170,11 @@ public class AddGrade extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(1440, 75));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
+        panel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
         panel1.setArc(0);
         panel1.setMaximumSize(new java.awt.Dimension(0, 0));
         panel1.setMinimumSize(new java.awt.Dimension(360, 75));
-        panel1.setPanelBackground(new java.awt.Color(153, 153, 153));
+        panel1.setPanelBackground(new java.awt.Color(21, 21, 23));
         panel1.setPreferredSize(new java.awt.Dimension(360, 75));
 
         jTextField1.setText("...");
@@ -186,12 +187,12 @@ public class AddGrade extends javax.swing.JPanel {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(5, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -203,10 +204,11 @@ public class AddGrade extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(panel1, gridBagConstraints);
 
+        panel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
         panel3.setArc(0);
         panel3.setMaximumSize(null);
         panel3.setMinimumSize(new java.awt.Dimension(360, 75));
-        panel3.setPanelBackground(new java.awt.Color(153, 153, 153));
+        panel3.setPanelBackground(new java.awt.Color(21, 21, 23));
         panel3.setPreferredSize(new java.awt.Dimension(360, 75));
 
         jTextField4.setText("...");
@@ -218,14 +220,14 @@ public class AddGrade extends javax.swing.JPanel {
             .addGroup(panel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel3Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -235,10 +237,11 @@ public class AddGrade extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(panel3, gridBagConstraints);
 
+        panel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
         panel2.setArc(0);
         panel2.setBorderColor(new java.awt.Color(204, 204, 204));
         panel2.setMinimumSize(new java.awt.Dimension(360, 75));
-        panel2.setPanelBackground(new java.awt.Color(102, 102, 102));
+        panel2.setPanelBackground(new java.awt.Color(21, 21, 23));
         panel2.setPreferredSize(new java.awt.Dimension(360, 75));
         panel2.setLayout(new java.awt.GridBagLayout());
 
@@ -282,10 +285,11 @@ public class AddGrade extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(panel2, gridBagConstraints);
 
+        panel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
         panel4.setArc(0);
         panel4.setMaximumSize(null);
         panel4.setMinimumSize(new java.awt.Dimension(360, 75));
-        panel4.setPanelBackground(new java.awt.Color(102, 102, 102));
+        panel4.setPanelBackground(new java.awt.Color(21, 21, 23));
         panel4.setPreferredSize(new java.awt.Dimension(360, 75));
 
         jTextField5.setText("--%");
@@ -297,14 +301,14 @@ public class AddGrade extends javax.swing.JPanel {
             .addGroup(panel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         panel4Layout.setVerticalGroup(
             panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel4Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();

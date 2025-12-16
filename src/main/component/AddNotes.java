@@ -14,7 +14,7 @@ public class AddNotes extends javax.swing.JPanel {
    /* Properties */
     String titlePlaceholder = "Untitled note";
     String textPlaceholder = "Start typing your notes here...";
-    Color initialText = new Color(33, 33, 34);
+    Color initialText = new Color(255, 255, 255);
     Color normalColor = Button.normalColor;
     Color highlightColor = Color.WHITE;
     
@@ -440,6 +440,7 @@ public class AddNotes extends javax.swing.JPanel {
 
         title.setBackground(new java.awt.Color(51, 51, 51));
         title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
         title.setText("Title");
         title.setBorder(null);
         title.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -474,7 +475,7 @@ public class AddNotes extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 6);
         jPanel1.add(panel2, gridBagConstraints);
 
-        panel3.setPanelBackground(new java.awt.Color(51, 51, 51));
+        panel3.setPanelBackground(new java.awt.Color(60, 63, 65));
         panel3.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane3.setBorder(null);
@@ -483,6 +484,7 @@ public class AddNotes extends javax.swing.JPanel {
 
         textArea.setBackground(new java.awt.Color(51, 51, 51));
         textArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        textArea.setForeground(new java.awt.Color(204, 204, 204));
         textArea.setText("TEXT HERE");
         textArea.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         jScrollPane3.setViewportView(textArea);
@@ -531,7 +533,7 @@ public class AddNotes extends javax.swing.JPanel {
         underline.addActionListener(this::underlineActionPerformed);
 
         font.setBackground(new java.awt.Color(67, 69, 74));
-        font.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontStyle.png"))); // NOI18N
+        font.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/font.png"))); // NOI18N
         font.setMargin(new java.awt.Insets(3, 0, 0, 0));
         font.addActionListener(this::fontActionPerformed);
 

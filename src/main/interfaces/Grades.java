@@ -182,7 +182,7 @@ public class Grades extends javax.swing.JPanel {
         panel1.setPreferredSize(new java.awt.Dimension(1440, 810));
         panel1.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(21, 21, 23));
         jPanel1.setMinimumSize(new java.awt.Dimension(1440, 50));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -222,8 +222,10 @@ public class Grades extends javax.swing.JPanel {
         container.setMinimumSize(new java.awt.Dimension(10, 50));
         container.setViewportView(buttonContainer);
 
+        buttonContainer.setArc(0);
+        buttonContainer.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         buttonContainer.setMinimumSize(new java.awt.Dimension(100, 25));
-        buttonContainer.setPanelBackground(new java.awt.Color(51, 51, 51));
+        buttonContainer.setPanelBackground(new java.awt.Color(21, 21, 23));
         buttonContainer.setLayout(new javax.swing.BoxLayout(buttonContainer, javax.swing.BoxLayout.LINE_AXIS));
         container.setViewportView(buttonContainer);
 
@@ -243,6 +245,7 @@ public class Grades extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         panel1.add(jPanel1, gridBagConstraints);
 
+        gradeContainer.setBackground(new java.awt.Color(21, 21, 23));
         gradeContainer.setMaximumSize(null);
         gradeContainer.setMinimumSize(new java.awt.Dimension(1000, 500));
 

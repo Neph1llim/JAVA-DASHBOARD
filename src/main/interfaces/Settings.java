@@ -123,7 +123,7 @@ public class Settings extends javax.swing.JPanel {
         jLabel2.setText("Account Settings");
 
         settingsEmail.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        settingsEmail.setText("ianChTzy@gmail.coems");
+        settingsEmail.setText("XX-XXXXX@g.batstate-u.edu.ph");
         settingsEmail.addActionListener(this::settingsEmailActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
