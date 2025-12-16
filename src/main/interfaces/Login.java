@@ -1,5 +1,9 @@
 package main.interfaces;
 
+import backend.exceptions.AuthenticationException;
+import backend.exceptions.DatabaseException;
+import backend.model.User;
+import backend.services.UserService;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.BorderFactory;
@@ -380,7 +384,7 @@ public class Login extends javax.swing.JPanel {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
          // Get values
-        String email = emailTextField.getText().trim();
+           String email = emailTextField.getText().trim();
         String password = new String(passwordTextField.getPassword()).trim();
 
         // Check if it's placeholder text
@@ -400,19 +404,113 @@ public class Login extends javax.swing.JPanel {
             return;
         }
 
-        // Authentication here @Cyrus
-        if (email.equals("admin") && password.equals("admin")) {
+        // Disable login button during authentication
+        login.setEnabled(false);
+        String originalButtonText = login.getText();
+        login.setText("Logging in...");
+
+        try {
+            // Create UserService instance
+            UserService userService = new UserService();
+
+            // Generate username from email (same way as in UserService)
+            String username = generateUsernameFromEmail(email);
+
+            // Debug: Print what we're trying to login
+            System.out.println("Attempting login with:");
+            System.out.println("Email: " + email);
+            System.out.println("Generated username: " + username);
+            System.out.println("Password length: " + password.length());
+
+            // Authenticate user using UserService's login method
+            User loggedInUser = userService.login(username, password);
+
+            // Login successful!
+            System.out.println("Login successful! User ID: " + loggedInUser.getUserId());
+            System.out.println("Username: " + loggedInUser.getUsername());
+            System.out.println("Email: " + loggedInUser.getEmail());
+
+            // Reset button
+            login.setEnabled(true);
+            login.setText(originalButtonText);
             setBorder("both", true);
+
+            // Show success message
+            JOptionPane.showMessageDialog(this, 
+                "Login successful!\nWelcome, " + loggedInUser.getUsername() + "!",
+                "Success", 
+                JOptionPane.INFORMATION_MESSAGE);
+
+            // Clear fields
+            emailTextField.setText("");
+            passwordTextField.setText("");
+            setupPlaceholder();
+
+            // Navigate to HomePage
             if (mainFrame != null) {
                 mainFrame.showCard("HomePage");
-                setupPlaceholder();
             }
-        } else {
-            setBorder("both", false);
-            JOptionPane.showMessageDialog(this, "Enter Correct Email or Password!");
-        }
-    }//GEN-LAST:event_loginActionPerformed
 
+        } catch (AuthenticationException e) {
+            // Authentication failed
+            login.setEnabled(true);
+            login.setText(originalButtonText);
+            setBorder("both", false);
+
+            System.err.println("Authentication failed: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, 
+                "Invalid email or password. Please try again.",
+                "Login Failed", 
+                JOptionPane.ERROR_MESSAGE);
+
+        } catch (DatabaseException e) {
+            // Database error
+            login.setEnabled(true);
+            login.setText(originalButtonText);
+
+            System.err.println("Database error during login: " + e.getMessage());
+            e.printStackTrace();
+
+            JOptionPane.showMessageDialog(this, 
+                "Unable to connect to database. Please try again later.",
+                "Connection Error", 
+                JOptionPane.ERROR_MESSAGE);
+
+        } catch (Exception e) {
+            // Any other error
+            login.setEnabled(true);
+            login.setText(originalButtonText);
+
+            System.err.println("Unexpected error during login: " + e.getMessage());
+            e.printStackTrace();
+
+            JOptionPane.showMessageDialog(this, 
+                "An unexpected error occurred: " + e.getMessage(),
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }    
+    }//GEN-LAST:event_loginActionPerformed
+    
+    private String generateUsernameFromEmail(String email) {
+        if (email == null || !email.contains("@")) {
+            // Fallback if email is invalid
+            return "user_" + (System.currentTimeMillis() % 10000);
+        }
+
+        String username = email.split("@")[0];
+
+        // Clean up - remove special characters, keep only letters, numbers, underscores
+        username = username.replaceAll("[^a-zA-Z0-9_]", "_");
+
+        // Ensure proper length
+        if (username.length() < 3) {
+            username = username + "_" + (int)(Math.random() * 1000);
+        } else if (username.length() > 20) {
+            username = username.substring(0, 20);
+        }
+
+        return username;
+    }
     private void signupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupButtonMouseClicked
         handleSignupClick(); 
         setBorder("both", true);

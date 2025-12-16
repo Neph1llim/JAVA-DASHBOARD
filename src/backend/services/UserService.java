@@ -22,29 +22,79 @@ public class UserService {
     /**
      * Register a new user with validation
      */
-    public User register(String username, String email, String password, String confirmPassword, Integer courseId) 
+    public User register(String email, String password, Integer courseId) 
             throws ValidationException, DatabaseException, DuplicateEntryException {
         
-        // 1. Validate inputs
-        validateRegistration(username, email, password, confirmPassword);
+        //Validate inputs
+        validateRegistration(email, password);
         
-        // 2. Hash password
+        String username = generateUsernameFromEmail(email);
+        
+        //Hash password
         String passwordHash = PasswordUtil.hashPassword(password);
         
-        // 3. Create user object
-        User user = new User(username, email, passwordHash);
+        //Create user object
+        User user = new User(username, email, passwordHash); 
         user.setCourseId(courseId);
         
-        // 4. Save to database
+        //Save to database
         return userDao.create(user);
+    }
+    
+    /**
+     * Generate username from email (extract part before @)
+     */
+    private String generateUsernameFromEmail(String email) {
+        if (email == null || !email.contains("@")) {
+            // Fallback if email is invalid
+            return "user_" + (System.currentTimeMillis() % 10000);
+        }
+        
+        String username = email.split("@")[0];
+        
+        // Clean up - remove special characters, keep only letters, numbers, underscores
+        username = username.replaceAll("[^a-zA-Z0-9_]", "_");
+        
+        // Ensure proper length
+        if (username.length() < 3) {
+            username = username + "_" + (int)(Math.random() * 1000);
+        } else if (username.length() > 20) {
+            username = username.substring(0, 20);
+        }
+        
+        return username;
     }
     
     /**
      * Register without course ID
      */
-    public User register(String username, String email, String password, String confirmPassword) 
+    public User register(String email, String password) 
             throws ValidationException, DatabaseException, DuplicateEntryException {
-        return register(username, email, password, confirmPassword, null);
+        return register(email, password, null);
+    }
+    
+    /**
+     * NEW: Login user with email
+     */
+    public User loginWithEmail(String email, String password) 
+            throws AuthenticationException, DatabaseException {
+        
+        // 1. Find user by email
+        User user = userDao.findByEmail(email);
+        
+        if (user == null) {
+            throw new AuthenticationException("Invalid email or password");
+        }
+        
+        // 2. Verify password
+        if (!PasswordUtil.checkPassword(password, user.getPasswordHash())) {
+            throw new AuthenticationException("Invalid email or password");
+        }
+        
+        // 3. Set session
+        SessionManager.setCurrentUser(user);
+        
+        return user;
     }
     
     /**
@@ -208,14 +258,10 @@ public class UserService {
     }
     
     // Private validation methods
-    private void validateRegistration(String username, String email, String password, String confirmPassword) 
+    private void validateRegistration(String email, String password) 
             throws ValidationException {
         
         // Check required fields
-        if (username == null || username.trim().isEmpty()) {
-            throw new ValidationException("Username is required");
-        }
-        
         if (email == null || email.trim().isEmpty()) {
             throw new ValidationException("Email is required");
         }
@@ -224,23 +270,111 @@ public class UserService {
             throw new ValidationException("Password is required");
         }
         
-        // Validate formats
-        if (!ValidationUtil.isValidUsername(username)) {
-            throw new ValidationException("Username must be 3-20 characters (letters, numbers, underscore, space only)");
-        }
-        
+        // Validate email format
         if (!ValidationUtil.isValidEmail(email)) {
             throw new ValidationException("Invalid email format");
         }
         
         // Check password strength
         if (!PasswordUtil.isStrongPassword(password)) {
-            throw new ValidationException("Password must be at least 8 characters with uppercase, lowercase, and numbers");
-        }
-        
-        // Check password confirmation
-        if (!password.equals(confirmPassword)) {
-            throw new ValidationException("Passwords do not match");
+            throw new ValidationException(
+                "Password must be at least 8 characters with uppercase, lowercase, and numbers"
+            );
         }
     }
+    
+    /**
+    * Get current user details
+    */
+   public User getCurrentUserDetails() throws DatabaseException {
+       User user = getCurrentUser();
+       if (user == null) {
+           throw new DatabaseException("No user is logged in");
+       }
+
+       // Get fresh data from database
+       return userDao.findById(user.getUserId());
+   }
+
+   /**
+    * Update user account (username, email, and optionally password)
+    */
+   public boolean updateUserAccount(String newUsername, String newEmail, String newPassword) 
+           throws ValidationException, DatabaseException {
+
+       User currentUser = getCurrentUser();
+       if (currentUser == null) {
+           throw new DatabaseException("No user is logged in");
+       }
+
+       int userId = currentUser.getUserId();
+
+       // Validate inputs
+       if (!ValidationUtil.isValidUsername(newUsername)) {
+           throw new ValidationException("Invalid username format");
+       }
+
+       if (!ValidationUtil.isValidEmail(newEmail)) {
+           throw new ValidationException("Invalid email format");
+       }
+
+       // Get user from database
+       User user = userDao.findById(userId);
+       if (user == null) {
+           throw new DatabaseException("User not found");
+       }
+
+       // Check if new username is already taken by another user
+       User existingUser = userDao.findByUsername(newUsername);
+       if (existingUser != null && existingUser.getUserId() != userId) {
+           throw new ValidationException("Username already taken");
+       }
+
+       // Check if new email is already taken by another user
+       existingUser = userDao.findByEmail(newEmail);
+       if (existingUser != null && existingUser.getUserId() != userId) {
+           throw new ValidationException("Email already taken");
+       }
+
+       // Update user info
+       user.setUsername(newUsername);
+       user.setEmail(newEmail);
+
+       // Update password if provided
+       if (newPassword != null && !newPassword.trim().isEmpty()) {
+           if (!PasswordUtil.isStrongPassword(newPassword)) {
+               throw new ValidationException(
+                   "Password must be at least 8 characters with uppercase, lowercase, and numbers"
+               );
+           }
+           String passwordHash = PasswordUtil.hashPassword(newPassword);
+           user.setPasswordHash(passwordHash);
+       }
+
+       // Save to database
+       boolean updated = userDao.update(user);
+
+       // Update session with new user data
+       if (updated) {
+           SessionManager.setCurrentUser(user);
+       }
+
+       return updated;
+   }
+
+   /**
+    * Get current user's email
+    */
+   public String getCurrentUserEmail() {
+       User user = getCurrentUser();
+       return user != null ? user.getEmail() : "";
+   }
+
+   /**
+    * Get current user's username
+    */
+   public String getCurrentUsername() {
+       User user = getCurrentUser();
+       return user != null ? user.getUsername() : "";
+   }
 }

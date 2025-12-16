@@ -12,14 +12,19 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import main.MainFrame;
 
+//Backend imports
+import backend.services.UserService;
+import backend.model.User;
+
 public class Signup extends javax.swing.JPanel {
+
     /* Properties */
     String emailPlaceholder = "24-XXXXX@g.batstate-u.edu.ph";
     String passwordPlaceholder = "               ";
     Color initialText = new Color(204,204, 204);
     private final Color currentTextColor = Color.WHITE;
     
-    public Signup() {
+    public Signup() {  
         initComponents();
         setupPlaceholder();
         setupListeners();
@@ -289,34 +294,47 @@ public class Signup extends javax.swing.JPanel {
     }//GEN-LAST:event_RedirectLoginMouseClicked
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-          // Get values
-        String email = emailField.getText().trim();
-        String password = new String(passwordTextField.getPassword()).trim();
+        // Get values from fields
+        String email = emailField.getText();
+        String password = new String(passwordTextField.getPassword());
 
-        // Check if it's placeholder text
-        boolean isEmailPlaceholder = email.equals(emailPlaceholder);
-        boolean isPasswordPlaceholder = password.equals(passwordPlaceholder.trim());
+        // Trim whitespace
+        email = email.trim();
+        password = password.trim();
 
-        // Validation
-        if (email.isEmpty() || isEmailPlaceholder) {
-            setBorder("email", false);
-            JOptionPane.showMessageDialog(this, "Email is Required!");
+        // Basic validation
+        if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email is required!");
+            emailField.requestFocus();
             return;
         }
 
-        if (password.isEmpty() || isPasswordPlaceholder) {
-            setBorder("pass", false);
-            JOptionPane.showMessageDialog(this, "Password is Required!");
+        if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Password is required!");
+            passwordTextField.requestFocus();
             return;
         }
 
-        // Authentication here @Cyrus
-        if (email.equals("admin") && password.equals("admin")) {
-            setBorder("both", true);
+        // Create UserService and try to register
+        try {
+            UserService userService = new UserService();
+            User newUser = userService.register(email, password);
+
+            // Success
+            JOptionPane.showMessageDialog(this, 
+                "Registration successful! Username: " + newUser.getUsername());
+
+            // Clear fields
+            emailField.setText("");
+            passwordTextField.setText("");
+
+            // Navigate to login
             showPanel("login");
-        } else {
-            setBorder("both", false);
-            JOptionPane.showMessageDialog(this, "Enter Correct Email or Password!");
+
+        } catch (Exception e) {
+            // Show error
+            JOptionPane.showMessageDialog(this, 
+                "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_signupActionPerformed
 

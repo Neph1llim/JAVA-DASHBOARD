@@ -14,15 +14,11 @@ public class ExceptionTest {
         System.out.println("1. Testing invalid email registration...");
         try {
             User invalidEmailUser = userService.register(
-                "testuser", 
                 "invalid-email", 
-                "password123", 
                 "password123",  // Added confirmPassword
                 null            // Added courseId (null)
             );
             System.out.println("   ❌ Should have thrown ValidationException!");
-        } catch (ValidationException e) {
-            System.out.println("   ✅ Correctly threw ValidationException: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("   ❌ Wrong exception type: " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
@@ -31,15 +27,11 @@ public class ExceptionTest {
         System.out.println("\n2. Testing invalid username registration...");
         try {
             User invalidUser = userService.register(
-                "ab",  // Too short (3-20 chars required)
                 "valid@email.com", 
-                "password123", 
                 "password123",  // Added confirmPassword
                 null            // Added courseId (null)
             );
             System.out.println("   ❌ Should have thrown ValidationException!");
-        } catch (ValidationException e) {
-            System.out.println("   ✅ Correctly threw ValidationException: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("   ❌ Wrong exception type: " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
@@ -48,15 +40,11 @@ public class ExceptionTest {
         System.out.println("\n3. Testing password mismatch...");
         try {
             User passwordMismatchUser = userService.register(
-                "testuser123", 
                 "test@email.com", 
                 "password123", 
-                "differentpassword",  // Different from password
                 null
             );
             System.out.println("   ❌ Should have thrown ValidationException!");
-        } catch (ValidationException e) {
-            System.out.println("   ✅ Correctly threw ValidationException: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("   ❌ Wrong exception type: " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
@@ -82,9 +70,7 @@ public class ExceptionTest {
             String username = "testuser_" + timestamp.substring(timestamp.length() - 6);
             
             User validUser = userService.register(
-                username,
                 username + "@test.com",
-                "ValidPass123",
                 "ValidPass123",
                 null
             );

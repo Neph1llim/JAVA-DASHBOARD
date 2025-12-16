@@ -5,10 +5,69 @@ TODO:
 
 package main.interfaces;
 
+import javax.swing.*;
+import java.awt.*;
+import backend.services.UserService;
+import backend.model.User;
+import backend.exceptions.ValidationException;
+import backend.exceptions.DatabaseException;
+
 public class Settings extends javax.swing.JPanel {
+    private javax.swing.JButton changeAccountBtn;
+    private javax.swing.JLabel currentUserLabel;
+    
+    private UserService userService;
 
     public Settings() {
         initComponents();
+        userService = new UserService();
+    }
+    
+     /**
+     * Load current user data into form fields
+     */
+    private void loadUserData() {
+        try {
+            User currentUser = userService.getCurrentUser();
+            
+            if (currentUser != null) {
+                // Get fresh data from database
+                User userDetails = userService.getCurrentUserDetails();
+                
+                // Set current user label
+                currentUserLabel.setText("Account: " + userDetails.getUsername());
+                
+                // Set form fields
+                settingsUsername.setText(userDetails.getUsername());
+                settingsEmail.setText(userDetails.getEmail());
+                
+                // Clear password field for security
+                settingsPassword.setText("");
+                
+                System.out.println("Loaded user data:");
+                System.out.println("Username: " + userDetails.getUsername());
+                System.out.println("Email: " + userDetails.getEmail());
+                System.out.println("User ID: " + userDetails.getUserId());
+            } else {
+                JOptionPane.showMessageDialog(this,
+                    "No user is logged in. Please login first.",
+                    "Not Logged In",
+                    JOptionPane.WARNING_MESSAGE);
+                
+                // Clear fields
+                settingsUsername.setText("");
+                settingsEmail.setText("");
+                settingsPassword.setText("");
+                currentUserLabel.setText("Account: Not Logged In");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Unexpected error: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 
     /* Built-in codes and functions */
@@ -20,13 +79,13 @@ public class Settings extends javax.swing.JPanel {
         Options = new main.component.Panel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        settingsEmail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        button3 = new main.component.Button();
+        settingsPassword = new javax.swing.JPasswordField();
+        changeAccoutBtn = new main.component.Button();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        settingsUsername = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -63,8 +122,9 @@ public class Settings extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Account Settings");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        jTextField1.setText("ianChTzy@gmail.coems");
+        settingsEmail.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        settingsEmail.setText("ianChTzy@gmail.coems");
+        settingsEmail.addActionListener(this::settingsEmailActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,20 +134,22 @@ public class Settings extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Password");
 
-        jPasswordField1.setText("ZALZALAKOUH");
+        settingsPassword.setText("ZALZALAKOUH");
+        settingsPassword.addActionListener(this::settingsPasswordActionPerformed);
 
-        button3.setForeground(new java.awt.Color(255, 255, 255));
-        button3.setText("Login");
-        button3.setArc(15);
-        button3.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        changeAccoutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        changeAccoutBtn.setText("Login");
+        changeAccoutBtn.setArc(15);
+        changeAccoutBtn.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        changeAccoutBtn.addActionListener(this::changeAccoutBtnActionPerformed);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Username");
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField2.setText("Add username...");
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        settingsUsername.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        settingsUsername.setText("Add username...");
+        settingsUsername.addActionListener(this::settingsUsernameActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -101,7 +163,7 @@ public class Settings extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(139, 139, 139)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(changeAccoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -109,9 +171,9 @@ public class Settings extends javax.swing.JPanel {
                                     .addComponent(jLabel7))
                                 .addGap(101, 101, 101)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(settingsPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(settingsEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(settingsUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(139, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -121,18 +183,18 @@ public class Settings extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(settingsUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingsEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingsPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
-                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(changeAccoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -339,9 +401,205 @@ public class Settings extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox5ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void settingsUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsUsernameActionPerformed
+        String username = settingsUsername.getText().trim();
+    
+        if (username.isEmpty()) {
+            settingsUsername.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            JOptionPane.showMessageDialog(this, 
+                "Username cannot be empty",
+                "Validation Error",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Check username format (basic validation)
+        if (!username.matches("^[a-zA-Z0-9_]{3,20}$")) {
+            settingsUsername.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1));
+        } else {
+            settingsUsername.setBorder(BorderFactory.createLineBorder(Color.GREEN, 1));
+        }
+    }//GEN-LAST:event_settingsUsernameActionPerformed
+
+    private void settingsEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsEmailActionPerformed
+         String email = settingsEmail.getText().trim();
+    
+        if (email.isEmpty()) {
+            settingsEmail.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            JOptionPane.showMessageDialog(this, 
+                "Email cannot be empty",
+                "Validation Error",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Basic email validation
+        if (email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            settingsEmail.setBorder(BorderFactory.createLineBorder(Color.GREEN, 1));
+        } else {
+            settingsEmail.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1));
+            JOptionPane.showMessageDialog(this, 
+                "Email format appears invalid",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_settingsEmailActionPerformed
+
+    private void settingsPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsPasswordActionPerformed
+        String password = new String(settingsPassword.getPassword()).trim();
+    
+        if (!password.isEmpty()) {
+            // Check password strength
+            boolean hasUpper = password.matches(".*[A-Z].*");
+            boolean hasLower = password.matches(".*[a-z].*");
+            boolean hasDigit = password.matches(".*\\d.*");
+            boolean hasLength = password.length() >= 8;
+
+            if (hasUpper && hasLower && hasDigit && hasLength) {
+                settingsPassword.setBorder(BorderFactory.createLineBorder(Color.GREEN, 1));
+            } else {
+                settingsPassword.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1));
+
+                String message = "Password should have:\n";
+                if (!hasUpper) message += "• At least one uppercase letter\n";
+                if (!hasLower) message += "• At least one lowercase letter\n";
+                if (!hasDigit) message += "• At least one number\n";
+                if (!hasLength) message += "• At least 8 characters\n";
+
+                JOptionPane.showMessageDialog(this, 
+                    message,
+                    "Password Requirements",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            // Empty password field - user might not want to change password
+            settingsPassword.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        }
+    }//GEN-LAST:event_settingsPasswordActionPerformed
+
+    private void changeAccoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeAccoutBtnActionPerformed
+        changeAccountBtn.setEnabled(false);
+        String originalText = changeAccountBtn.getText();
+        changeAccountBtn.setText("Updating...");
+
+        // Get values from form
+        String username = settingsUsername.getText().trim();
+        String email = settingsEmail.getText().trim();
+        String password = new String(settingsPassword.getPassword()).trim();
+
+        // Validation
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Username is required",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            changeAccountBtn.setEnabled(true);
+            changeAccountBtn.setText(originalText);
+            return;
+        }
+
+        if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Email is required",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            changeAccountBtn.setEnabled(true);
+            changeAccountBtn.setText(originalText);
+            return;
+        }
+
+        // Show confirmation dialog
+        String passwordMessage = password.isEmpty() ? 
+            "Password will remain unchanged." : 
+            "Password will be updated.";
+
+        int confirmation = JOptionPane.showConfirmDialog(this,
+            "<html><b>Confirm Account Update</b><br><br>" +
+            "Username: " + username + "<br>" +
+            "Email: " + email + "<br>" +
+            passwordMessage + "<br><br>" +
+            "Are you sure you want to update your account?</html>",
+            "Confirm Update",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+
+        if (confirmation != JOptionPane.YES_OPTION) {
+            changeAccountBtn.setEnabled(true);
+            changeAccountBtn.setText(originalText);
+            return;
+        }
+
+        // Perform update in a separate thread to prevent GUI freezing
+        new Thread(() -> {
+            try {
+                // Call UserService to update account
+                boolean success = userService.updateUserAccount(username, email, password);
+
+                // Update UI on EDT
+                SwingUtilities.invokeLater(() -> {
+                    if (success) {
+                        JOptionPane.showMessageDialog(Settings.this,
+                            "<html><b>Account Updated Successfully!</b><br><br>" +
+                            "Your account information has been updated.</html>",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                        // Update current user label
+                        currentUserLabel.setText("Account: " + username);
+
+                        // Clear password field after successful update
+                        settingsPassword.setText("");
+
+                        // Reset borders
+                        settingsUsername.setBorder(UIManager.getBorder("TextField.border"));
+                        settingsEmail.setBorder(UIManager.getBorder("TextField.border"));
+                        settingsPassword.setBorder(UIManager.getBorder("PasswordField.border"));
+
+                    } else {
+                        JOptionPane.showMessageDialog(Settings.this,
+                            "Failed to update account. Please try again.",
+                            "Update Failed",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    // Re-enable button
+                    changeAccountBtn.setEnabled(true);
+                    changeAccountBtn.setText(originalText);
+                });
+
+            } catch (ValidationException e) {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(Settings.this,
+                        "Validation Error: " + e.getMessage(),
+                        "Validation Failed",
+                        JOptionPane.ERROR_MESSAGE);
+                    changeAccountBtn.setEnabled(true);
+                    changeAccountBtn.setText(originalText);
+                });
+
+            } catch (DatabaseException e) {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(Settings.this,
+                        "Database Error: " + e.getMessage(),
+                        "Database Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    changeAccountBtn.setEnabled(true);
+                    changeAccountBtn.setText(originalText);
+                });
+
+            } catch (Exception e) {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(Settings.this,
+                        "Unexpected Error: " + e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    changeAccountBtn.setEnabled(true);
+                    changeAccountBtn.setText(originalText);
+                    e.printStackTrace();
+                });
+            }
+        }).start();
+    }//GEN-LAST:event_changeAccoutBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -349,7 +607,7 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JPanel Settings;
     private main.component.Button button1;
     private main.component.Button button2;
-    private main.component.Button button3;
+    private main.component.Button changeAccoutBtn;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -368,11 +626,11 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField settingsEmail;
+    private javax.swing.JPasswordField settingsPassword;
+    private javax.swing.JTextField settingsUsername;
     // End of variables declaration//GEN-END:variables
 }
