@@ -384,6 +384,15 @@ private void removeSingleFile(main.component.Button button, File file) {
         JOptionPane.QUESTION_MESSAGE);
     
     if (confirm == JOptionPane.YES_OPTION) {
+        // FIRST: If this button was selected, visually deselect it before removing
+        if (selectedButtons.contains(button)) {
+            button.setBackground(null);
+            button.setOpaque(false);
+            button.setContentAreaFilled(false);
+            button.setBorder(null);
+            button.repaint();
+        }
+        
         // Remove from panel
         filePanel.remove(button);
         
@@ -392,8 +401,10 @@ private void removeSingleFile(main.component.Button button, File file) {
         selectedButtons.remove(button);
         originalButtonColors.remove(button);
         
-        // Update delete button text
-        updateDeleteButtonText();
+        // ONLY update delete button text if we ARE in selection mode
+        if (selectionMode) {
+            updateDeleteButtonText();
+        }
         
         // Refresh display
         filePanel.revalidate();
@@ -402,10 +413,13 @@ private void removeSingleFile(main.component.Button button, File file) {
 }
 
 private void updateDeleteButtonText() {
-    if (selectedButtons.isEmpty()) {
-        deleteButton.setText("Cancel Selection");
-    } else {
-        deleteButton.setText("Delete Selected (" + selectedButtons.size() + ")");
+    // Only update if we're in selection mode
+    if (selectionMode) {
+        if (selectedButtons.isEmpty()) {
+            deleteButton.setText("Cancel Selection");
+        } else {
+            deleteButton.setText("Delete Selected (" + selectedButtons.size() + ")");
+        }
     }
 }
 
