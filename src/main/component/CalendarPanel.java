@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package main.component;
 
 import javax.swing.*;
@@ -11,10 +7,6 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
-/**
- *
- * @author Cyrus Wilson
- */
 public class CalendarPanel extends javax.swing.JPanel {
     
     // Custom variables
@@ -32,8 +24,22 @@ public class CalendarPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taskList = new javax.swing.JList<>();
         calendarTable = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        taskList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(taskList);
+
+        jPanel2.add(jScrollPane1, java.awt.BorderLayout.LINE_START);
 
         setMinimumSize(new java.awt.Dimension(5, 0));
         setPreferredSize(new java.awt.Dimension(571, 81));
@@ -54,6 +60,7 @@ public class CalendarPanel extends javax.swing.JPanel {
                 "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"
             }
         ));
+        jTable1.setShowGrid(false);
         calendarTable.setViewportView(jTable1);
 
         add(calendarTable, java.awt.BorderLayout.CENTER);
@@ -62,14 +69,17 @@ public class CalendarPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane calendarTable;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JList<String> taskList;
     // End of variables declaration//GEN-END:variables
     
     private void initCalendar() {
         currentMonth = YearMonth.now();
         
         // Get the model from the ACTUAL table (jTable1)
-        tableModel = (DefaultTableModel) jTable1.getModel();
+        tableModel = (DefaultTableModel) jTable1.getModel();                                                                                                                                                
         
         // Set up the table
         jTable1.setRowHeight(50);
@@ -80,8 +90,27 @@ public class CalendarPanel extends javax.swing.JPanel {
         jTable1.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
         jTable1.setGridColor(Color.LIGHT_GRAY);
         
+        // Make the table transparent
+        jTable1.setOpaque(false);
+        jTable1.setBackground(new Color(0, 0, 0, 0));
+        
+        // Make grid completely transparent
+        jTable1.setGridColor(new Color(0, 0, 0, 0)); // Fully transparent
+        jTable1.setShowGrid(false); // Hide grid lines entirely
+        
+        // Make the table header transparent
+        jTable1.getTableHeader().setOpaque(false);
+        jTable1.getTableHeader().setBackground(new Color(0, 0, 0, 0));
+        jTable1.getTableHeader().setBorder(BorderFactory.createEmptyBorder());
+        
+        calendarTable.setBackground(new Color(0, 0, 0, 0));
+        
         updateCalendar();
     }
+    
+//    private void transparentTableHeader(){
+//        calendarTable.setBackground(new Color(0, 0, 0, 0));
+//    }
     
     public void setMonth(YearMonth month) {
         this.currentMonth = month;
@@ -119,39 +148,57 @@ public class CalendarPanel extends javax.swing.JPanel {
     
     // Custom cell renderer
     private class CalendarCellRenderer extends DefaultTableCellRenderer {
-        @Override
+         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            
-            Component c = super.getTableCellRendererComponent(
+
+            // Call parent method to get the component
+            JLabel label = (JLabel) super.getTableCellRendererComponent(
                 table, value, isSelected, hasFocus, row, column);
-            
-            c.setBackground(Color.WHITE);
-            c.setForeground(Color.BLACK);
-            setHorizontalAlignment(SwingConstants.CENTER);
-            
+
+            // Remove all borders (to prevent any visible grid lines)
+            label.setBorder(BorderFactory.createEmptyBorder());
+
+            // Make the label transparent
+            label.setOpaque(false);
+
+            // Center the text
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setVerticalAlignment(SwingConstants.CENTER);
+
             if (value instanceof Integer) {
                 int day = (Integer) value;
                 LocalDate date = currentMonth.atDay(day);
-                
-                // Highlight today
-                if (date.equals(LocalDate.now())) {
-                    c.setBackground(new Color(173, 216, 230)); // Light blue
-                }
-                
+
+                // Set text
+                label.setText(String.valueOf(day));
+
+                // Set foreground color (text color)
+                label.setForeground(Color.WHITE);
+
                 // Weekend colors
                 if (column == 0) { // Sunday
-                    c.setForeground(Color.RED);
+                    label.setForeground(Color.GRAY);
                 } else if (column == 6) { // Saturday
-                    c.setForeground(Color.BLUE);
+                    label.setForeground(Color.GRAY);
                 }
-                
-                setText(String.valueOf(day));
+
+                // Highlight today - make this cell opaque with background color
+                if (date.equals(LocalDate.now())) {
+                    label.setOpaque(true);
+                    label.setBackground(new Color(173, 216, 230, 200)); // Semi-transparent light blue
+                }
+
             } else {
-                setText("");
+                label.setText("");
+                label.setForeground(Color.WHITE);
             }
-            
-            return c;
+
+            // Optional: Add a subtle margin between cells for visual separation
+            // (without using visible grid lines)
+            label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+
+            return label;
         }
     }
 }
