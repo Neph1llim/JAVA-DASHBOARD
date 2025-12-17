@@ -78,7 +78,7 @@ private void setActionButtonFonts() {
         deleteButton.addActionListener(this::deleteButtonActionPerformed);
         actionPanel.add(deleteButton);
 
-        files.add(actionPanel, java.awt.BorderLayout.PAGE_END);
+        files.add(actionPanel, java.awt.BorderLayout.SOUTH);
 
         fileScrollPane.setBorder(null);
         fileScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -102,62 +102,62 @@ private void setActionButtonFonts() {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        if (!selectionMode) {
+            // Enter selection mode
+            selectionMode = true;
+            deleteButton.setBackground(new Color(214, 72, 72)); // Red color for selection mode
+            updateDeleteButtonText(); // This will set text to "Cancel Selection" initially
+
+            JOptionPane.showMessageDialog(this,
+                "Selection Mode Activated!\n\n" +
+                "• Click files to select/deselect (turns red)\n" +
+                "• Click 'Cancel Selection' to exit without deleting\n" +
+                "• Click 'Delete Selected' when ready to delete red files",
+                "Selection Mode",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            // Already in selection mode - check if files are selected
+            if (selectedButtons.isEmpty()) {
+                // No files selected, just cancel selection mode
+                exitSelectionMode();
+                JOptionPane.showMessageDialog(this,
+                    "Selection mode cancelled.",
+                    "Cancelled",
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Files are selected, show delete confirmation
+                int confirm = JOptionPane.showConfirmDialog(this,
+                    "Delete " + selectedButtons.size() + " selected file(s) from the list?\n" +
+                    "Files marked in red will be removed.\n" +
+                    "(This does NOT delete the actual files)",
+                    "Confirm Delete Selected",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    deleteSelectedFiles();
+                }
+            }
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
     private void addFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
         int result = fileChooser.showOpenDialog(this);
-        
+
         if (result == JFileChooser.APPROVE_OPTION) {
             File[] selectedFiles = fileChooser.getSelectedFiles();
-            
+
             for (File file : selectedFiles) {
                 createFileButton(file);
             }
-            
+
             filePanel.revalidate();
             filePanel.repaint();
         }
     }//GEN-LAST:event_addFileActionPerformed
-
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-    if (!selectionMode) {
-        // Enter selection mode
-        selectionMode = true;
-        deleteButton.setBackground(new Color(214, 72, 72)); // Red color for selection mode
-        updateDeleteButtonText(); // This will set text to "Cancel Selection" initially
-        
-        JOptionPane.showMessageDialog(this,
-            "Selection Mode Activated!\n\n" +
-            "• Click files to select/deselect (turns red)\n" +
-            "• Click 'Cancel Selection' to exit without deleting\n" +
-            "• Click 'Delete Selected' when ready to delete red files",
-            "Selection Mode",
-            JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        // Already in selection mode - check if files are selected
-        if (selectedButtons.isEmpty()) {
-            // No files selected, just cancel selection mode
-            exitSelectionMode();
-            JOptionPane.showMessageDialog(this,
-                "Selection mode cancelled.",
-                "Cancelled",
-                JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            // Files are selected, show delete confirmation
-            int confirm = JOptionPane.showConfirmDialog(this,
-                "Delete " + selectedButtons.size() + " selected file(s) from the list?\n" +
-                "Files marked in red will be removed.\n" +
-                "(This does NOT delete the actual files)",
-                "Confirm Delete Selected",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
-            
-            if (confirm == JOptionPane.YES_OPTION) {
-                deleteSelectedFiles();
-            }
-        }
-    }
-    }//GEN-LAST:event_deleteButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -300,7 +300,7 @@ private ImageIcon getFileIcon(File file) {
     }
     
     // For other file types, no icon (or add more as you get more icons)
-    return getIconIfExists("/main/resource/icons/defaultFile.png");
+    return getIconIfExists("/main/resource/icons/default.png");
 }
 
 // ADDED: Scale icon to desired size
@@ -385,6 +385,15 @@ private void removeSingleFile(main.component.Button button, File file) {
         JOptionPane.QUESTION_MESSAGE);
     
     if (confirm == JOptionPane.YES_OPTION) {
+        // FIRST: If this button was selected, visually deselect it before removing
+        if (selectedButtons.contains(button)) {
+            button.setBackground(null);
+            button.setOpaque(false);
+            button.setContentAreaFilled(false);
+            button.setBorder(null);
+            button.repaint();
+        }
+        
         // Remove from panel
         filePanel.remove(button);
         
@@ -393,8 +402,10 @@ private void removeSingleFile(main.component.Button button, File file) {
         selectedButtons.remove(button);
         originalButtonColors.remove(button);
         
-        // Update delete button text
-        updateDeleteButtonText();
+        // ONLY update delete button text if we ARE in selection mode
+        if (selectionMode) {
+            updateDeleteButtonText();
+        }
         
         // Refresh display
         filePanel.revalidate();
@@ -403,10 +414,13 @@ private void removeSingleFile(main.component.Button button, File file) {
 }
 
 private void updateDeleteButtonText() {
-    if (selectedButtons.isEmpty()) {
-        deleteButton.setText("Cancel Selection");
-    } else {
-        deleteButton.setText("Delete Selected (" + selectedButtons.size() + ")");
+    // Only update if we're in selection mode
+    if (selectionMode) {
+        if (selectedButtons.isEmpty()) {
+            deleteButton.setText("Cancel Selection");
+        } else {
+            deleteButton.setText("Delete Selected (" + selectedButtons.size() + ")");
+        }
     }
 }
 

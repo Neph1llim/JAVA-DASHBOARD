@@ -6,7 +6,7 @@ package main.component;
  */
 public class CalendarNav extends javax.swing.JPanel {
     
-    // Variables declaration - do not modify                     
+    // Variables declaration                     
     private javax.swing.JButton todayButton;
     
     // Your custom variables
@@ -17,24 +17,24 @@ public class CalendarNav extends javax.swing.JPanel {
         void onMonthChanged(java.time.YearMonth newMonth);
     }
 
-    /** Creates new form CalendarNav */
     public CalendarNav() {
         initComponents();
         initCustomComponents();
     }
     
-        private void initCustomComponents() {
+    private void initCustomComponents() {
         currentMonth = java.time.YearMonth.now();
-        listeners = new java.util.ArrayList<>();
-        updateDisplay();
+        listeners = new java.util.ArrayList<>(); 
 
-        // Add action listeners
+        monthLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         prevButton.addActionListener(evt -> prevButtonActionPerformed());
         nextButton.addActionListener(evt -> nextButtonActionPerformed());
+        
+        updateDisplay();   
     }
 
     private void prevButtonActionPerformed() {
-        currentMonth = currentMonth.minusMonths(1);
         updateDisplay();
         fireMonthChanged();
     }
@@ -79,12 +79,15 @@ public class CalendarNav extends javax.swing.JPanel {
         setBackground(new java.awt.Color(102, 102, 102));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(40, 40, 40));
 
+        prevButton.setBackground(new java.awt.Color(40, 40, 40));
         prevButton.setText("◀");
         prevButton.addActionListener(this::prevButtonActionPerformed);
 
+        nextButton.setBackground(new java.awt.Color(40, 40, 40));
         nextButton.setText("▶");
+        nextButton.addActionListener(this::nextButtonActionPerformed);
 
         monthLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         monthLabel.setText("Month");
@@ -117,12 +120,16 @@ public class CalendarNav extends javax.swing.JPanel {
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
         currentMonth = currentMonth.minusMonths(1);
         updateDisplay();
         fireMonthChanged();
     }//GEN-LAST:event_prevButtonActionPerformed
+
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nextButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
