@@ -9,8 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.text.StyledDocument;
 
+/* Backend imports */
+import backend.services.NoteService;
+
+import backend.exceptions.AuthenticationException;
+import backend.exceptions.DatabaseException;
+import backend.exceptions.ValidationException;
+
 public class Notes extends javax.swing.JPanel {
-    private static final int MIN_CARD_WIDTH = 280;  // Minimum width
+    private static final int MIN_CARD_WIDTH = 280;  // Minimum width    
     private static final int MAX_CARD_WIDTH = 355;  // Maximum width  
     private static final int CARD_HEIGHT = 300;     // Fixed height
     private static final int HORIZONTAL_GAP = 3;
@@ -21,10 +28,14 @@ public class Notes extends javax.swing.JPanel {
     private JScrollPane scrollPane;
     private List<Note> noteCards = new ArrayList<>();
     private Note noteToEdit = null; // Track which note is being edited
+    private NoteService noteService; // Backend service
+    private java.util.Map<Integer, Integer> noteIdMap = new java.util.HashMap<>(); // Maps UI note index to backend note ID
     
     public Notes() {
         initComponents();
         setupNotePanel();
+        this.noteService = new NoteService();
+        // Don't load notes here - wait until user is logged in
     }
     
     private void setupNotePanel() {
@@ -65,10 +76,98 @@ public class Notes extends javax.swing.JPanel {
         notePanel.repaint();
     }
     
+    /**
+     * Called by Login interface after successful authentication
+     * This method loads notes into the panel
+     */
+    public void onUserLoggedIn() {
+        loadNotesFromDatabase();
+    }
+    
+    /**
+     * Loads notes from database and populates the panel
+     */
+    private void loadNotesFromDatabase() {
+        try {
+            // Clear old notes first
+            clearAllNotes();
+            
+            // Then load new notes
+            List<backend.model.Note> dbNotes = noteService.getUserNotes();
+            
+            for (backend.model.Note dbNote : dbNotes) {
+                Note uiNote = convertToUINote(dbNote);
+                addNoteCardWithoutSave(uiNote, dbNote.getNoteId());
+            }
+        } catch (AuthenticationException e) {
+            JOptionPane.showMessageDialog(this, "Please login first to view notes", "Authentication Error", JOptionPane.ERROR_MESSAGE);
+        } catch (DatabaseException e) {
+            JOptionPane.showMessageDialog(this, "Error loading notes: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    /**
+     * Converts backend Note model to UI Note component
+     */
+    private Note convertToUINote(backend.model.Note dbNote) {
+        Note uiNote = new Note(dbNote.getTitle(), dbNote.getContent());
+        uiNote.setNoteId(dbNote.getNoteId());
+        uiNote.setPinned(dbNote.isPinned());
+        return uiNote;
+    }
+    
     public void addNoteCard(Note noteCard) {
         if (cardsContainer != null) {
-            // Configure the note for display in the Notes panel
+            try {
+                // Save note to database first
+                backend.model.Note dbNote = noteService.createNote(
+                    noteCard.getNoteTitle(), 
+                    noteCard.getNoteContent(), 
+                    noteCard.isPinned()
+                );
+                
+                // Set the backend note ID on the UI component
+                noteCard.setNoteId(dbNote.getNoteId());
+                
+                // Configure the note for display in the Notes panel
+                configureNoteForDisplay(noteCard);
+
+                noteCard.setNoteClickListener(new Note.NoteClickListener() {
+                    @Override
+                    public void onNoteClicked(Note note) {
+                        editNoteCard(note);
+                    }
+                });
+
+                // Track the note ID mapping
+                noteIdMap.put(noteCards.size(), dbNote.getNoteId());
+                noteCards.add(noteCard);
+                
+                // Reorganize all cards with dynamic sizing
+                reorganizeCards();
+                
+                // Scroll to show new card
+                SwingUtilities.invokeLater(() -> {
+                    JScrollBar vertical = scrollPane.getVerticalScrollBar();
+                    vertical.setValue(vertical.getMaximum());
+                });
+            } catch (AuthenticationException e) {
+                JOptionPane.showMessageDialog(this, "Please login first to create notes", "Authentication Error", JOptionPane.ERROR_MESSAGE);
+            } catch (ValidationException e) {
+                JOptionPane.showMessageDialog(this, "Invalid note: " + e.getMessage(), "Validation Error", JOptionPane.WARNING_MESSAGE);
+            } catch (DatabaseException e) {
+                JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    /**
+     * Add note card without saving to database (used for loading existing notes)
+     */
+    private void addNoteCardWithoutSave(Note noteCard, int noteId) {
+        if (cardsContainer != null) {
             configureNoteForDisplay(noteCard);
+            noteIdMap.put(noteCards.size(), noteId);
 
             noteCard.setNoteClickListener(new Note.NoteClickListener() {
                 @Override
@@ -78,11 +177,8 @@ public class Notes extends javax.swing.JPanel {
             });
 
             noteCards.add(noteCard);
-            
-            // Reorganize all cards with dynamic sizing
             reorganizeCards();
             
-            // Scroll to show new card
             SwingUtilities.invokeLater(() -> {
                 JScrollBar vertical = scrollPane.getVerticalScrollBar();
                 vertical.setValue(vertical.getMaximum());
@@ -194,6 +290,10 @@ public class Notes extends javax.swing.JPanel {
         // Store reference to note being edited
         noteToEdit = noteCard;
         
+        // Get the backend note ID
+        int uiNoteIndex = noteCards.indexOf(noteCard);
+        Integer noteId = noteIdMap.get(uiNoteIndex);
+        
         // Create editor with existing note content
         AddNotes editNoteEditor = new AddNotes(this, noteCard);
         
@@ -206,14 +306,31 @@ public class Notes extends javax.swing.JPanel {
      */
     public void updateNoteCard(String newTitle, String newContent, StyledDocument styledDoc) {
         if (noteToEdit != null) {
-            // Update the existing note directly
-            noteToEdit.updateContent(newTitle, newContent, styledDoc);
-
-            // Clear reference
-            noteToEdit = null;
-
-            // Refresh container
-            reorganizeCards();
+            try {
+                int uiNoteIndex = noteCards.indexOf(noteToEdit);
+                Integer noteId = noteIdMap.get(uiNoteIndex);
+                
+                if (noteId != null) {
+                    // Update in database
+                    boolean success = noteService.updateNote(noteId, newTitle, newContent, noteToEdit.isPinned());
+                    
+                    if (success) {
+                        // Update UI
+                        noteToEdit.updateContent(newTitle, newContent, styledDoc);
+                        reorganizeCards();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Failed to update note", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                
+                noteToEdit = null;
+            } catch (AuthenticationException e) {
+                JOptionPane.showMessageDialog(this, "Please login first", "Authentication Error", JOptionPane.ERROR_MESSAGE);
+            } catch (ValidationException e) {
+                JOptionPane.showMessageDialog(this, "Invalid input: " + e.getMessage(), "Validation Error", JOptionPane.WARNING_MESSAGE);
+            } catch (DatabaseException e) {
+                JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
     
@@ -229,8 +346,27 @@ public class Notes extends javax.swing.JPanel {
      */
     public void removeNoteCard(Note noteCard) {
         if (cardsContainer != null && noteCards.contains(noteCard)) {
-            noteCards.remove(noteCard);
-            reorganizeCards();
+            try {
+                int uiNoteIndex = noteCards.indexOf(noteCard);
+                Integer noteId = noteIdMap.get(uiNoteIndex);
+                
+                if (noteId != null) {
+                    // Delete from database
+                    boolean success = noteService.deleteNote(noteId);
+                    
+                    if (success) {
+                        noteCards.remove(noteCard);
+                        noteIdMap.remove(uiNoteIndex);
+                        reorganizeCards();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Failed to delete note", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } catch (AuthenticationException e) {
+                JOptionPane.showMessageDialog(this, "Please login first", "Authentication Error", JOptionPane.ERROR_MESSAGE);
+            } catch (DatabaseException e) {
+                JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
     
@@ -312,7 +448,10 @@ public class Notes extends javax.swing.JPanel {
      */
     public void clearAllNotes() {
         noteCards.clear();
-        reorganizeCards();
+        noteIdMap.clear();
+        cardsContainer.removeAll();
+        cardsContainer.revalidate();
+        cardsContainer.repaint();
     }
     
     /**

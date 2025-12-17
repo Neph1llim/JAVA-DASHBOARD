@@ -19,7 +19,6 @@ public class calendarTask extends javax.swing.JPanel {
 
         calendarTaskLabel.setText("YOUR TASKS");
 
-        calendarTaskArea.setText("jTextField1");
         calendarTaskArea.addActionListener(this::calendarTaskAreaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
