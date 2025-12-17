@@ -18,7 +18,7 @@ public interface UserDao {
     // Validation
     boolean usernameExists(String username) throws DatabaseException;
     boolean emailExists(String email) throws DatabaseException;
-    
+        
     // Search functionality
     List<User> searchUsers(String keyword) throws DatabaseException;
     
