@@ -18,12 +18,12 @@ public class GradeTab extends javax.swing.JPanel {
         findPanels();
         setupLayout();
         
-        this.courseId = -1; // No database ID
+        this.courseId = -1;
         initializeServices();
     }
     
     private void findPanels() {
-        // Find centerPanel and buttonPanel from contentPanel
+        // Finds the centerPanel and buttonPanel from contentPanel
         for (java.awt.Component comp : contentPanel.getComponents()) {
             if (comp.getName() != null && comp.getName().equals("centerPanel")) {
                 centerPanel = (javax.swing.JPanel) comp;
@@ -57,7 +57,7 @@ public class GradeTab extends javax.swing.JPanel {
             buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
             buttonPanel.setOpaque(false);
             
-            // Find and move button1 to buttonPanel
+            // Finds and move button1 to buttonPanel
             for (java.awt.Component comp : contentPanel.getComponents()) {
                 if (comp instanceof main.component.Button && comp.getName() != null && comp.getName().equals("button1")) {
                     contentPanel.remove(comp);
@@ -73,152 +73,152 @@ public class GradeTab extends javax.swing.JPanel {
     }
     
     private void saveAllAssessments() {
-    if (courseId <= 0) {
-        JOptionPane.showMessageDialog(this,
-            "This course is not saved to the database yet. Please save the course first.",
-            "Course Not Saved",
-            JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        if (courseId <= 0) {
+            JOptionPane.showMessageDialog(this,
+                "This course is not saved to the database yet. Please save the course first.",
+                "Course Not Saved",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    if (assessmentService == null) {
-        JOptionPane.showMessageDialog(this,
-            "Unable to connect to database service. Please check your connection.",
-            "Service Error",
-            JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    int savedCount = 0;
-    int errorCount = 0;
-    StringBuilder errorMessages = new StringBuilder();
-    
-    // Check if there are any assessments to save
-    int assessmentCount = 0;
-    for (java.awt.Component comp : centerPanel.getComponents()) {
-        if (comp instanceof AddGrade) {
-            assessmentCount++;
-        }
-    }
-    
-    if (assessmentCount == 0) {
-        JOptionPane.showMessageDialog(this,
-            "No assessments found to save. Please add assessments first.",
-            "No Assessments",
-            JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
-    
-    // Collect all AddGrade components from centerPanel
-    for (java.awt.Component comp : centerPanel.getComponents()) {
-        if (comp instanceof AddGrade) {
-            AddGrade grade = (AddGrade) comp;
-            
-            // Call calculateGrade to ensure latest values are calculated
-            grade.calculateGrade();
-            
-            // Validate the grade entry
-            if (!grade.isValidEntry()) {
-                errorCount++;
-                errorMessages.append("• Invalid grade calculation for: ")
-                            .append(grade.getAssessmentName()).append("\n");
-                continue;
-            }
-            
-            // Check for empty assessment name
-            String assessmentName = grade.getAssessmentName().trim();
-            if (assessmentName.isEmpty() || assessmentName.equals("Enter Assessment Name")) {
-                errorCount++;
-                errorMessages.append("• Missing assessment name\n");
-                continue;
-            }
-            
-            try {
-                // Get values including the CALCULATED GRADE
-                double score = Double.parseDouble(grade.getScore());
-                double maxScore = Double.parseDouble(grade.getMaxScore());
-                double percentage = grade.getPercentageValue();
-                double calculatedGrade = grade.getGradeValue();  // GET THE CALCULATED GRADE
-                
-                // Validate percentage range
-                if (percentage < 0 || percentage > 100) {
-                    errorCount++;
-                    errorMessages.append("• Invalid percentage for: ").append(assessmentName)
-                                .append(" (must be 0-100)\n");
-                    continue;
-                }
-                
-                // Validate score <= maxScore
-                if (score > maxScore) {
-                    errorCount++;
-                    errorMessages.append("• Score cannot exceed max score for: ")
-                                .append(assessmentName).append("\n");
-                    continue;
-                }
-                
-                // Validate maxScore > 0
-                if (maxScore <= 0) {
-                    errorCount++;
-                    errorMessages.append("• Max score must be > 0 for: ")
-                                .append(assessmentName).append("\n");
-                    continue;
-                }
-                
-                // Save to database WITH CALCULATED GRADE
-                Assessment saved = assessmentService.saveAssessment(
-                    courseId, assessmentName, score, maxScore, percentage, calculatedGrade);
-                
-                if (saved != null) {
-                    savedCount++;
-                    System.out.println("Saved assessment: " + assessmentName + 
-                                     " - Percentage: " + percentage + 
-                                     " - Calculated Grade: " + calculatedGrade);
-                } else {
-                    errorCount++;
-                    errorMessages.append("• Failed to save: ").append(assessmentName).append("\n");
-                }
-                
-            } catch (NumberFormatException e) {
-                errorCount++;
-                errorMessages.append("• Invalid number format for: ").append(assessmentName).append("\n");
-            } catch (Exception e) {
-                errorCount++;
-                errorMessages.append("• Error saving ").append(assessmentName)
-                            .append(": ").append(e.getMessage()).append("\n");
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    // SHOW SUMMARY MESSAGE TO USER
-    if (errorCount == 0) {
-        if (savedCount > 0) {
+        if (assessmentService == null) {
             JOptionPane.showMessageDialog(this,
-                "Successfully saved " + savedCount + " assessment(s).",
-                "Save Successful",
+                "Unable to connect to database service. Please check your connection.",
+                "Service Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int savedCount = 0;
+        int errorCount = 0;
+        StringBuilder errorMessages = new StringBuilder();
+
+        // Check if there are any assessments to save
+        int assessmentCount = 0;
+        for (java.awt.Component comp : centerPanel.getComponents()) {
+            if (comp instanceof AddGrade) {
+                assessmentCount++;
+            }
+        }
+
+        if (assessmentCount == 0) {
+            JOptionPane.showMessageDialog(this,
+                "No assessments found to save. Please add assessments first.",
+                "No Assessments",
                 JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Collect all AddGrade components from centerPanel
+        for (java.awt.Component comp : centerPanel.getComponents()) {
+            if (comp instanceof AddGrade) {
+                AddGrade grade = (AddGrade) comp;
+
+                // Call calculateGrade to ensure latest values are calculated
+                grade.calculateGrade();
+
+                // Validate the grade entry
+                if (!grade.isValidEntry()) {
+                    errorCount++;
+                    errorMessages.append("• Invalid grade calculation for: ")
+                                .append(grade.getAssessmentName()).append("\n");
+                    continue;
+                }
+
+                // Check for empty assessment name
+                String assessmentName = grade.getAssessmentName().trim();
+                if (assessmentName.isEmpty() || assessmentName.equals("Enter Assessment Name")) {
+                    errorCount++;
+                    errorMessages.append("• Missing assessment name\n");
+                    continue;
+                }
+
+                try {
+                    // Get values including the CALCULATED GRADE
+                    double score = Double.parseDouble(grade.getScore());
+                    double maxScore = Double.parseDouble(grade.getMaxScore());
+                    double percentage = grade.getPercentageValue();
+                    double calculatedGrade = grade.getGradeValue();  // GET THE CALCULATED GRADE
+
+                    // Validate percentage range
+                    if (percentage < 0 || percentage > 100) {
+                        errorCount++;
+                        errorMessages.append("• Invalid percentage for: ").append(assessmentName)
+                                    .append(" (must be 0-100)\n");
+                        continue;
+                    }
+
+                    // Validate score <= maxScore
+                    if (score > maxScore) {
+                        errorCount++;
+                        errorMessages.append("• Score cannot exceed max score for: ")
+                                    .append(assessmentName).append("\n");
+                        continue;
+                    }
+
+                    // Validate maxScore > 0
+                    if (maxScore <= 0) {
+                        errorCount++;
+                        errorMessages.append("• Max score must be > 0 for: ")
+                                    .append(assessmentName).append("\n");
+                        continue;
+                    }
+
+                    // Save to database WITH CALCULATED GRADE
+                    Assessment saved = assessmentService.saveAssessment(
+                        courseId, assessmentName, score, maxScore, percentage, calculatedGrade);
+
+                    if (saved != null) {
+                        savedCount++;
+                        System.out.println("Saved assessment: " + assessmentName + 
+                                         " - Percentage: " + percentage + 
+                                         " - Calculated Grade: " + calculatedGrade);
+                    } else {
+                        errorCount++;
+                        errorMessages.append("• Failed to save: ").append(assessmentName).append("\n");
+                    }
+
+                } catch (NumberFormatException e) {
+                    errorCount++;
+                    errorMessages.append("• Invalid number format for: ").append(assessmentName).append("\n");
+                } catch (Exception e) {
+                    errorCount++;
+                    errorMessages.append("• Error saving ").append(assessmentName)
+                                .append(": ").append(e.getMessage()).append("\n");
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // SHOWS THE SUMMARY MESSAGE TO USER
+        if (errorCount == 0) {
+            if (savedCount > 0) {
+                JOptionPane.showMessageDialog(this,
+                    "Successfully saved " + savedCount + " assessment(s).",
+                    "Save Successful",
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                    "No assessments were saved. Please check your inputs.",
+                    "No Data Saved",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
+            // Show error summary
+            String errorSummary = "Encountered " + errorCount + " error(s) while saving:\n\n" 
+                               + errorMessages.toString();
+
+            // Truncate if too long
+            if (errorSummary.length() > 500) {
+                errorSummary = errorSummary.substring(0, 500) + "\n... (more errors truncated)";
+            }
+
             JOptionPane.showMessageDialog(this,
-                "No assessments were saved. Please check your inputs.",
-                "No Data Saved",
-                JOptionPane.INFORMATION_MESSAGE);
+                errorSummary,
+                "Save Errors",
+                JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        // Show error summary
-        String errorSummary = "Encountered " + errorCount + " error(s) while saving:\n\n" 
-                           + errorMessages.toString();
-        
-        // Truncate if too long
-        if (errorSummary.length() > 500) {
-            errorSummary = errorSummary.substring(0, 500) + "\n... (more errors truncated)";
-        }
-        
-        JOptionPane.showMessageDialog(this,
-            errorSummary,
-            "Save Errors",
-            JOptionPane.ERROR_MESSAGE);
     }
-}
     
     private void initializeServices() {
         if (courseId > 0) {

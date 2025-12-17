@@ -11,8 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import main.MainFrame;
-
-//Backend imports
 import backend.services.UserService;
 import backend.model.User;
 

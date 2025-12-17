@@ -11,8 +11,6 @@ public class Assessment {
     private double percentage;
     private double calculatedGrade;
     private LocalDate createdAt;
-    
-    // Constructors
     public Assessment() {}
     
     public Assessment(int courseId, String assessmentName, double score, 

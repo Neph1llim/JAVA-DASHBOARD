@@ -59,7 +59,7 @@ public class NoteService {
      * Get note by ID (with permission check)
      */
     public Note getNoteById(int noteId) 
-            throws AuthenticationException, ValidationException, DatabaseException {
+        throws AuthenticationException, ValidationException, DatabaseException {
         
         // Check authentication
         if (!SessionManager.isLoggedIn()) {

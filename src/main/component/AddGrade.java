@@ -25,16 +25,15 @@ public class AddGrade extends javax.swing.JPanel {
     return assessment;
 }
 
-// Add method to get assessment data
-public Object[] getAssessmentData() {
-    return new Object[] {
-        getAssessmentName(),
-        getScore(),
-        getMaxScore(),
-        getPercentage(),
-        getCalculatedGrade()
-    };
-}
+    public Object[] getAssessmentData() {
+        return new Object[] {
+            getAssessmentName(),
+            getScore(),
+            getMaxScore(),
+            getPercentage(),
+            getCalculatedGrade()
+        };
+    }
     
     private void setupDefaults() {
         // Placeholder text
