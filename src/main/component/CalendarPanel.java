@@ -9,13 +9,8 @@ import java.time.YearMonth;
 
 public class CalendarPanel extends javax.swing.JPanel {
     
-    // Custom variables
     private DefaultTableModel tableModel;
     private YearMonth currentMonth;
-
-    /**
-     * Creates new form CalendarPanel
-     */
     public CalendarPanel() {
         initComponents();
         initCalendar();
@@ -108,10 +103,6 @@ public class CalendarPanel extends javax.swing.JPanel {
         updateCalendar();
     }
     
-//    private void transparentTableHeader(){
-//        calendarTable.setBackground(new Color(0, 0, 0, 0));
-//    }
-    
     public void setMonth(YearMonth month) {
         this.currentMonth = month;
         updateCalendar();
@@ -144,25 +135,18 @@ public class CalendarPanel extends javax.swing.JPanel {
         }
         
         jTable1.repaint();
-    }
-    
+    }  
     // Custom cell renderer
     private class CalendarCellRenderer extends DefaultTableCellRenderer {
          @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
+            boolean isSelected, boolean hasFocus, int row, int column) {
 
-            // Call parent method to get the component
             JLabel label = (JLabel) super.getTableCellRendererComponent(
                 table, value, isSelected, hasFocus, row, column);
 
-            // Remove all borders (to prevent any visible grid lines)
             label.setBorder(BorderFactory.createEmptyBorder());
-
-            // Make the label transparent
             label.setOpaque(false);
-
-            // Center the text
             label.setHorizontalAlignment(SwingConstants.CENTER);
             label.setVerticalAlignment(SwingConstants.CENTER);
 
@@ -170,20 +154,16 @@ public class CalendarPanel extends javax.swing.JPanel {
                 int day = (Integer) value;
                 LocalDate date = currentMonth.atDay(day);
 
-                // Set text
                 label.setText(String.valueOf(day));
 
-                // Set foreground color (text color)
                 label.setForeground(Color.WHITE);
 
-                // Weekend colors
                 if (column == 0) { // Sunday
                     label.setForeground(Color.GRAY);
                 } else if (column == 6) { // Saturday
                     label.setForeground(Color.GRAY);
                 }
 
-                // Highlight today - make this cell opaque with background color
                 if (date.equals(LocalDate.now())) {
                     label.setOpaque(true);
                     label.setBackground(new Color(173, 216, 230, 200)); // Semi-transparent light blue
@@ -193,9 +173,6 @@ public class CalendarPanel extends javax.swing.JPanel {
                 label.setText("");
                 label.setForeground(Color.WHITE);
             }
-
-            // Optional: Add a subtle margin between cells for visual separation
-            // (without using visible grid lines)
             label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
             return label;

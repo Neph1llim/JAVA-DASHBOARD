@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.text.StyledDocument;
 import main.interfaces.Notes;
 
 public class cardCarousel extends javax.swing.JPanel {

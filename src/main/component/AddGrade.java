@@ -6,10 +6,6 @@ package main.component;
 
 import backend.model.Assessment;
 
-/**
- *
- * @author charles cua
- */
 public class AddGrade extends javax.swing.JPanel {
 
     private double percentageValue;
@@ -33,16 +29,15 @@ public class AddGrade extends javax.swing.JPanel {
     return assessment;
 }
 
-// Add method to get assessment data
-public Object[] getAssessmentData() {
-    return new Object[] {
-        getAssessmentName(),
-        getScore(),
-        getMaxScore(),
-        getPercentage(),
-        getCalculatedGrade()
-    };
-}
+    public Object[] getAssessmentData() {
+        return new Object[] {
+            getAssessmentName(),
+            getScore(),
+            getMaxScore(),
+            getPercentage(),
+            getCalculatedGrade()
+        };
+    }
     
     private void setupDefaults() {
         // Set placeholder text
@@ -65,7 +60,7 @@ public Object[] getAssessmentData() {
         jTextField4.addActionListener(e -> calculateGrade());
     }
     
-    void calculateGrade() {
+    public void calculateGrade() {
         try {
             // Get values from text fields
             String scoreText = jTextField2.getText().trim();

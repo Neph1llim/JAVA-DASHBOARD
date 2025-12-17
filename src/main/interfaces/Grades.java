@@ -186,7 +186,7 @@ public class Grades extends javax.swing.JPanel {
         }
 
         // Store the course name and tab before deletion
-        String courseNameToDelete = currentTab;  // Store this before any changes
+        String courseNameToDelete = currentTab;
         int indexToDelete = subName.indexOf(courseNameToDelete);
 
         if (indexToDelete == -1) {
@@ -217,7 +217,7 @@ public class Grades extends javax.swing.JPanel {
 
         int courseId = currentGradeTab.getCourseId();
 
-        // Ask for confirmation
+        // Ask for confirmation before deleting
         String message;
         if (courseId > 0) {
             message = String.format(

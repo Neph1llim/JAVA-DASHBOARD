@@ -225,22 +225,17 @@ public class Note extends javax.swing.JPanel {
     
     private NoteClickListener clickListener;
     
-        
-    // Add a getter method
     public NoteClickListener getNoteClickListener() {
         return clickListener;
     }
-    
-    // Add a method to remove click listener (optional but good practice)
+
     public void removeNoteClickListener() {
         this.clickListener = null;
-        // You might also want to remove the mouse listeners here
         for (MouseListener ml : this.getMouseListeners()) {
             this.removeMouseListener(ml);
         }
     }
     
-    // Add this method to set click listener
     public void setNoteClickListener(NoteClickListener listener) {
         this.clickListener = listener;
         

@@ -12,7 +12,6 @@ import javax.swing.border.Border;
 import main.MainFrame;
 
 public class Login extends javax.swing.JPanel {
-    /* Properties */
     String emailPlaceholder = "24-XXXXX@g.batstate-u.edu.ph";
     String passwordPlaceholder = "               ";
     Color initialText = new Color(204,204, 204);
@@ -25,8 +24,7 @@ public class Login extends javax.swing.JPanel {
         setupListeners();
         setBorder("both", true);
     }
-    
-    /* Methods */
+
     public void setMainFrame(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
     }
@@ -384,7 +382,7 @@ public class Login extends javax.swing.JPanel {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
          // Get values
-           String email = emailTextField.getText().trim();
+        String email = emailTextField.getText().trim();
         String password = new String(passwordTextField.getPassword()).trim();
 
         // Check if it's placeholder text

@@ -22,7 +22,6 @@ public class Notes extends javax.swing.JPanel {
     private List<Note> noteCards = new ArrayList<>();
     private Note noteToEdit = null; // Track which note is being edited
     
-    /* Constructors*/
     public Notes() {
         initComponents();
         setupNotePanel();
@@ -39,20 +38,16 @@ public class Notes extends javax.swing.JPanel {
             }
         };
         
-        cardsContainer.setBackground(new Color(21, 21, 23)); // Match your dark theme
+        cardsContainer.setBackground(new Color(21, 21, 23));
         cardsContainer.setOpaque(true);
-
-        // Create scroll pane
         scrollPane = new JScrollPane(cardsContainer);
         scrollPane.setBorder(null);
         scrollPane.setOpaque(true);
         scrollPane.getViewport().setOpaque(true);
-        scrollPane.getViewport().setBackground(new Color(21, 21, 23)); // Match dark theme
+        scrollPane.getViewport().setBackground(new Color(21, 21, 23));
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        
-        // Add component listener to adjust layout when viewport resizes
         scrollPane.getViewport().addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -60,10 +55,9 @@ public class Notes extends javax.swing.JPanel {
             }
         });
 
-        // Clear and setup notePanel
         notePanel.removeAll();
         notePanel.setOpaque(true);
-        notePanel.setBackground(new Color(21, 21, 23)); // Match dark theme
+        notePanel.setBackground(new Color(21, 21, 23));
         notePanel.setLayout(new BorderLayout());
         notePanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -71,23 +65,18 @@ public class Notes extends javax.swing.JPanel {
         notePanel.repaint();
     }
     
-    /**
-     * Adds a new note card to the grid
-     */
     public void addNoteCard(Note noteCard) {
         if (cardsContainer != null) {
             // Configure the note for display in the Notes panel
             configureNoteForDisplay(noteCard);
-            
-            // Add click listener for editing
+
             noteCard.setNoteClickListener(new Note.NoteClickListener() {
                 @Override
                 public void onNoteClicked(Note note) {
                     editNoteCard(note);
                 }
             });
-            
-            // Add to list
+
             noteCards.add(noteCard);
             
             // Reorganize all cards with dynamic sizing
