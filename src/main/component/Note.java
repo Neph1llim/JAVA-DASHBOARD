@@ -367,6 +367,7 @@ public class Note extends javax.swing.JPanel {
         panel2.setPanelBackground(new java.awt.Color(204, 204, 204));
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        titleLabel.setForeground(new java.awt.Color(0, 0, 0));
         titleLabel.setText("Title");
 
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);

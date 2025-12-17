@@ -3,8 +3,6 @@ package main.component;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
 import main.MainFrame;
 import main.interfaces.Notes;
@@ -12,7 +10,7 @@ import main.interfaces.Notes;
 public class AddNotes extends javax.swing.JPanel {
     String titlePlaceholder = "Untitled note";
     String textPlaceholder = "Start typing your notes here...";
-    Color initialText = new Color(255, 255, 255);
+    Color initialText = new Color(250, 250, 250);
     Color normalColor = Button.normalColor;
     Color highlightColor = Color.WHITE;
     
@@ -20,7 +18,7 @@ public class AddNotes extends javax.swing.JPanel {
     private boolean italicActive = false;
     private boolean underlineActive = false;
     private boolean textColorActive = false;
-    private final Color normalTextColor = Color.BLACK;
+    private final Color normalTextColor = Color.WHITE;
     private Color newTextColor = normalTextColor;
     
     // Reference to Notes panel

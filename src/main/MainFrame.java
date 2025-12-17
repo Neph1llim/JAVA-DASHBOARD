@@ -12,17 +12,15 @@ import backend.db.DatabaseSetup;
 import backend.db.DatabaseInspector;
 
 public class MainFrame extends javax.swing.JFrame {
-
+    
     /* Properties */
     boolean isMinimized = false;
     private final CardLayout cardLayout;
-    
     private static boolean databaseReady = false;
-    /* Constructors for OOP */
+    
+    /* Constructors */
     public MainFrame() {
         initComponents();
-
-
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
 
         // Set the MainFrame reference in some panel
@@ -35,8 +33,10 @@ public class MainFrame extends javax.swing.JFrame {
         initializeDatabaseBackground();
     }
     
-        private void initializeDatabaseBackground() {
-        // Run in background to avoid blocking UI
+    /**
+     * runs the database in the background
+     */
+    private void initializeDatabaseBackground() {
         new Thread(() -> {
             try {
                 initializeDatabase();
@@ -73,18 +73,19 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
     
+    
+    
     /**
      * Get database status
      */
     public static boolean isDatabaseReady() {
         return databaseReady;
     }
-    
-    public void showCard(String cardName) {
-        cardLayout.show(getContentPane(), cardName);
-    }
 
-    /* Built-in codes and functions */
+    /**
+     * Built-in codes and functions
+     * this is where the codes from the design tab is added by the Netbeans IDE
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -178,6 +179,9 @@ public class MainFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Button Functionalities
+     */
     private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeActionPerformed
         final int maxWidth = 250;
         final int minWidth = 60;
@@ -223,6 +227,18 @@ public class MainFrame extends javax.swing.JFrame {
         timer.start();
     }//GEN-LAST:event_minimizeActionPerformed
 
+    /**
+     * Class methods and functions
+     */    
+    
+    /* changes the panel shown in the interface */
+    public void showCard(String cardName) {
+        cardLayout.show(getContentPane(), cardName);
+    }
+
+    /**
+     * Getters, this is used for OOP encapsulation used to retrieve the variables and objects of this class
+     */
     public Notes getNotesPanel() {
         return notes;
     }
@@ -234,7 +250,11 @@ public class MainFrame extends javax.swing.JFrame {
     public main.interfaces.Settings getSettingsPanel() {
         return settings;
     }
-    /* Main Class Code */
+    
+    /**
+     * Main Class Code 
+     * Main entry point of the system 
+     */
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
@@ -245,10 +265,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }
-
-    // Variables declaration - do not modify                     
-    // ... (YOUR EXISTING VARIABLES - DON'T TOUCH)
-    // End of variables declaration                   
+                  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel HomePage;
     public static javax.swing.JPanel Interface;

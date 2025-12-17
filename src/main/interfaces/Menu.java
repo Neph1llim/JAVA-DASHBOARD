@@ -13,76 +13,7 @@ public class Menu extends javax.swing.JPanel {
         // default highlighted button
         focusButton(home);
     }
-      
-    /* Methods */   
-    private void showPanel(String name){
-        CardLayout card = (CardLayout) MainFrame.Interface.getLayout();
-        card.show(MainFrame.Interface, name);
-    }
-    
-    private Button[] menuButtons() {
-        return new Button[] { home, notes, files, grades, settings };
-    }
-    
-    public void Minimize(boolean isMinimized){
-        int targetWidth = isMinimized ? 60 : 250; // ternary operator
-        int btnWidth = isMinimized ? 42 : 115; // ternary operator
-
-        setPreferredSize(new Dimension(targetWidth, getPreferredSize().height));
-
-        for (Button btn : menuButtons()) {
-            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
-        }
-
-        if (isMinimized) {
-            for (Button btn : menuButtons()) {
-                btn.setText("");
-            }
-        } else {
-            home.setText("Home");
-            notes.setText("Notes");
-            files.setText("Files");
-            grades.setText("Grades");
-            settings.setText("Settings");
-        }
-
-        //refresh the panel
-        revalidate();
-        repaint();
-    }
-
-    public void animateToWidth(int currentWidth, boolean minimize) {
-        setPreferredSize(new Dimension(currentWidth, getPreferredSize().height));
-
-        int btnWidth = 42 + (115 - 42) * (currentWidth - 60) / (250 - 60);
-        for (Button btn : menuButtons()) {
-            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
-        }
-
-        if (minimize && currentWidth < 155) {
-            for (Button btn : menuButtons()) {
-                btn.setText("");
-            }
-        } 
-        
-        if (!minimize && currentWidth > 155) {
-            home.setText("Home");
-            notes.setText("Notes");
-            files.setText("Files");
-            grades.setText("Grades");
-            settings.setText("Settings");
-            
-        }
-    }
-    
-    private void focusButton(Button selectedButton) {
-        for (Button btn : menuButtons()) {
-            btn.setHighlighted(btn == selectedButton);
-        }
-        revalidate();
-        repaint();
-    }
-    
+     
     /* Built-in codes and functions */
         @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -193,7 +124,8 @@ public class Menu extends javax.swing.JPanel {
 
         add(panel1);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /* Button functionalities*/
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         showPanel("home");
         focusButton(home);
@@ -219,6 +151,79 @@ public class Menu extends javax.swing.JPanel {
         focusButton(settings);
     }//GEN-LAST:event_settingsActionPerformed
 
+    /* Methods */ 
+    
+    /* Changes interface panel */
+    private void showPanel(String name){
+        CardLayout card = (CardLayout) MainFrame.Interface.getLayout();
+        card.show(MainFrame.Interface, name);
+    }
+    
+    /* creates an array of buttons*/
+    private Button[] menuButtons() {
+        return new Button[] { home, notes, files, grades, settings };
+    }
+    
+    /*  */
+    public void Minimize(boolean isMinimized){
+        int targetWidth = isMinimized ? 60 : 250; // ternary operator
+        int btnWidth = isMinimized ? 42 : 115; // ternary operator
+
+        setPreferredSize(new Dimension(targetWidth, getPreferredSize().height));
+
+        for (Button btn : menuButtons()) {
+            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
+        }
+
+        if (isMinimized) {
+            for (Button btn : menuButtons()) {
+                btn.setText("");
+            }
+        } else {
+            home.setText("Home");
+            notes.setText("Notes");
+            files.setText("Files");
+            grades.setText("Grades");
+            settings.setText("Settings");
+        }
+
+        //refresh the panel
+        revalidate();
+        repaint();
+    }
+
+    public void animateToWidth(int currentWidth, boolean minimize) {
+        setPreferredSize(new Dimension(currentWidth, getPreferredSize().height));
+
+        int btnWidth = 42 + (115 - 42) * (currentWidth - 60) / (250 - 60);
+        for (Button btn : menuButtons()) {
+            btn.setPreferredSize(new Dimension(btnWidth, btn.getHeight()));
+        }
+
+        if (minimize && currentWidth < 155) {
+            for (Button btn : menuButtons()) {
+                btn.setText("");
+            }
+        } 
+        
+        if (!minimize && currentWidth > 155) {
+            home.setText("Home");
+            notes.setText("Notes");
+            files.setText("Files");
+            grades.setText("Grades");
+            settings.setText("Settings");
+            
+        }
+    }
+    
+    private void focusButton(Button selectedButton) {
+        for (Button btn : menuButtons()) {
+            btn.setHighlighted(btn == selectedButton);
+        }
+        revalidate();
+        repaint();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.component.Button files;
     private main.component.Button grades;
