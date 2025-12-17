@@ -6,10 +6,10 @@
       <Dimension value="null"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[480, 255]"/>
+      <Dimension value="[300, 255]"/>
     </Property>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1440, 810]"/>
+      <Dimension value="[800, 810]"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -46,11 +46,14 @@
     <Container class="main.component.Panel" name="panel2">
       <Properties>
         <Property name="arc" type="int" value="0"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[800, 330]"/>
+        </Property>
         <Property name="panelBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="17" green="15" red="15" type="rgb"/>
         </Property>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[1440, 810]"/>
+          <Dimension value="[800, 810]"/>
         </Property>
       </Properties>
 
@@ -153,7 +156,7 @@
         <Container class="javax.swing.JPanel" name="jPanel1">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[1440, 75]"/>
+              <Dimension value="[800, 75]"/>
             </Property>
           </Properties>
           <Constraints>
