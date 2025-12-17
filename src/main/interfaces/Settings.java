@@ -10,54 +10,13 @@ import backend.exceptions.DatabaseException;
 import backend.exceptions.ValidationException;
 
 public class Settings extends javax.swing.JPanel {
-    private UserService userService;
+    private final UserService userService;
     private User currentUser;
 
     public Settings() {
         initComponents();
         userService = new UserService();
         loadCurrentUser();
-    }
-    
-    /**
-     * Load current logged in user into form fields
-     */
-    private void loadCurrentUser() {
-        try {
-            User currentUser = userService.getCurrentUser();
-            
-            if (currentUser != null) {
-                // Get fresh user details
-                User userDetails = userService.getCurrentUserDetails();
-                
-                if (userDetails != null) {
-                    settingsUsername.setText(userDetails.getUsername());
-                    settingsEmail.setText(userDetails.getEmail());
-                    settingsPassword.setText(""); // Clear password for security
-                    
-                    // Update button text
-                    changeAccountBtn.setText("Switch Account");
-                }
-            } else {
-                // No user logged in
-                settingsUsername.setText("");
-                settingsEmail.setText("");
-                settingsPassword.setText("");
-                changeAccountBtn.setText("Login");
-            }
-            
-        } catch (Exception e) {
-            System.err.println("Error loading current user: " + e.getMessage());
-        }
-    }
-     
-     /**
-     * Clear all login fields
-     */     
-    private void clearFields() {
-        settingsUsername.setText("");
-        settingsEmail.setText("");
-        settingsPassword.setText("");
     }
 
     /* Built-in codes and functions */
@@ -78,8 +37,8 @@ public class Settings extends javax.swing.JPanel {
         settingsUsername = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        button1 = new main.component.Button();
-        button2 = new main.component.Button();
+        applyChangesBtn = new main.component.Button();
+        saveChangesBtn = new main.component.Button();
         jSeparator3 = new javax.swing.JSeparator();
 
         Settings.setBackground(new java.awt.Color(21, 21, 23));
@@ -245,11 +204,51 @@ public class Settings extends javax.swing.JPanel {
             .addComponent(Settings, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+     /**
+     * Load current logged in user into form fields
+     */
+    private void loadCurrentUser() {
+        try {
+            User currentUser = userService.getCurrentUser();
+            
+            if (currentUser != null) {
+                // Get fresh user details
+                User userDetails = userService.getCurrentUserDetails();
+                
+                if (userDetails != null) {
+                    settingsUsername.setText(userDetails.getUsername());
+                    settingsEmail.setText(userDetails.getEmail());
+                    settingsPassword.setText(""); // Clear password for security
+                    
+                    // Update button text
+                    changeAccountBtn.setText("Switch Account");
+                }
+            } else {
+                // No user logged in
+                settingsUsername.setText("");
+                settingsEmail.setText("");
+                settingsPassword.setText("");
+                changeAccountBtn.setText("Login");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error loading current user: " + e.getMessage());
+        }
+    }
+     
+     /**
+     * Clear all login fields
+     */     
+    private void clearFields() {
+        settingsUsername.setText("");
+        settingsEmail.setText("");
+        settingsPassword.setText("");
+    }
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_button1ActionPerformed
-
+    
     private void settingsUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsUsernameActionPerformed
         String username = settingsUsername.getText().trim();
     
@@ -541,11 +540,15 @@ public class Settings extends javax.swing.JPanel {
                 JOptionPane.ERROR_MESSAGE);
         }
     }
+     
+     private void applyChangesBtnActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        applyChangesBtn();
+    }   
     
     /**
      * Update account information (Save button functionality)
      */
-    private void updateAccountInfo() {
+    private void applyChangesBtn() {
         String username = settingsUsername.getText().trim();
         String email = settingsEmail.getText().trim();
         String password = new String(settingsPassword.getPassword()).trim();
@@ -643,9 +646,8 @@ public class Settings extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.component.Panel Options;
     private javax.swing.JPanel Settings;
-    private main.component.Button button1;
-    private main.component.Button button2;
-    private main.component.Button changeAccoutBtn;
+    private main.component.Button applyChangesBtn;
+    private main.component.Button changeAccountBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -659,4 +661,5 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JPasswordField settingsPassword;
     private javax.swing.JTextField settingsUsername;
     // End of variables declaration//GEN-END:variables
+
 }

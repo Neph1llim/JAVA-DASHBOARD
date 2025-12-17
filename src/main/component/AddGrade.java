@@ -1,6 +1,8 @@
 
 package main.component;
 
+import backend.model.Assessment;
+
 
 public class AddGrade extends javax.swing.JPanel {
 
