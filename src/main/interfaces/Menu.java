@@ -22,7 +22,7 @@ public class Menu extends javax.swing.JPanel {
     }
     
     private Button[] menuButtons() {
-        return new Button[] { home, notes, files, widgets, settings };
+        return new Button[] { home, notes, files, grades, settings };
     }
     
     public void Minimize(boolean isMinimized){
@@ -43,7 +43,7 @@ public class Menu extends javax.swing.JPanel {
             home.setText("Home");
             notes.setText("Notes");
             files.setText("Files");
-            widgets.setText("Widgets");
+            grades.setText("Grades");
             settings.setText("Settings");
         }
 
@@ -70,7 +70,7 @@ public class Menu extends javax.swing.JPanel {
             home.setText("Home");
             notes.setText("Notes");
             files.setText("Files");
-            widgets.setText("widgets");
+            grades.setText("Grades");
             settings.setText("Settings");
             
         }
@@ -93,7 +93,7 @@ public class Menu extends javax.swing.JPanel {
         home = new main.component.Button();
         notes = new main.component.Button();
         files = new main.component.Button();
-        widgets = new main.component.Button();
+        grades = new main.component.Button();
         settings = new main.component.Button();
 
         setMinimumSize(new java.awt.Dimension(50, 250));
@@ -138,16 +138,16 @@ public class Menu extends javax.swing.JPanel {
         files.addActionListener(this::filesActionPerformed);
         files.addActionListener(this::filesActionPerformed);
 
-        widgets.setBackground(new java.awt.Color(51, 51, 51));
-        widgets.setForeground(new java.awt.Color(255, 255, 255));
-        widgets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/plugin.png"))); // NOI18N
-        widgets.setText("Grades");
-        widgets.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        widgets.setHideActionText(true);
-        widgets.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        widgets.setIconTextGap(12);
-        widgets.setMargin(new java.awt.Insets(2, 6, 2, 2));
-        widgets.addActionListener(this::widgetsActionPerformed);
+        grades.setBackground(new java.awt.Color(51, 51, 51));
+        grades.setForeground(new java.awt.Color(255, 255, 255));
+        grades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/plugin.png"))); // NOI18N
+        grades.setText("Grades");
+        grades.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        grades.setHideActionText(true);
+        grades.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        grades.setIconTextGap(12);
+        grades.setMargin(new java.awt.Insets(2, 6, 2, 2));
+        grades.addActionListener(this::gradesActionPerformed);
 
         settings.setBackground(new java.awt.Color(51, 51, 51));
         settings.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,7 +167,7 @@ public class Menu extends javax.swing.JPanel {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(widgets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(settings, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(files, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(notes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -184,13 +184,13 @@ public class Menu extends javax.swing.JPanel {
                 .addGap(12, 12, 12)
                 .addComponent(files, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(widgets, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(grades, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 487, Short.MAX_VALUE)
                 .addComponent(settings, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        widgets.getAccessibleContext().setAccessibleDescription("");
+        grades.getAccessibleContext().setAccessibleDescription("");
 
         add(panel1);
     }// </editor-fold>//GEN-END:initComponents
@@ -210,10 +210,10 @@ public class Menu extends javax.swing.JPanel {
         focusButton(files);
     }//GEN-LAST:event_filesActionPerformed
 
-    private void widgetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_widgetsActionPerformed
+    private void gradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradesActionPerformed
         showPanel("grades");
-        focusButton(widgets);
-    }//GEN-LAST:event_widgetsActionPerformed
+        focusButton(grades);
+    }//GEN-LAST:event_gradesActionPerformed
 
     private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
         showPanel("settings");
@@ -222,10 +222,10 @@ public class Menu extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.component.Button files;
+    private main.component.Button grades;
     private main.component.Button home;
     private main.component.Button notes;
     private main.component.Panel panel1;
     private main.component.Button settings;
-    private main.component.Button widgets;
     // End of variables declaration//GEN-END:variables
 }

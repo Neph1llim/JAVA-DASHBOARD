@@ -14,7 +14,7 @@ public class AddNotes extends javax.swing.JPanel {
    /* Properties */
     String titlePlaceholder = "Untitled note";
     String textPlaceholder = "Start typing your notes here...";
-    Color initialText = new Color(33, 33, 34);
+    Color initialText = new Color(255, 255, 255);
     Color normalColor = Button.normalColor;
     Color highlightColor = Color.WHITE;
     
@@ -418,9 +418,10 @@ public class AddNotes extends javax.swing.JPanel {
         fontColor = new main.component.Button();
 
         panel1.setArc(0);
-        panel1.setPanelBackground(new java.awt.Color(0, 0, 0));
+        panel1.setPanelBackground(new java.awt.Color(21, 21, 23));
         panel1.setLayout(new java.awt.GridBagLayout());
 
+        back.setBackground(new java.awt.Color(21, 21, 23));
         back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/back.png"))); // NOI18N
         back.setMinimumSize(new java.awt.Dimension(40, 40));
         back.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -432,15 +433,17 @@ public class AddNotes extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(18, 25, 0, 0);
         panel1.add(back, gridBagConstraints);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(21, 21, 23));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        panel2.setPanelBackground(new java.awt.Color(102, 102, 102));
+        panel2.setPanelBackground(new java.awt.Color(51, 51, 51));
 
-        title.setBackground(new java.awt.Color(102, 102, 102));
+        title.setBackground(new java.awt.Color(51, 51, 51));
         title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
         title.setText("Title");
         title.setBorder(null);
+        title.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         title.setHighlighter(null);
         title.addActionListener(this::titleActionPerformed);
 
@@ -472,16 +475,18 @@ public class AddNotes extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 6);
         jPanel1.add(panel2, gridBagConstraints);
 
-        panel3.setPanelBackground(new java.awt.Color(102, 102, 102));
+        panel3.setPanelBackground(new java.awt.Color(60, 63, 65));
         panel3.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane3.setBorder(null);
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setViewportView(textArea);
 
-        textArea.setBackground(new java.awt.Color(102, 102, 102));
+        textArea.setBackground(new java.awt.Color(51, 51, 51));
         textArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        textArea.setForeground(new java.awt.Color(204, 204, 204));
         textArea.setText("TEXT HERE");
+        textArea.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         jScrollPane3.setViewportView(textArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -502,34 +507,41 @@ public class AddNotes extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 6, 0, 6);
         jPanel1.add(panel3, gridBagConstraints);
 
-        panel4.setPanelBackground(new java.awt.Color(102, 102, 102));
+        panel4.setPanelBackground(new java.awt.Color(51, 51, 51));
 
+        cancel.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         cancel.setLabel("Cancel");
         cancel.addActionListener(this::cancelActionPerformed);
 
+        save.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         save.setLabel("Save");
         save.addActionListener(this::saveActionPerformed);
 
+        bold.setBackground(new java.awt.Color(67, 69, 74));
         bold.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontBold.png"))); // NOI18N
         bold.setMargin(new java.awt.Insets(3, 0, 0, 0));
         bold.addActionListener(this::boldActionPerformed);
 
+        italize.setBackground(new java.awt.Color(67, 69, 74));
         italize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontItalic.png"))); // NOI18N
         italize.setMargin(new java.awt.Insets(3, 0, 0, 0));
         italize.addActionListener(this::italizeActionPerformed);
 
+        underline.setBackground(new java.awt.Color(67, 69, 74));
         underline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontUnderline.png"))); // NOI18N
         underline.setMargin(new java.awt.Insets(3, 0, 0, 0));
         underline.addActionListener(this::underlineActionPerformed);
 
-        font.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontStyle.png"))); // NOI18N
+        font.setBackground(new java.awt.Color(67, 69, 74));
+        font.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/font.png"))); // NOI18N
         font.setMargin(new java.awt.Insets(3, 0, 0, 0));
         font.addActionListener(this::fontActionPerformed);
 
+        fontColor.setBackground(new java.awt.Color(67, 69, 74));
         fontColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/fontColor.png"))); // NOI18N
         fontColor.setText("_");
         fontColor.setToolTipText("");
-        fontColor.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        fontColor.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         fontColor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         fontColor.setIconTextGap(0);
         fontColor.setMargin(new java.awt.Insets(0, 0, 0, 0));

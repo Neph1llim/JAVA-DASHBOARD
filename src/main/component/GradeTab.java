@@ -86,7 +86,7 @@ public class GradeTab extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1440, 810));
 
         panel2.setArc(0);
-        panel2.setPanelBackground(new java.awt.Color(102, 102, 102));
+        panel2.setPanelBackground(new java.awt.Color(21, 21, 23));
         panel2.setPreferredSize(new java.awt.Dimension(1440, 810));
         panel2.setLayout(new java.awt.GridBagLayout());
 
@@ -104,7 +104,10 @@ public class GradeTab extends javax.swing.JPanel {
 
         buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        button1.setForeground(new java.awt.Color(0, 0, 0));
         button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/add.png"))); // NOI18N
+        button1.setFont(new java.awt.Font("Segoe UI Variable", 1, 12)); // NOI18N
+        button1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         button1.addActionListener(this::button1ActionPerformed);
         buttonPanel.add(button1);
 
@@ -123,28 +126,29 @@ public class GradeTab extends javax.swing.JPanel {
         jPanel1.setMinimumSize(new java.awt.Dimension(1440, 75));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
+        panel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
         panel3.setArc(0);
         panel3.setMaximumSize(new java.awt.Dimension(360, 75));
         panel3.setMinimumSize(new java.awt.Dimension(360, 75));
-        panel3.setPanelBackground(new java.awt.Color(153, 153, 153));
+        panel3.setPanelBackground(new java.awt.Color(51, 51, 51));
         panel3.setPreferredSize(new java.awt.Dimension(360, 75));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Assement");
+        jLabel1.setText("Assessment");
 
         javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
         panel3.setLayout(panel3Layout);
         panel3Layout.setHorizontalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel3Layout.createSequentialGroup()
-                .addGap(161, 161, 161)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
+                .addContainerGap(98, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addGap(159, 159, 159))
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(25, 25, 25))
         );
@@ -157,10 +161,11 @@ public class GradeTab extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(panel3, gridBagConstraints);
 
+        panel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
         panel5.setArc(0);
         panel5.setMaximumSize(new java.awt.Dimension(360, 75));
         panel5.setMinimumSize(new java.awt.Dimension(360, 75));
-        panel5.setPanelBackground(new java.awt.Color(102, 102, 102));
+        panel5.setPanelBackground(new java.awt.Color(51, 51, 51));
         panel5.setPreferredSize(new java.awt.Dimension(360, 75));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -171,14 +176,14 @@ public class GradeTab extends javax.swing.JPanel {
         panel5Layout.setHorizontalGroup(
             panel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel5Layout.createSequentialGroup()
-                .addContainerGap(131, Short.MAX_VALUE)
+                .addContainerGap(127, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(182, 182, 182))
         );
         panel5Layout.setVerticalGroup(
             panel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel5Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(25, 25, 25))
         );
@@ -191,10 +196,11 @@ public class GradeTab extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(panel5, gridBagConstraints);
 
+        panel6.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
         panel6.setArc(0);
         panel6.setMaximumSize(new java.awt.Dimension(360, 75));
         panel6.setMinimumSize(new java.awt.Dimension(360, 75));
-        panel6.setPanelBackground(new java.awt.Color(153, 153, 153));
+        panel6.setPanelBackground(new java.awt.Color(51, 51, 51));
         panel6.setPreferredSize(new java.awt.Dimension(360, 75));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -205,14 +211,14 @@ public class GradeTab extends javax.swing.JPanel {
         panel6Layout.setHorizontalGroup(
             panel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel6Layout.createSequentialGroup()
-                .addContainerGap(107, Short.MAX_VALUE)
+                .addContainerGap(103, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(160, 160, 160))
         );
         panel6Layout.setVerticalGroup(
             panel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel6Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(25, 25, 25))
         );
@@ -225,10 +231,11 @@ public class GradeTab extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(panel6, gridBagConstraints);
 
+        panel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
         panel4.setArc(0);
         panel4.setMaximumSize(new java.awt.Dimension(360, 75));
         panel4.setMinimumSize(new java.awt.Dimension(360, 75));
-        panel4.setPanelBackground(new java.awt.Color(102, 102, 102));
+        panel4.setPanelBackground(new java.awt.Color(51, 51, 51));
         panel4.setPreferredSize(new java.awt.Dimension(360, 75));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -241,12 +248,12 @@ public class GradeTab extends javax.swing.JPanel {
             .addGroup(panel4Layout.createSequentialGroup()
                 .addGap(179, 179, 179)
                 .addComponent(jLabel4)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         panel4Layout.setVerticalGroup(
             panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(25, 25, 25))
         );

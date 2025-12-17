@@ -101,7 +101,7 @@ public class ToDo extends javax.swing.JPanel {
         panel12.setLayout(new java.awt.GridBagLayout());
 
         panel1.setMinimumSize(new java.awt.Dimension(300, 80));
-        panel1.setPanelBackground(new java.awt.Color(27, 27, 28));
+        panel1.setPanelBackground(new java.awt.Color(53, 54, 56));
         panel1.setPreferredSize(new java.awt.Dimension(434, 75));
         panel1.setLayout(new java.awt.GridBagLayout());
 
@@ -136,6 +136,7 @@ public class ToDo extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         panel2.add(Add, gridBagConstraints);
@@ -160,7 +161,6 @@ public class ToDo extends javax.swing.JPanel {
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setMinimumSize(new java.awt.Dimension(300, 0));
-        jScrollPane1.setOpaque(true);
         jScrollPane1.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(container);
 

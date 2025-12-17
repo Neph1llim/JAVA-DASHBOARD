@@ -418,7 +418,7 @@ public class Notes extends javax.swing.JPanel {
         jPanel1.setOpaque(false);
 
         button1.setBackground(new java.awt.Color(153, 153, 153));
-        button1.setForeground(new java.awt.Color(0, 0, 0));
+        button1.setForeground(new java.awt.Color(255, 255, 255));
         button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/add.png"))); // NOI18N
         button1.setText("ADD ");
         button1.setArc(50);
