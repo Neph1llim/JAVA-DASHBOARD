@@ -454,6 +454,16 @@ public class Login extends javax.swing.JPanel {
             // Navigate to HomePage
             if (mainFrame != null) {
                 mainFrame.showCard("HomePage");
+                
+                // Reload all user-specific data for the newly logged-in user
+                try {
+                    Home homePage = mainFrame.getHomePanel();
+                    if (homePage != null) {
+                        homePage.reloadAllUserData();
+                    }
+                } catch (Exception e) {
+                    System.err.println("Could not reload user data: " + e.getMessage());
+                }
             }
 
         } catch (AuthenticationException e) {

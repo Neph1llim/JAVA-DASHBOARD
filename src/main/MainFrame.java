@@ -39,10 +39,9 @@ public class MainFrame extends javax.swing.JFrame {
         // Run in background to avoid blocking UI
         new Thread(() -> {
             try {
-                System.out.println("[DATABASE] Starting initialization...");
                 initializeDatabase();
             } catch (Exception e) {
-                System.err.println("[DATABASE] Background initialization failed: " + e.getMessage());
+                System.err.println("[DATABASE ERROR] " + e.getMessage());
             }
         }).start();
     }
@@ -52,8 +51,6 @@ public class MainFrame extends javax.swing.JFrame {
      */
     private static boolean initializeDatabase() {
         try {
-            System.out.println("\n=== DATABASE INITIALIZATION ===");
-            
             // Test connection
             DatabaseConnection dbConn = DatabaseConnection.getInstance();
             if (!dbConn.testConnection()) {
@@ -68,7 +65,6 @@ public class MainFrame extends javax.swing.JFrame {
             DatabaseInspector.checkRequiredTables();
             
             databaseReady = true;
-            System.out.println("[DATABASE] Ready for use");
             return true;
             
         } catch (Exception e) {
@@ -230,6 +226,14 @@ public class MainFrame extends javax.swing.JFrame {
     public Notes getNotesPanel() {
         return notes;
     }
+    
+    public main.interfaces.Home getHomePanel() {
+        return home;
+    }
+    
+    public main.interfaces.Settings getSettingsPanel() {
+        return settings;
+    }
     /* Main Class Code */
     public static void main(String args[]) {
         try {
@@ -237,7 +241,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException ex) {
         }
         //</editor-fold>
-
+ 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }

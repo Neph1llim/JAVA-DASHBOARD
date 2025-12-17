@@ -17,6 +17,35 @@ public class Home extends javax.swing.JPanel {
         connectCarousel();
     }
 
+    /**
+     * Reloads notes for the current logged-in user
+     * Called when user logs in or switches accounts
+     */
+    public void reloadNotes() {
+        Notes notesPanel = mainFrame.getNotesPanel();
+        if (notesPanel != null) {
+            notesPanel.onUserLoggedIn();
+        }
+    }
+    
+    /**
+     * Reloads all user-specific data when switching accounts
+     */
+    public void reloadAllUserData() {
+        // Reload notes
+        reloadNotes();
+        
+        // Reload settings
+        try {
+            Settings settingsPanel = mainFrame.getSettingsPanel();
+            if (settingsPanel != null) {
+                settingsPanel.reloadSettings();
+            }
+        } catch (Exception e) {
+            System.err.println("Could not reload settings: " + e.getMessage());
+        }
+    }
+
     private void connectCarousel() {
         Notes notesPanel = mainFrame.getNotesPanel();
 

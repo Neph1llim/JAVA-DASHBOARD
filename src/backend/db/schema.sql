@@ -73,33 +73,3 @@ CREATE TABLE To_Do_List (
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
     INDEX idx_user_todos (user_id, is_completed)
 );
-
--- Calendar_Events table 
-CREATE TABLE Calendar_Events ( 
-    event_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    event_date DATE NOT NULL,
-    event_time TIME,
-    reminder_minutes INT DEFAULT 15,
-    color VARCHAR(7) DEFAULT '#5686FE',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-    INDEX idx_user_events (user_id, event_date)
-);
-
--- User_Preferences table
-CREATE TABLE User_Preferences (
-    preference_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    theme VARCHAR(20) DEFAULT 'DARK',
-    primary_color VARCHAR(7) DEFAULT '#5686FE',
-    secondary_color VARCHAR(7) DEFAULT '#1B1B1C',
-    default_font VARCHAR(50) DEFAULT 'Segoe UI Semibold',
-    sidebar_position ENUM('LEFT', 'RIGHT') DEFAULT 'LEFT',
-    home_layout_json TEXT,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-    UNIQUE KEY unique_user_pref (user_id)
-);

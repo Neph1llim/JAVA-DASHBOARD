@@ -9,12 +9,15 @@ import java.awt.event.MouseListener;
 public class Note extends javax.swing.JPanel {
     private String noteTitle;
     private String noteContent;
+    private int noteId;
+    private boolean isPinned = false;
     private static final int TITLE_MAX_LENGTH = 15;
     private static final int CONTENT_MAX_LENGTH = 150;
 
     public Note(String title, String content) {
         this.noteTitle = title;
         this.noteContent = content;
+        this.noteId = -1; // Default for new notes
         initComponents();
         setupCard();
         
@@ -185,6 +188,22 @@ public class Note extends javax.swing.JPanel {
 
     public String getNoteContent() {
         return noteContent;
+    }
+    
+    public int getNoteId() {
+        return noteId;
+    }
+    
+    public void setNoteId(int noteId) {
+        this.noteId = noteId;
+    }
+    
+    public boolean isPinned() {
+        return isPinned;
+    }
+    
+    public void setPinned(boolean pinned) {
+        this.isPinned = pinned;
     }
     
     public StyledDocument getStyledDocument() {
