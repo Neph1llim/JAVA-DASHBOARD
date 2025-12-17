@@ -71,11 +71,12 @@ public class ToDo extends javax.swing.JPanel {
         panel12.repaint();
     }
 
-    
     public void bawasanNotes(int ilan){
         itemCount = itemCount - ilan;
         updateContainerSize();
     }
+    
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
