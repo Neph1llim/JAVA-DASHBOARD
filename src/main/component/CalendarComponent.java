@@ -1,13 +1,9 @@
 package main.component;
 
 public class CalendarComponent extends javax.swing.JPanel {
-    // Variables declaration
     private CalendarNav calendarNav;
     private CalendarPanel calendarPanel;
     
-    /**
-     * Creates new form CalendarComponent
-     */
     public CalendarComponent() {
         initComponents();
         setupCustomComponents();

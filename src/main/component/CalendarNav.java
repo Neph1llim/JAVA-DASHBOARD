@@ -1,9 +1,5 @@
 package main.component;
 
-/**
- *
- * @author Cyrus Wilson
- */
 public class CalendarNav extends javax.swing.JPanel {
     
     // Variables declaration - do not modify                     
@@ -28,7 +24,6 @@ public class CalendarNav extends javax.swing.JPanel {
         listeners = new java.util.ArrayList<>();
         updateDisplay();
 
-        // Add action listeners
         prevButton.addActionListener(evt -> prevButtonActionPerformed());
         nextButton.addActionListener(evt -> nextButtonActionPerformed());
     }

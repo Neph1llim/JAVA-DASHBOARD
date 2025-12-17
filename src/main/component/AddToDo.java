@@ -16,7 +16,7 @@ public class AddToDo extends javax.swing.JPanel {
         setupEditField();
         
         // Remove fixed width settings to make it flexible
-        setMinimumSize(new Dimension(100, 60)); // Minimum width
+        setMinimumSize(new Dimension(100, 60));
         setPreferredSize(new Dimension(400, 60)); // Default preferred size
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 60)); // Can expand horizontally
         
@@ -49,7 +49,6 @@ public class AddToDo extends javax.swing.JPanel {
         gbc.insets = new java.awt.Insets(5, 10, 5, 5);
         panel2.add(editField, gbc);
         
-        // Add Enter key listener
         editField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -62,7 +61,6 @@ public class AddToDo extends javax.swing.JPanel {
             }
         });
         
-        // Focus listener
         editField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {

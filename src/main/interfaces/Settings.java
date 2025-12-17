@@ -1,7 +1,3 @@
-/*
-TODO:
-
-*/
 
 package main.interfaces;
 

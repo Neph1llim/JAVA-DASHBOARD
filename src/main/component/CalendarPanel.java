@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package main.component;
 
 import javax.swing.*;
@@ -11,19 +8,14 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
-/**
- *
- * @author Cyrus Wilson
- */
+
 public class CalendarPanel extends javax.swing.JPanel {
     
     // Custom variables
     private DefaultTableModel tableModel;
     private YearMonth currentMonth;
 
-    /**
-     * Creates new form CalendarPanel
-     */
+
     public CalendarPanel() {
         initComponents();
         initCalendar();
