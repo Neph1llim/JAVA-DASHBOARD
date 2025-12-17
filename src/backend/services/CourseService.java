@@ -1,9 +1,5 @@
 package backend.services;
 
-/**
- *
- * @author Cyrus Wilson
- */
 import backend.dao.interfaces.CourseDao;
 import backend.dao.impl.CourseDaoImpl;
 import backend.model.Course;
@@ -17,104 +13,167 @@ public class CourseService {
     }
     
     /**
-     * Create a new course
+     * Create a new course for a user
      */
-    public Course createCourse(int userId, String courseName, String courseYear) {
+    public Course createCourse(int userId, String courseName) {
         try {
-            
-            Course course = new Course();
-            course.setUserId(userId);
-            course.setCourseName(courseName);
-            if (courseYear != null && !courseYear.trim().isEmpty()) {
-            course.setCourseYear(Integer.parseInt(courseYear.trim()));
-            }
-            
-            System.out.println("[COURSE SERVICE] Creating course: " + courseName);
+            Course course = new Course(courseName, 0.0, 0.0, 
+                                      java.time.LocalDate.now(), userId);
             return courseDao.createCourse(course);
-            
         } catch (Exception e) {
             System.err.println("[COURSE SERVICE] Error creating course: " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
     
     /**
-     * Get all courses for a user
+     * Get all courses for a specific user
      */
     public List<Course> getUserCourses(int userId) {
         try {
-            System.out.println("[COURSE SERVICE] Getting courses for user ID: " + userId);
             return courseDao.getCoursesByUser(userId);
         } catch (Exception e) {
             System.err.println("[COURSE SERVICE] Error getting courses: " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
     
     /**
-     * Get course by ID
+     * Get a course by its ID
      */
     public Course getCourseById(int courseId) {
         try {
-            System.out.println("[COURSE SERVICE] Getting course ID: " + courseId);
             return courseDao.getCourseById(courseId);
         } catch (Exception e) {
-            System.err.println("[COURSE SERVICE] Error getting course: " + e.getMessage());
+            System.err.println("[COURSE SERVICE] Error getting course by ID: " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
     
     /**
-     * Update course
+     * Update an existing course
      */
     public boolean updateCourse(Course course) {
         try {
-            if (course == null) {
-                System.err.println("[COURSE SERVICE] Course cannot be null");
-                return false;
-            }
-            
-            System.out.println("[COURSE SERVICE] Updating course ID: " + course.getCourseId());
             return courseDao.updateCourse(course);
-            
         } catch (Exception e) {
             System.err.println("[COURSE SERVICE] Error updating course: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
     
     /**
-     * Delete course
+     * Delete a course and all its associated assessments
      */
     public boolean deleteCourse(int courseId) {
         try {
-            System.out.println("[COURSE SERVICE] Deleting course ID: " + courseId);
             return courseDao.deleteCourse(courseId);
         } catch (Exception e) {
             System.err.println("[COURSE SERVICE] Error deleting course: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
     
     /**
-     * Assign/enroll user to course
+     * Search courses by keyword
      */
-    public boolean assignUserToCourse(int userId, int courseId) {
+    public List<Course> searchCourses(String keyword) {
         try {
-            System.out.println("[COURSE SERVICE] Enrolling user ID: " + userId + " to course ID: " + courseId);
-            return courseDao.enrollUserToCourse(userId, courseId);
+            return courseDao.searchCourses(keyword);
         } catch (Exception e) {
-            System.err.println("[COURSE SERVICE] Error assigning user to course: " + e.getMessage());
+            System.err.println("[COURSE SERVICE] Error searching courses: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Get all courses (admin function or for debugging)
+     */
+    public List<Course> getAllCourses() {
+        try {
+            return courseDao.findAll();
+        } catch (Exception e) {
+            System.err.println("[COURSE SERVICE] Error getting all courses: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Update course final grade based on assessments
+     */
+    public boolean updateCourseFinalGrade(int courseId, double finalGrade) {
+        try {
+            Course course = courseDao.getCourseById(courseId);
+            if (course == null) {
+                System.err.println("[COURSE SERVICE] Course not found: " + courseId);
+                return false;
+            }
+            
+            course.setFinalGrade(finalGrade);
+            return courseDao.updateCourse(course);
+            
+        } catch (Exception e) {
+            System.err.println("[COURSE SERVICE] Error updating course final grade: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
     
     /**
-     * Test method
+     * Check if a course name already exists for a user
      */
-    public static void main(String[] args) {
-        CourseService service = new CourseService();
-        System.out.println("=== COURSE SERVICE TEST ===");
-        System.out.println("Service methods ready. Requires CourseDaoImpl implementation.");
+    public boolean isCourseNameExists(int userId, String courseName) {
+        try {
+            List<Course> userCourses = getUserCourses(userId);
+            if (userCourses == null) return false;
+            
+            return userCourses.stream()
+                .anyMatch(course -> course.getCourseName().equalsIgnoreCase(courseName));
+        } catch (Exception e) {
+            System.err.println("[COURSE SERVICE] Error checking course name: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Get total number of courses for a user
+     */
+    public int getCourseCount(int userId) {
+        try {
+            List<Course> courses = getUserCourses(userId);
+            return courses != null ? courses.size() : 0;
+        } catch (Exception e) {
+            System.err.println("[COURSE SERVICE] Error getting course count: " + e.getMessage());
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    /**
+     * Get average final grade for all courses of a user
+     */
+    public double getAverageFinalGrade(int userId) {
+        try {
+            List<Course> courses = getUserCourses(userId);
+            if (courses == null || courses.isEmpty()) return 0.0;
+            
+            double total = courses.stream()
+                .mapToDouble(Course::getFinalGrade)
+                .sum();
+            
+            return total / courses.size();
+        } catch (Exception e) {
+            System.err.println("[COURSE SERVICE] Error calculating average grade: " + e.getMessage());
+            e.printStackTrace();
+            return 0.0;
+        }
     }
 }

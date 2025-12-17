@@ -13,11 +13,6 @@ public interface CourseDao {
     boolean updateCourse(Course course) throws DatabaseException;
     boolean deleteCourse(int courseId) throws DatabaseException;
     
-    // Business operations
+    // Business operations - REMOVED enrollment methods
     List<Course> searchCourses(String keyword) throws DatabaseException;
-    List<Course> findUpcomingCourses(int userId) throws DatabaseException;
-    List<Course> findCompletedCourses(int userId) throws DatabaseException;
-    boolean enrollUserToCourse(int courseId, int userId) throws DatabaseException;
-    boolean unenrollUser(int courseId, int userId) throws DatabaseException;
-    List<Integer> getEnrolledUsers(int courseId) throws DatabaseException;
 }

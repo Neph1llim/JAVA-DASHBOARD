@@ -6,28 +6,84 @@ import java.awt.*;
 import javax.swing.*;
 import main.interfaces.Notes;
 
+/* Database import files */
+import backend.db.DatabaseConnection;
+import backend.db.DatabaseSetup;
+import backend.db.DatabaseInspector;
+
 public class MainFrame extends javax.swing.JFrame {
 
     /* Properties */
     boolean isMinimized = false;
     private final CardLayout cardLayout;
-
+    
+    private static boolean databaseReady = false;
     /* Constructors for OOP */
     public MainFrame() {
         initComponents();
-        
+
 
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
 
         // Set the MainFrame reference in some panel
         login.setMainFrame(this);
         home.setMainFrame(this);
-
+        
         // default Interface set to Login
         cardLayout = (CardLayout) getContentPane().getLayout();
         cardLayout.show(getContentPane(), "Login");
+        initializeDatabaseBackground();
     }
-
+    
+        private void initializeDatabaseBackground() {
+        // Run in background to avoid blocking UI
+        new Thread(() -> {
+            try {
+                System.out.println("[DATABASE] Starting initialization...");
+                initializeDatabase();
+            } catch (Exception e) {
+                System.err.println("[DATABASE] Background initialization failed: " + e.getMessage());
+            }
+        }).start();
+    }
+    
+    /**
+     * Static method to initialize database
+     */
+    private static boolean initializeDatabase() {
+        try {
+            System.out.println("\n=== DATABASE INITIALIZATION ===");
+            
+            // Test connection
+            DatabaseConnection dbConn = DatabaseConnection.getInstance();
+            if (!dbConn.testConnection()) {
+                System.err.println("[ERROR] Cannot connect to database");
+                return false;
+            }
+            
+            // Add missing tables
+            DatabaseSetup.addMissingTables();
+            
+            // Verify tables exist
+            DatabaseInspector.checkRequiredTables();
+            
+            databaseReady = true;
+            System.out.println("[DATABASE] Ready for use");
+            return true;
+            
+        } catch (Exception e) {
+            System.err.println("[DATABASE ERROR] " + e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Get database status
+     */
+    public static boolean isDatabaseReady() {
+        return databaseReady;
+    }
+    
     public void showCard(String cardName) {
         cardLayout.show(getContentPane(), cardName);
     }
@@ -49,7 +105,6 @@ public class MainFrame extends javax.swing.JFrame {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(100, 32), new java.awt.Dimension(20, 32767));
         Interface = new javax.swing.JPanel();
         home = new main.interfaces.Home();
-        widgets = new main.interfaces.Widgets();
         notes = new main.interfaces.Notes();
         files = new main.interfaces.Files();
         settings = new main.interfaces.Settings();
@@ -108,10 +163,6 @@ public class MainFrame extends javax.swing.JFrame {
         Interface.setPreferredSize(new java.awt.Dimension(1200, 810));
         Interface.setLayout(new java.awt.CardLayout());
         Interface.add(home, "home");
-
-        widgets.setBackground(new java.awt.Color(21, 21, 23));
-        widgets.setForeground(new java.awt.Color(27, 27, 28));
-        Interface.add(widgets, "widgets");
 
         notes.setBackground(new java.awt.Color(255, 255, 255));
         Interface.add(notes, "notes");
@@ -181,8 +232,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
     /* Main Class Code */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code">
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException ex) {
@@ -193,6 +242,9 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }
 
+    // Variables declaration - do not modify                     
+    // ... (YOUR EXISTING VARIABLES - DON'T TOUCH)
+    // End of variables declaration                   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel HomePage;
     public static javax.swing.JPanel Interface;
@@ -209,6 +261,5 @@ public class MainFrame extends javax.swing.JFrame {
     private main.interfaces.Notes notes;
     private main.interfaces.Settings settings;
     private main.interfaces.Signup signup;
-    private main.interfaces.Widgets widgets;
     // End of variables declaration//GEN-END:variables
 }

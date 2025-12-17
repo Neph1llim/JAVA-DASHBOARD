@@ -1,13 +1,25 @@
 package main.component;
 
 import javax.swing.JOptionPane;
+import backend.services.CourseService;
+import backend.services.AssessmentService;
+import backend.model.Course;
+import backend.model.Assessment;
+import java.util.List;
 
 public class GradeTab extends javax.swing.JPanel {
+    private CourseService courseService;
+    private AssessmentService assessmentService;
+    private int courseId; // Store course ID for this tab
+    private String courseName; // Store course name
     
     public GradeTab() {
         initComponents();
         findPanels();
         setupLayout();
+        
+        this.courseId = -1; // No database ID
+        initializeServices();
     }
     
     private void findPanels() {
@@ -59,7 +71,249 @@ public class GradeTab extends javax.swing.JPanel {
         contentPanel.revalidate();
         contentPanel.repaint();
     }
+    
+    private void saveAllAssessments() {
+    if (courseId <= 0) {
+        JOptionPane.showMessageDialog(this,
+            "This course is not saved to the database yet. Please save the course first.",
+            "Course Not Saved",
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
+    if (assessmentService == null) {
+        JOptionPane.showMessageDialog(this,
+            "Unable to connect to database service. Please check your connection.",
+            "Service Error",
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    int savedCount = 0;
+    int errorCount = 0;
+    StringBuilder errorMessages = new StringBuilder();
+    
+    // Check if there are any assessments to save
+    int assessmentCount = 0;
+    for (java.awt.Component comp : centerPanel.getComponents()) {
+        if (comp instanceof AddGrade) {
+            assessmentCount++;
+        }
+    }
+    
+    if (assessmentCount == 0) {
+        JOptionPane.showMessageDialog(this,
+            "No assessments found to save. Please add assessments first.",
+            "No Assessments",
+            JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+    
+    // Collect all AddGrade components from centerPanel
+    for (java.awt.Component comp : centerPanel.getComponents()) {
+        if (comp instanceof AddGrade) {
+            AddGrade grade = (AddGrade) comp;
+            
+            // Call calculateGrade to ensure latest values are calculated
+            grade.calculateGrade();
+            
+            // Validate the grade entry
+            if (!grade.isValidEntry()) {
+                errorCount++;
+                errorMessages.append("• Invalid grade calculation for: ")
+                            .append(grade.getAssessmentName()).append("\n");
+                continue;
+            }
+            
+            // Check for empty assessment name
+            String assessmentName = grade.getAssessmentName().trim();
+            if (assessmentName.isEmpty() || assessmentName.equals("Enter Assessment Name")) {
+                errorCount++;
+                errorMessages.append("• Missing assessment name\n");
+                continue;
+            }
+            
+            try {
+                // Get values including the CALCULATED GRADE
+                double score = Double.parseDouble(grade.getScore());
+                double maxScore = Double.parseDouble(grade.getMaxScore());
+                double percentage = grade.getPercentageValue();
+                double calculatedGrade = grade.getGradeValue();  // GET THE CALCULATED GRADE
+                
+                // Validate percentage range
+                if (percentage < 0 || percentage > 100) {
+                    errorCount++;
+                    errorMessages.append("• Invalid percentage for: ").append(assessmentName)
+                                .append(" (must be 0-100)\n");
+                    continue;
+                }
+                
+                // Validate score <= maxScore
+                if (score > maxScore) {
+                    errorCount++;
+                    errorMessages.append("• Score cannot exceed max score for: ")
+                                .append(assessmentName).append("\n");
+                    continue;
+                }
+                
+                // Validate maxScore > 0
+                if (maxScore <= 0) {
+                    errorCount++;
+                    errorMessages.append("• Max score must be > 0 for: ")
+                                .append(assessmentName).append("\n");
+                    continue;
+                }
+                
+                // Save to database WITH CALCULATED GRADE
+                Assessment saved = assessmentService.saveAssessment(
+                    courseId, assessmentName, score, maxScore, percentage, calculatedGrade);
+                
+                if (saved != null) {
+                    savedCount++;
+                    System.out.println("Saved assessment: " + assessmentName + 
+                                     " - Percentage: " + percentage + 
+                                     " - Calculated Grade: " + calculatedGrade);
+                } else {
+                    errorCount++;
+                    errorMessages.append("• Failed to save: ").append(assessmentName).append("\n");
+                }
+                
+            } catch (NumberFormatException e) {
+                errorCount++;
+                errorMessages.append("• Invalid number format for: ").append(assessmentName).append("\n");
+            } catch (Exception e) {
+                errorCount++;
+                errorMessages.append("• Error saving ").append(assessmentName)
+                            .append(": ").append(e.getMessage()).append("\n");
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    // SHOW SUMMARY MESSAGE TO USER
+    if (errorCount == 0) {
+        if (savedCount > 0) {
+            JOptionPane.showMessageDialog(this,
+                "Successfully saved " + savedCount + " assessment(s).",
+                "Save Successful",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "No assessments were saved. Please check your inputs.",
+                "No Data Saved",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    } else {
+        // Show error summary
+        String errorSummary = "Encountered " + errorCount + " error(s) while saving:\n\n" 
+                           + errorMessages.toString();
+        
+        // Truncate if too long
+        if (errorSummary.length() > 500) {
+            errorSummary = errorSummary.substring(0, 500) + "\n... (more errors truncated)";
+        }
+        
+        JOptionPane.showMessageDialog(this,
+            errorSummary,
+            "Save Errors",
+            JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
+    private void initializeServices() {
+        if (courseId > 0) {
+            try {
+                this.assessmentService = new AssessmentService();
+                
+                // Enable save button if it exists
+                if (saveAllButton != null) {
+                    saveAllButton.setEnabled(true);
+                    saveAllButton.setBackground(new java.awt.Color(86, 134, 254));
+                }
+                
+                loadSavedAssessments();
+                
+            } catch (Exception e) {
+                System.err.println("Failed to initialize assessment service: " + e.getMessage());
+                
+                // Disable save button
+                if (saveAllButton != null) {
+                    saveAllButton.setEnabled(false);
+                    saveAllButton.setBackground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        }
+    }
+    
+    private void loadSavedAssessments() {
+        if (assessmentService == null || courseId <= 0) return;
+        
+        try {
+            List<Assessment> assessments = assessmentService.getCourseAssessments(courseId);
+            if (assessments != null) {
+                for (Assessment assessment : assessments) {
+                    AddGrade gradeComponent = new AddGrade();
+                    gradeComponent.setAssessmentName(assessment.getAssessmentName());
+                    gradeComponent.setScore(String.valueOf(assessment.getScore()));
+                    gradeComponent.setMaxScore(String.valueOf(assessment.getMaxScore()));
+                    gradeComponent.setPercentage(String.valueOf(assessment.getPercentage()));
+                    gradeComponent.calculateGrade();
+                    
+                    if (centerPanel == null) {
+                        setupLayout();
+                    }
+                    
+                    centerPanel.add(gradeComponent);
+                    gradeComponent.setMaximumSize(new java.awt.Dimension(
+                        Integer.MAX_VALUE, 
+                        gradeComponent.getPreferredSize().height
+                    ));
+                }
+                
+                if (centerPanel != null) {
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading assessments: " + e.getMessage());
+        }
+    }
+    
+    // GETTERS AND SETTERS (keep only one set)
+    public int getCourseId() { 
+        return courseId; 
+    }
+    
+    public void setCourseId(int courseId) { 
+        this.courseId = courseId;
+        if (courseId > 0) {
+            initializeServices();
+            
+            // Enable save button if it exists
+            if (saveAllButton != null) {
+                saveAllButton.setEnabled(true);
+                saveAllButton.setBackground(new java.awt.Color(86, 134, 254));
+            }
+        } else {
+            // Disable save button for local-only courses
+            if (saveAllButton != null) {
+                saveAllButton.setEnabled(false);
+            }
+        }
+    }
+    
+    public String getCourseName() { 
+        return courseName; 
+    }
+    
+    public void setCourseName(String courseName) { 
+        this.courseName = courseName;
+        if (this.getName() == null) {
+            this.setName(courseName);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -70,6 +324,7 @@ public class GradeTab extends javax.swing.JPanel {
         contentPanel = new main.component.Panel();
         centerPanel = new javax.swing.JPanel();
         buttonPanel = new javax.swing.JPanel();
+        saveAllButton = new main.component.Button();
         button1 = new main.component.Button();
         jPanel1 = new javax.swing.JPanel();
         panel3 = new main.component.Panel();
@@ -82,12 +337,13 @@ public class GradeTab extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
 
         setMaximumSize(null);
-        setMinimumSize(new java.awt.Dimension(480, 255));
-        setPreferredSize(new java.awt.Dimension(1440, 810));
+        setMinimumSize(new java.awt.Dimension(300, 255));
+        setPreferredSize(new java.awt.Dimension(800, 810));
 
         panel2.setArc(0);
+        panel2.setMinimumSize(new java.awt.Dimension(800, 330));
         panel2.setPanelBackground(new java.awt.Color(21, 21, 23));
-        panel2.setPreferredSize(new java.awt.Dimension(1440, 810));
+        panel2.setPreferredSize(new java.awt.Dimension(800, 810));
         panel2.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -104,6 +360,14 @@ public class GradeTab extends javax.swing.JPanel {
 
         buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        saveAllButton.setBackground(new java.awt.Color(51, 51, 51));
+        saveAllButton.setText("Save");
+        saveAllButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        saveAllButton.setPreferredSize(new java.awt.Dimension(80, 40));
+        saveAllButton.addActionListener(this::saveAllButtonActionPerformed);
+        buttonPanel.add(saveAllButton);
+
+        button1.setBackground(new java.awt.Color(51, 51, 51));
         button1.setForeground(new java.awt.Color(0, 0, 0));
         button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resource/icons/add.png"))); // NOI18N
         button1.setFont(new java.awt.Font("Segoe UI Variable", 1, 12)); // NOI18N
@@ -123,7 +387,7 @@ public class GradeTab extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         panel2.add(jScrollPane1, gridBagConstraints);
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(1440, 75));
+        jPanel1.setMinimumSize(new java.awt.Dimension(800, 75));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         panel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
@@ -292,21 +556,25 @@ public class GradeTab extends javax.swing.JPanel {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
     AddGrade newGrade = new AddGrade();
-        // Make sure centerPanel is available
-    if (centerPanel == null) {
-        setupLayout();
-    }
-
-    centerPanel.add(newGrade);
-
-    newGrade.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, newGrade.getPreferredSize().height));
-    
-    // Updates the layout
-    centerPanel.revalidate();
-    centerPanel.repaint();
-    
-    newGrade.scrollRectToVisible(newGrade.getBounds());
+        
+        if (centerPanel == null) {
+            setupLayout();
+        }
+        
+        centerPanel.add(newGrade);
+        newGrade.setMaximumSize(new java.awt.Dimension(
+            Integer.MAX_VALUE, 
+            newGrade.getPreferredSize().height
+        ));
+        
+        centerPanel.revalidate();
+        centerPanel.repaint();
+        newGrade.scrollRectToVisible(newGrade.getBounds());
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void saveAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAllButtonActionPerformed
+    saveAllAssessments();
+    }//GEN-LAST:event_saveAllButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -325,5 +593,6 @@ public class GradeTab extends javax.swing.JPanel {
     private main.component.Panel panel4;
     private main.component.Panel panel5;
     private main.component.Panel panel6;
+    private main.component.Button saveAllButton;
     // End of variables declaration//GEN-END:variables
 }

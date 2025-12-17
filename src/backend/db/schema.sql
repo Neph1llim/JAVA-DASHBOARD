@@ -4,7 +4,6 @@ USE note_app;
 -- Users table
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
-    course_id INT,
     email VARCHAR(255) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -17,10 +16,23 @@ CREATE TABLE Courses (
     course_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     course_name VARCHAR(100) NOT NULL,
-    course_year VARCHAR(20),
-    course_grades INT NULL,
+    course_grades DECIMAL(5,2) DEFAULT 0.00,
+    final_grade DECIMAL(5,2) DEFAULT 0.00,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+);
+
+--Assessments
+CREATE TABLE Assessments (
+    assessment_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_id INT NOT NULL,
+    assessment_name VARCHAR(255) NOT NULL,
+    score DECIMAL(10,2),
+    max_score DECIMAL(10,2),
+    percentage DECIMAL(5,2),
+    calculated_grade DECIMAL(10,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id) ON DELETE CASCADE
 );
 
 -- Notes table

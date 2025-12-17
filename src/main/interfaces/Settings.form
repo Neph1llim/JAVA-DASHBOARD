@@ -64,9 +64,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="button1" min="-2" pref="125" max="-2" attributes="0"/>
+                      <Component id="applyChangesBtn" min="-2" pref="125" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="button2" min="-2" pref="125" max="-2" attributes="0"/>
+                      <Component id="saveChangesBtn" min="-2" pref="125" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -98,8 +98,8 @@
                       <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="20" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="button2" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                          <Component id="button1" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="saveChangesBtn" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="applyChangesBtn" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
@@ -130,7 +130,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="changeAccoutBtn" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="changeAccountBtn" min="-2" pref="100" max="-2" attributes="0"/>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -172,7 +172,7 @@
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="changeAccoutBtn" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="changeAccountBtn" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -231,7 +231,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsPasswordActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="main.component.Button" name="changeAccoutBtn">
+                <Component class="main.component.Button" name="changeAccountBtn">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -243,7 +243,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeAccoutBtnActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeAccountBtnActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel7">
@@ -296,10 +296,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="applyChangesBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="main.component.Button" name="button2">
+            <Component class="main.component.Button" name="saveChangesBtn">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -310,6 +310,9 @@
                   <Font name="Segoe UI Variable" size="18" style="1"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveChangesBtnActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator3">
             </Component>

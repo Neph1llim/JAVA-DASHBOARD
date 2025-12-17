@@ -24,7 +24,7 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="66" green="66" red="66" type="rgb"/>
+          <Color blue="28" green="28" red="28" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -64,6 +64,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="prevButton">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="28" green="28" red="28" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="&#x25c0;"/>
           </Properties>
           <Events>
@@ -72,8 +75,14 @@
         </Component>
         <Component class="javax.swing.JButton" name="nextButton">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="28" green="28" red="28" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="&#x25b6;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="monthLabel">
           <Properties>

@@ -60,8 +60,8 @@ private void setActionButtonFonts() {
         files.setPreferredSize(new java.awt.Dimension(1230, 860));
         files.setLayout(new java.awt.BorderLayout());
 
-        actionPanel.setArc(0);
-        actionPanel.setPanelBackground(new java.awt.Color(21, 21, 23));
+        actionPanel.setMinimumSize(new java.awt.Dimension(91, 75));
+        actionPanel.setPanelBackground(new java.awt.Color(27, 27, 28));
         actionPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         addFile.setBackground(new java.awt.Color(102, 102, 102));

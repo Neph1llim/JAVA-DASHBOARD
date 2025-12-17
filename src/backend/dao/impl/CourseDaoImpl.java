@@ -4,7 +4,6 @@ import backend.dao.interfaces.CourseDao;
 import backend.model.Course;
 import backend.exceptions.DatabaseException;
 import backend.db.DatabaseConnection;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,38 +15,75 @@ public class CourseDaoImpl implements CourseDao {
         this.dbConnection = DatabaseConnection.getInstance();
     }
     
-    @Override  // FIXED: Changed from create() to createCourse()
+    @Override
     public Course createCourse(Course course) throws DatabaseException {
-        String sql = "INSERT INTO courses (course_name, user_id, course_year, course_grades, " +
-                    "created_at) VALUES (?, ?, ?, ?, ?)";
+    // Check if final_grade column exists
+    boolean hasFinalGradeColumn = checkColumnExists("courses", "final_grade");
+    
+    String sql;
+    if (hasFinalGradeColumn) {
+        sql = "INSERT INTO courses (course_name, user_id, course_grades, final_grade, created_at) " +
+              "VALUES (?, ?, ?, ?, ?)";
+    } else {
+        // Fallback for old schema
+        sql = "INSERT INTO courses (course_name, user_id, course_grades, created_at) " +
+              "VALUES (?, ?, ?, ?)";
+    }
+    
+    try (Connection conn = dbConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
         
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            
-            pstmt.setString(1, course.getCourseName());
-            pstmt.setInt(2, course.getUserId());
-            pstmt.setInt(3, course.getCourseYear());
-            pstmt.setDouble(4, course.getCourseGrades());
-            pstmt.setDate(5, Date.valueOf(course.getCreatedDate()));
-            
-            int affectedRows = pstmt.executeUpdate();
-            
-            if (affectedRows > 0) {
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        course.setCourseId(rs.getInt(1));
-                    }
+        int paramIndex = 1;
+        pstmt.setString(paramIndex++, course.getCourseName());
+        pstmt.setInt(paramIndex++, course.getUserId());
+        pstmt.setDouble(paramIndex++, course.getCourseGrades());
+        
+        if (hasFinalGradeColumn) {
+            pstmt.setDouble(paramIndex++, course.getFinalGrade());
+        }
+        
+        pstmt.setDate(paramIndex, Date.valueOf(course.getCreatedDate()));
+        
+        int affectedRows = pstmt.executeUpdate();
+        
+        if (affectedRows > 0) {
+            try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    course.setCourseId(rs.getInt(1));
                 }
             }
-            
-            return course;
-            
+        }
+        
+        return course;
+        
+    } catch (SQLException e) {
+        throw new DatabaseException("Failed to create course: " + e.getMessage(), e);
+    }
+}
+
+    
+    private boolean checkColumnExists(String tableName, String columnName) throws DatabaseException {
+        String sql = "SELECT COUNT(*) FROM information_schema.columns " +
+                     "WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?";
+
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, tableName);
+            pstmt.setString(2, columnName);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+            return false;
+
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to create course: " + e.getMessage(), e);
+            throw new DatabaseException("Failed to check column existence: " + e.getMessage(), e);
         }
     }
     
-    @Override  // FIXED: Changed from findById() to getCourseById()
+    @Override
     public Course getCourseById(int courseId) throws DatabaseException {
         String sql = "SELECT * FROM courses WHERE course_id = ?";
         
@@ -68,10 +104,10 @@ public class CourseDaoImpl implements CourseDao {
         }
     }
     
-    @Override  // FIXED: Changed from findByUserId() to getCoursesByUser()
+    @Override
     public List<Course> getCoursesByUser(int userId) throws DatabaseException {
         List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM courses WHERE user_id = ? ORDER BY created_at DESC";
+        String sql = "SELECT * FROM courses WHERE user_id = ? ORDER BY course_name";
         
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -110,20 +146,19 @@ public class CourseDaoImpl implements CourseDao {
         }
     }
     
-    @Override  // FIXED: Changed from update() to updateCourse()
+    @Override
     public boolean updateCourse(Course course) throws DatabaseException {
-        String sql = "UPDATE courses SET course_name = ?, user_id = ?, course_year = ?, " +
-                    "course_grades = ?, created_at = ? WHERE course_id = ?";
+        String sql = "UPDATE courses SET course_name = ?, user_id = ?, course_grades = ?, " +
+                    "final_grade = ? WHERE course_id = ?";
         
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, course.getCourseName());
             pstmt.setInt(2, course.getUserId());
-            pstmt.setInt(3, course.getCourseYear());
-            pstmt.setDouble(4, course.getCourseGrades());
-            pstmt.setDate(5, Date.valueOf(course.getCreatedDate()));
-            pstmt.setInt(6, course.getCourseId());
+            pstmt.setDouble(3, course.getCourseGrades());
+            pstmt.setDouble(4, course.getFinalGrade());
+            pstmt.setInt(5, course.getCourseId());
             
             return pstmt.executeUpdate() > 0;
             
@@ -132,16 +167,44 @@ public class CourseDaoImpl implements CourseDao {
         }
     }
     
-    @Override  // FIXED: Changed from delete() to deleteCourse()
+    @Override
     public boolean deleteCourse(int courseId) throws DatabaseException {
-        String sql = "DELETE FROM courses WHERE course_id = ?";
-        
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, courseId);
-            return pstmt.executeUpdate() > 0;
-            
+        // First delete assessments for this course
+        String deleteAssessmentsSql = "DELETE FROM Assessments WHERE course_id = ?";
+        String deleteCourseSql = "DELETE FROM Courses WHERE course_id = ?";
+
+        try (Connection conn = dbConnection.getConnection()) {
+            // Start transaction
+            conn.setAutoCommit(false);
+
+            try {
+                // Delete assessments first (foreign key constraint)
+                try (PreparedStatement pstmt1 = conn.prepareStatement(deleteAssessmentsSql)) {
+                    pstmt1.setInt(1, courseId);
+                    pstmt1.executeUpdate();
+                }
+
+                // Delete the course
+                try (PreparedStatement pstmt2 = conn.prepareStatement(deleteCourseSql)) {
+                    pstmt2.setInt(1, courseId);
+                    boolean courseDeleted = pstmt2.executeUpdate() > 0;
+
+                    if (courseDeleted) {
+                        conn.commit();
+                        return true;
+                    } else {
+                        conn.rollback();
+                        return false;
+                    }
+                }
+
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new DatabaseException("Failed to delete course and assessments: " + e.getMessage(), e);
+            } finally {
+                conn.setAutoCommit(true);
+            }
+
         } catch (SQLException e) {
             throw new DatabaseException("Failed to delete course: " + e.getMessage(), e);
         }
@@ -171,121 +234,26 @@ public class CourseDaoImpl implements CourseDao {
         }
     }
     
-    @Override
-    public List<Course> findUpcomingCourses(int userId) throws DatabaseException {
-        // Note: Your courses table doesn't have start_date, so this might need adjustment
-        List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM courses WHERE user_id = ? ORDER BY created_at DESC LIMIT 10";
-        
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
-            
-            while (rs.next()) {
-                courses.add(mapResultSetToCourse(rs));
-            }
-            
-            return courses;
-            
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed to find upcoming courses: " + e.getMessage(), e);
-        }
-    }
-    
-    @Override  // FIXED: Added missing method
-    public List<Course> findCompletedCourses(int userId) throws DatabaseException {
-        // Assuming completed courses have course_grades > 0 or some completion flag
-        List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM courses WHERE user_id = ? AND course_grades > 0 " +
-                    "ORDER BY course_grades DESC";
-        
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
-            
-            while (rs.next()) {
-                courses.add(mapResultSetToCourse(rs));
-            }
-            
-            return courses;
-            
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed to find completed courses: " + e.getMessage(), e);
-        }
-    }
-    
-    @Override  // FIXED: Changed from enrollUser() to enrollUserToCourse()
-    public boolean enrollUserToCourse(int courseId, int userId) throws DatabaseException {
-        String sql = "INSERT INTO course_enrollments (course_id, user_id, enrolled_at) " +
-                    "VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE enrolled_at = NOW()";
-        
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, courseId);
-            pstmt.setInt(2, userId);
-            return pstmt.executeUpdate() > 0;
-            
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed to enroll user: " + e.getMessage(), e);
-        }
-    }
-    
-    @Override  // FIXED: Added missing method (note parameter order: courseId, userId)
-    public boolean unenrollUser(int courseId, int userId) throws DatabaseException {
-        String sql = "DELETE FROM course_enrollments WHERE course_id = ? AND user_id = ?";
-        
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, courseId);
-            pstmt.setInt(2, userId);
-            return pstmt.executeUpdate() > 0;
-            
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed to unenroll user: " + e.getMessage(), e);
-        }
-    }
-    
-    @Override
-    public List<Integer> getEnrolledUsers(int courseId) throws DatabaseException {
-        List<Integer> userIds = new ArrayList<>();
-        String sql = "SELECT user_id FROM course_enrollments WHERE course_id = ?";
-        
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, courseId);
-            ResultSet rs = pstmt.executeQuery();
-            
-            while (rs.next()) {
-                userIds.add(rs.getInt("user_id"));
-            }
-            
-            return userIds;
-            
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed to get enrolled users: " + e.getMessage(), e);
-        }
-    }
-    
     private Course mapResultSetToCourse(ResultSet rs) throws SQLException {
-        Course course = new Course();
-        course.setCourseId(rs.getInt("course_id"));
-        course.setCourseName(rs.getString("course_name"));
-        course.setCourseYear(rs.getInt("course_year"));
-        course.setCourseGrades(rs.getDouble("course_grades"));
-        
-        Date createdAt = rs.getDate("created_at");
-        if (createdAt != null) {
-            course.setCreatedDate(createdAt.toLocalDate());
-        }
-        
-        course.setUserId(rs.getInt("user_id"));
-        return course;
+    Course course = new Course();
+    course.setCourseId(rs.getInt("course_id"));
+    course.setCourseName(rs.getString("course_name"));
+    course.setCourseGrades(rs.getDouble("course_grades"));
+    
+    // Try to get final_grade, but handle if it doesn't exist
+    try {
+        course.setFinalGrade(rs.getDouble("final_grade"));
+    } catch (SQLException e) {
+        // Column doesn't exist, set default
+        course.setFinalGrade(0.0);
     }
+    
+    Date createdAt = rs.getDate("created_at");
+    if (createdAt != null) {
+        course.setCreatedDate(createdAt.toLocalDate());
+    }
+    
+    course.setUserId(rs.getInt("user_id"));
+    return course;
+}
 }
