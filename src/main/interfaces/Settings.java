@@ -20,6 +20,7 @@ public class Settings extends javax.swing.JPanel {
         initComponents();
         userService = new UserService();
         loadCurrentUser();
+        
     }
 
     /* Built-in codes and functions */
@@ -142,11 +143,11 @@ public class Settings extends javax.swing.JPanel {
         jLabel1.setText("Settings");
         jLabel1.setAutoscrolls(true);
 
-        apply.setForeground(new java.awt.Color(255, 255, 255));
-        apply.setText("Apply");
-        apply.setArc(15);
-        apply.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        apply.addActionListener(this::applyActionPerformed);
+        applyChangesBtn.setForeground(new java.awt.Color(255, 255, 255));
+        applyChangesBtn.setText("Apply");
+        applyChangesBtn.setArc(15);
+        applyChangesBtn.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        applyChangesBtn.addActionListener(this::applyChangesBtnActionPerformed);
 
         saveChangesBtn.setForeground(new java.awt.Color(255, 255, 255));
         saveChangesBtn.setText("Save");
@@ -160,7 +161,7 @@ public class Settings extends javax.swing.JPanel {
             OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OptionsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(apply, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(applyChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
@@ -190,7 +191,7 @@ public class Settings extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(apply, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(applyChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
 
@@ -207,6 +208,7 @@ public class Settings extends javax.swing.JPanel {
             .addComponent(Settings, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+// </editor-fold>                        
     
      /**
      * Load current logged in user into form fields
@@ -239,18 +241,6 @@ public class Settings extends javax.swing.JPanel {
             System.err.println("Error loading current user: " + e.getMessage());
         }
     }
-     
-     /**
-     * Clear all login fields
-     */     
-    private void clearFields() {
-        settingsUsername.setText("");
-        settingsEmail.setText("");
-        settingsPassword.setText("");
-    }
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        
-    }//GEN-LAST:event_button1ActionPerformed
     
     private void settingsUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsUsernameActionPerformed
         String username = settingsUsername.getText().trim();
@@ -436,6 +426,10 @@ public class Settings extends javax.swing.JPanel {
     private void saveChangesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesBtnActionPerformed
         saveAccountChanges();
     }//GEN-LAST:event_saveChangesBtnActionPerformed
+
+    private void applyChangesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyChangesBtnActionPerformed
+        applyChangesBtn();
+    }//GEN-LAST:event_applyChangesBtnActionPerformed
     
      private void saveAccountChanges() {
         String username = settingsUsername.getText().trim();
@@ -544,10 +538,6 @@ public class Settings extends javax.swing.JPanel {
         }
     }
      
-     private void applyChangesBtnActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        applyChangesBtn();
-    }   
-    
     /**
      * Update account information (Save button functionality)
      */
