@@ -10,10 +10,7 @@ import backend.exceptions.DatabaseException;
 import backend.exceptions.ValidationException;
 
 public class Settings extends javax.swing.JPanel {
-    /**
-     * Attributes
-     */  
-    private UserService userService;
+    private final UserService userService;
     private User currentUser;
 
     /**
@@ -23,257 +20,8 @@ public class Settings extends javax.swing.JPanel {
         initComponents();
         userService = new UserService();
         loadCurrentUser();
+        
     }
-    
-    /**
-     * Load current logged in user into form fields
-     */
-    private void loadCurrentUser() {
-        try {
-            User currentUser = userService.getCurrentUser();
-            
-            if (currentUser != null) {
-                // Get fresh user details
-                User userDetails = userService.getCurrentUserDetails();
-                
-                if (userDetails != null) {
-                    settingsUsername.setText(userDetails.getUsername());
-                    settingsEmail.setText(userDetails.getEmail());
-                    settingsPassword.setText(""); // Clear password for security
-                    
-                    // Update button text
-                    changeAccountBtn.setText("Switch Account");
-                }
-            } else {
-                // No user logged in
-                settingsUsername.setText("");
-                settingsEmail.setText("");
-                settingsPassword.setText("");
-                changeAccountBtn.setText("Login");
-            }
-            
-        } catch (Exception e) {
-            System.err.println("Error loading current user: " + e.getMessage());
-        }
-    }
-     
-     /**
-     * Clear all login fields
-     */     
-    private void clearFields() {
-        settingsUsername.setText("");
-        settingsEmail.setText("");
-        settingsPassword.setText("");
-    }
-    
-    /**
-     * Save account information (Save button functionality)
-     */
-    private void saveAccountChanges() {
-        String username = settingsUsername.getText().trim();
-        String email = settingsEmail.getText().trim();
-        String password = new String(settingsPassword.getPassword()).trim();
-        
-        // Check if user is logged in
-        User currentUser = userService.getCurrentUser();
-        if (currentUser == null) {
-            JOptionPane.showMessageDialog(this,
-                "Please login first to save changes",
-                "Not Logged In",
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Validation (same as apply)
-        if (username.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "Username is required",
-                "Validation Error",
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "Email is required",
-                "Validation Error",
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Disable button during save
-        saveChangesBtn.setEnabled(false);
-        String originalButtonText = saveChangesBtn.getText();
-        saveChangesBtn.setText("Saving...");
-        
-        try {
-            // Update user account
-            boolean success = userService.updateUserAccount(username, email, password);
-            
-            if (success) {
-                // Success
-                saveChangesBtn.setEnabled(true);
-                saveChangesBtn.setText(originalButtonText);
-                settingsPassword.setText(""); // Clear password after save
-                
-                // Show what was changed
-                StringBuilder savedChanges = new StringBuilder();
-                savedChanges.append("Account updated successfully!\n\n");
-                savedChanges.append("Changes saved:\n");
-                
-                if (!username.equals(currentUser.getUsername())) {
-                    savedChanges.append("• New username: " + username + "\n");
-                }
-                
-                if (!email.equals(currentUser.getEmail())) {
-                    savedChanges.append("• New email: " + email + "\n");
-                }
-                
-                if (!password.isEmpty()) {
-                    savedChanges.append("• Password has been updated\n");
-                }
-                
-                JOptionPane.showMessageDialog(this,
-                    savedChanges.toString(),
-                    "Save Successful",
-                    JOptionPane.INFORMATION_MESSAGE);
-                    
-                // Reload user data to reflect changes
-                loadCurrentUser();
-            } else {
-                // Update failed
-                saveChangesBtn.setEnabled(true);
-                saveChangesBtn.setText(originalButtonText);
-                JOptionPane.showMessageDialog(this,
-                    "Failed to update account. Please try again.",
-                    "Save Failed",
-                    JOptionPane.ERROR_MESSAGE);
-            }
-            
-        } catch (ValidationException e) {
-            saveChangesBtn.setEnabled(true);
-            saveChangesBtn.setText(originalButtonText);
-            JOptionPane.showMessageDialog(this,
-                "Validation error: " + e.getMessage(),
-                "Save Failed",
-                JOptionPane.ERROR_MESSAGE);
-            
-        } catch (DatabaseException e) {
-            saveChangesBtn.setEnabled(true);
-            saveChangesBtn.setText(originalButtonText);
-            JOptionPane.showMessageDialog(this,
-                "Database error: " + e.getMessage(),
-                "Save Failed",
-                JOptionPane.ERROR_MESSAGE);
-            
-        } catch (Exception e) {
-            saveChangesBtn.setEnabled(true);
-            saveChangesBtn.setText(originalButtonText);
-            JOptionPane.showMessageDialog(this,
-                "Error: " + e.getMessage(),
-                "Save Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    /**
-     * Update account information (Update button functionality)
-     */
-    private void updateAccountInfo() {
-        String username = settingsUsername.getText().trim();
-        String email = settingsEmail.getText().trim();
-        String password = new String(settingsPassword.getPassword()).trim();
-        
-        // Check if we have a logged in user
-        if (currentUser == null) {
-            JOptionPane.showMessageDialog(this,
-                "Please login first to update account",
-                "Not Logged In",
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Show loading state
-        changeAccountBtn.setEnabled(false);
-        String originalText = changeAccountBtn.getText();
-        changeAccountBtn.setText("Updating...");
-        
-        new Thread(() -> {
-            try {
-                boolean success;
-                
-                if (password.isEmpty()) {
-                    // Update without changing password
-                    success = userService.updateProfile(
-                        currentUser.getUserId(),
-                        username,
-                        email
-                    );
-                } else {
-                    // Update with password change
-                    success = userService.updateUserAccount(username, email, password);
-                }
-                
-                SwingUtilities.invokeLater(() -> {
-                    if (success) {
-                        // Reload user data
-                        loadCurrentUser();
-                        
-                        JOptionPane.showMessageDialog(Settings.this,
-                            "Account updated successfully",
-                            "Success",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(Settings.this,
-                            "Failed to update account",
-                            "Update Failed",
-                            JOptionPane.ERROR_MESSAGE);
-                    }
-                    
-                    // Reset button
-                    changeAccountBtn.setEnabled(true);
-                    changeAccountBtn.setText(originalText);
-                });
-                
-            } catch (ValidationException e) {
-                SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(Settings.this,
-                        "Validation error: " + e.getMessage(),
-                        "Update Failed",
-                        JOptionPane.ERROR_MESSAGE);
-                    
-                    // Reset button
-                    changeAccountBtn.setEnabled(true);
-                    changeAccountBtn.setText(originalText);
-                });
-                
-            } catch (DatabaseException e) {
-                SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(Settings.this,
-                        "Database error: " + e.getMessage(),
-                        "Update Failed",
-                        JOptionPane.ERROR_MESSAGE);
-                    
-                    // Reset button
-                    changeAccountBtn.setEnabled(true);
-                    changeAccountBtn.setText(originalText);
-                });
-                
-            } catch (Exception e) {
-                SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(Settings.this,
-                        "Error: " + e.getMessage(),
-                        "Update Failed",
-                        JOptionPane.ERROR_MESSAGE);
-                    
-                    // Reset button
-                    changeAccountBtn.setEnabled(true);
-                    changeAccountBtn.setText(originalText);
-                });
-            }
-        }).start();
-    }
-
 
     /* Built-in codes and functions */
     @SuppressWarnings("unchecked")
@@ -293,7 +41,7 @@ public class Settings extends javax.swing.JPanel {
         settingsUsername = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        apply = new main.component.Button();
+        applyChangesBtn = new main.component.Button();
         saveChangesBtn = new main.component.Button();
         jSeparator3 = new javax.swing.JSeparator();
 
@@ -395,11 +143,11 @@ public class Settings extends javax.swing.JPanel {
         jLabel1.setText("Settings");
         jLabel1.setAutoscrolls(true);
 
-        apply.setForeground(new java.awt.Color(255, 255, 255));
-        apply.setText("Apply");
-        apply.setArc(15);
-        apply.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        apply.addActionListener(this::applyActionPerformed);
+        applyChangesBtn.setForeground(new java.awt.Color(255, 255, 255));
+        applyChangesBtn.setText("Apply");
+        applyChangesBtn.setArc(15);
+        applyChangesBtn.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        applyChangesBtn.addActionListener(this::applyChangesBtnActionPerformed);
 
         saveChangesBtn.setForeground(new java.awt.Color(255, 255, 255));
         saveChangesBtn.setText("Save");
@@ -413,7 +161,7 @@ public class Settings extends javax.swing.JPanel {
             OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OptionsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(apply, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(applyChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
@@ -443,7 +191,7 @@ public class Settings extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(apply, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(applyChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
 
@@ -460,11 +208,40 @@ public class Settings extends javax.swing.JPanel {
             .addComponent(Settings, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void applyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyActionPerformed
-        updateAccountInfo();
-    }//GEN-LAST:event_applyActionPerformed
-
+// </editor-fold>                        
+    
+     /**
+     * Load current logged in user into form fields
+     */
+    private void loadCurrentUser() {
+        try {
+            User currentUser = userService.getCurrentUser();
+            
+            if (currentUser != null) {
+                // Get fresh user details
+                User userDetails = userService.getCurrentUserDetails();
+                
+                if (userDetails != null) {
+                    settingsUsername.setText(userDetails.getUsername());
+                    settingsEmail.setText(userDetails.getEmail());
+                    settingsPassword.setText(""); // Clear password for security
+                    
+                    // Update button text
+                    changeAccountBtn.setText("Switch Account");
+                }
+            } else {
+                // No user logged in
+                settingsUsername.setText("");
+                settingsEmail.setText("");
+                settingsPassword.setText("");
+                changeAccountBtn.setText("Login");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error loading current user: " + e.getMessage());
+        }
+    }
+    
     private void settingsUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsUsernameActionPerformed
         String username = settingsUsername.getText().trim();
     
@@ -650,10 +427,219 @@ public class Settings extends javax.swing.JPanel {
         saveAccountChanges();
     }//GEN-LAST:event_saveChangesBtnActionPerformed
 
+    private void applyChangesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyChangesBtnActionPerformed
+        applyChangesBtn();
+    }//GEN-LAST:event_applyChangesBtnActionPerformed
+    
+     private void saveAccountChanges() {
+        String username = settingsUsername.getText().trim();
+        String email = settingsEmail.getText().trim();
+        String password = new String(settingsPassword.getPassword()).trim();
+        
+        // Check if user is logged in
+        User currentUser = userService.getCurrentUser();
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(this,
+                "Please login first to save changes",
+                "Not Logged In",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Validation (same as apply)
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Username is required",
+                "Validation Error",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Email is required",
+                "Validation Error",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Disable button during save
+        saveChangesBtn.setEnabled(false);
+        String originalButtonText = saveChangesBtn.getText();
+        saveChangesBtn.setText("Saving...");
+        
+        try {
+            // Update user account
+            boolean success = userService.updateUserAccount(username, email, password);
+            
+            if (success) {
+                // Success
+                saveChangesBtn.setEnabled(true);
+                saveChangesBtn.setText(originalButtonText);
+                settingsPassword.setText(""); // Clear password after save
+                
+                // Show what was changed
+                StringBuilder savedChanges = new StringBuilder();
+                savedChanges.append("Account updated successfully!\n\n");
+                savedChanges.append("Changes saved:\n");
+                
+                if (!username.equals(currentUser.getUsername())) {
+                    savedChanges.append("• New username: " + username + "\n");
+                }
+                
+                if (!email.equals(currentUser.getEmail())) {
+                    savedChanges.append("• New email: " + email + "\n");
+                }
+                
+                if (!password.isEmpty()) {
+                    savedChanges.append("• Password has been updated\n");
+                }
+                
+                JOptionPane.showMessageDialog(this,
+                    savedChanges.toString(),
+                    "Save Successful",
+                    JOptionPane.INFORMATION_MESSAGE);
+                    
+                // Reload user data to reflect changes
+                loadCurrentUser();
+            } else {
+                // Update failed
+                saveChangesBtn.setEnabled(true);
+                saveChangesBtn.setText(originalButtonText);
+                JOptionPane.showMessageDialog(this,
+                    "Failed to update account. Please try again.",
+                    "Save Failed",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (ValidationException e) {
+            saveChangesBtn.setEnabled(true);
+            saveChangesBtn.setText(originalButtonText);
+            JOptionPane.showMessageDialog(this,
+                "Validation error: " + e.getMessage(),
+                "Save Failed",
+                JOptionPane.ERROR_MESSAGE);
+            
+        } catch (DatabaseException e) {
+            saveChangesBtn.setEnabled(true);
+            saveChangesBtn.setText(originalButtonText);
+            JOptionPane.showMessageDialog(this,
+                "Database error: " + e.getMessage(),
+                "Save Failed",
+                JOptionPane.ERROR_MESSAGE);
+            
+        } catch (Exception e) {
+            saveChangesBtn.setEnabled(true);
+            saveChangesBtn.setText(originalButtonText);
+            JOptionPane.showMessageDialog(this,
+                "Error: " + e.getMessage(),
+                "Save Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+     
+    /**
+     * Update account information (Save button functionality)
+     */
+    private void applyChangesBtn() {
+        String username = settingsUsername.getText().trim();
+        String email = settingsEmail.getText().trim();
+        String password = new String(settingsPassword.getPassword()).trim();
+        
+        // Check if we have a logged in user
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(this,
+                "Please login first to update account",
+                "Not Logged In",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Show loading state
+        changeAccountBtn.setEnabled(false);
+        String originalText = changeAccountBtn.getText();
+        changeAccountBtn.setText("Updating...");
+        
+        new Thread(() -> {
+            try {
+                boolean success;
+                
+                if (password.isEmpty()) {
+                    // Update without changing password
+                    success = userService.updateProfile(
+                        currentUser.getUserId(),
+                        username,
+                        email
+                    );
+                } else {
+                    // Update with password change
+                    success = userService.updateUserAccount(username, email, password);
+                }
+                
+                SwingUtilities.invokeLater(() -> {
+                    if (success) {
+                        // Reload user data
+                        loadCurrentUser();
+                        
+                        JOptionPane.showMessageDialog(Settings.this,
+                            "Account updated successfully",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(Settings.this,
+                            "Failed to update account",
+                            "Update Failed",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                    // Reset button
+                    changeAccountBtn.setEnabled(true);
+                    changeAccountBtn.setText(originalText);
+                });
+                
+            } catch (ValidationException e) {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(Settings.this,
+                        "Validation error: " + e.getMessage(),
+                        "Update Failed",
+                        JOptionPane.ERROR_MESSAGE);
+                    
+                    // Reset button
+                    changeAccountBtn.setEnabled(true);
+                    changeAccountBtn.setText(originalText);
+                });
+                
+            } catch (DatabaseException e) {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(Settings.this,
+                        "Database error: " + e.getMessage(),
+                        "Update Failed",
+                        JOptionPane.ERROR_MESSAGE);
+                    
+                    // Reset button
+                    changeAccountBtn.setEnabled(true);
+                    changeAccountBtn.setText(originalText);
+                });
+                
+            } catch (Exception e) {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(Settings.this,
+                        "Error: " + e.getMessage(),
+                        "Update Failed",
+                        JOptionPane.ERROR_MESSAGE);
+                    
+                    // Reset button
+                    changeAccountBtn.setEnabled(true);
+                    changeAccountBtn.setText(originalText);
+                });
+            }
+        }).start();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.component.Panel Options;
     private javax.swing.JPanel Settings;
-    private main.component.Button apply;
+    private main.component.Button applyChangesBtn;
     private main.component.Button changeAccountBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -668,4 +654,5 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JPasswordField settingsPassword;
     private javax.swing.JTextField settingsUsername;
     // End of variables declaration//GEN-END:variables
+
 }
