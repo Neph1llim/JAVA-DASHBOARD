@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package main.component;
 
-import backend.model.Assessment;
 
-/**
- *
- * @author charles cua
- */
 public class AddGrade extends javax.swing.JPanel {
 
     private double percentageValue;
@@ -45,7 +37,7 @@ public Object[] getAssessmentData() {
 }
     
     private void setupDefaults() {
-        // Set placeholder text
+        // Placeholder text
         jTextField1.setText("Enter Assessment Name");
         jTextField2.setText("0"); // Score
         jTextField6.setText("100"); // Max Score
@@ -59,20 +51,18 @@ public Object[] getAssessmentData() {
     }
     
     private void setupListeners() {
-        // Add listeners to automatically calculate when values change
         jTextField2.addActionListener(e -> calculateGrade());
         jTextField6.addActionListener(e -> calculateGrade());
         jTextField4.addActionListener(e -> calculateGrade());
     }
     
-    void calculateGrade() {
+    public void calculateGrade() {
         try {
             // Get values from text fields
             String scoreText = jTextField2.getText().trim();
             String maxText = jTextField6.getText().trim();
             String percentText = jTextField4.getText().trim();
             
-            // Parse values
             scoreValue = scoreText.isEmpty() ? 0 : Double.parseDouble(scoreText);
             maxScoreValue = maxText.isEmpty() ? 100 : Double.parseDouble(maxText);
             percentageValue = percentText.isEmpty() ? 0 : Double.parseDouble(percentText);
@@ -158,14 +148,14 @@ public Object[] getAssessmentData() {
     public boolean isValidEntry() {
         try {
             String gradeText = jTextField5.getText();
-            if (gradeText.startsWith("Error")) {
-                return false;
-            }
+                if (gradeText.startsWith("Error")) {
+                    return false;
+                }
             Double.parseDouble(gradeText);
             return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+            } catch (NumberFormatException e) {
+                return false;
+            }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

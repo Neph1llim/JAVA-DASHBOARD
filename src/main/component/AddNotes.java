@@ -1,6 +1,5 @@
 package main.component;
 
-/* Import statements */
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,14 +10,12 @@ import main.MainFrame;
 import main.interfaces.Notes;
 
 public class AddNotes extends javax.swing.JPanel {
-   /* Properties */
     String titlePlaceholder = "Untitled note";
     String textPlaceholder = "Start typing your notes here...";
     Color initialText = new Color(255, 255, 255);
     Color normalColor = Button.normalColor;
     Color highlightColor = Color.WHITE;
     
-    // Track formatting states
     private boolean boldActive = false;
     private boolean italicActive = false;
     private boolean underlineActive = false;
@@ -31,7 +28,6 @@ public class AddNotes extends javax.swing.JPanel {
     private boolean isEditing = false;
     private Note noteBeingEdited = null;
     
-    /* Constructors */
     public AddNotes(Notes notesPanel) {
         this.notesPanel = notesPanel;
         this.isEditing = false;

@@ -3,15 +3,11 @@ package main.component;
 import javax.swing.JSplitPane;
 
 public class CalendarComponent extends javax.swing.JPanel {
-    // Variables declaration
     private CalendarNav calendarNav;
     private CalendarPanel calendarPanel;
     private calendarTask taskPanel; // Add calendarTask panel
     private JSplitPane splitPane; // For resizable panels
     
-    /**
-     * Creates new form CalendarComponent
-     */
     public CalendarComponent() {
         initComponents();
         setupCustomComponents();

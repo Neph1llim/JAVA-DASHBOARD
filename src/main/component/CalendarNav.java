@@ -1,9 +1,5 @@
 package main.component;
 
-/**
- *
- * @author Cyrus Wilson
- */
 public class CalendarNav extends javax.swing.JPanel {
     
     // Variables declaration                     
