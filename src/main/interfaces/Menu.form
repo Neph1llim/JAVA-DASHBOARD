@@ -35,17 +35,17 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="settings" alignment="1" pref="238" max="32767" attributes="0"/>
                       <Component id="files" alignment="0" max="32767" attributes="0"/>
                       <Component id="notes" alignment="1" max="32767" attributes="0"/>
                       <Component id="home" alignment="1" max="32767" attributes="0"/>
+                      <Component id="grades" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <Component id="grades" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -57,9 +57,9 @@
                   <Component id="notes" min="-2" pref="55" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="files" min="-2" pref="55" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="grades" min="-2" pref="55" max="-2" attributes="0"/>
-                  <EmptySpace pref="493" max="32767" attributes="0"/>
+                  <EmptySpace pref="487" max="32767" attributes="0"/>
                   <Component id="settings" min="-2" pref="55" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
