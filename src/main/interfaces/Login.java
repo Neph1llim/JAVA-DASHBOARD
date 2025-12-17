@@ -403,6 +403,13 @@ public class Login extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Password is Required!");
             return;
         }
+        
+        //ADMIN CREDENTIALS FOR EASY ACCESS
+        if (email.equals("admin") && password.equals("adminPass")){
+            login.setEnabled(true);
+            mainFrame.showCard("HomePage");
+            return;
+        }
 
         // Disable login button during authentication
         login.setEnabled(false);
