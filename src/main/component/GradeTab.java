@@ -337,12 +337,13 @@ public class GradeTab extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
 
         setMaximumSize(null);
-        setMinimumSize(new java.awt.Dimension(480, 255));
-        setPreferredSize(new java.awt.Dimension(1440, 810));
+        setMinimumSize(new java.awt.Dimension(300, 255));
+        setPreferredSize(new java.awt.Dimension(800, 810));
 
         panel2.setArc(0);
+        panel2.setMinimumSize(new java.awt.Dimension(800, 330));
         panel2.setPanelBackground(new java.awt.Color(21, 21, 23));
-        panel2.setPreferredSize(new java.awt.Dimension(1440, 810));
+        panel2.setPreferredSize(new java.awt.Dimension(800, 810));
         panel2.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -386,7 +387,7 @@ public class GradeTab extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         panel2.add(jScrollPane1, gridBagConstraints);
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(1440, 75));
+        jPanel1.setMinimumSize(new java.awt.Dimension(800, 75));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         panel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));

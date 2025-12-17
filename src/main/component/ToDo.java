@@ -7,7 +7,7 @@ import java.awt.*;
 public class ToDo extends javax.swing.JPanel { 
     private int height = 80;
     private int itemCount = 0;
-    private final int MAX_MAIN_HEIGHT = 378; // Max height before scrolling
+    private final int MAX_MAIN_HEIGHT = 345; // Max height before scrolling
     
     public ToDo() {
         initComponents();

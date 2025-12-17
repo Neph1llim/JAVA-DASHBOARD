@@ -5,6 +5,8 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import javax.swing.*;
 import main.interfaces.Notes;
+
+/* Database import files */
 import backend.db.DatabaseConnection;
 import backend.db.DatabaseSetup;
 import backend.db.DatabaseInspector;
@@ -240,9 +242,9 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     // ... (YOUR EXISTING VARIABLES - DON'T TOUCH)
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel HomePage;
     public static javax.swing.JPanel Interface;

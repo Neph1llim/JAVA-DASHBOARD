@@ -1,3 +1,4 @@
+
 package main.component;
 
 import javax.swing.*;
@@ -7,10 +8,12 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
+
 public class CalendarPanel extends javax.swing.JPanel {
     
     private DefaultTableModel tableModel;
     private YearMonth currentMonth;
+
     public CalendarPanel() {
         initComponents();
         initCalendar();

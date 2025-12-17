@@ -436,7 +436,7 @@ public class Grades extends javax.swing.JPanel {
 
         gradeContainer.setBackground(new java.awt.Color(21, 21, 23));
         gradeContainer.setMaximumSize(null);
-        gradeContainer.setMinimumSize(new java.awt.Dimension(1000, 500));
+        gradeContainer.setMinimumSize(new java.awt.Dimension(800, 500));
 
         javax.swing.GroupLayout gradeContainerLayout = new javax.swing.GroupLayout(gradeContainer);
         gradeContainer.setLayout(gradeContainerLayout);
