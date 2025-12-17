@@ -1,6 +1,6 @@
-
 package main.interfaces;
 
+/* Import packages*/
 import javax.swing.*;
 import java.awt.*;
 import backend.services.UserService;
@@ -13,6 +13,9 @@ public class Settings extends javax.swing.JPanel {
     private final UserService userService;
     private User currentUser;
 
+    /**
+     * Class constructors
+     */
     public Settings() {
         initComponents();
         userService = new UserService();
@@ -139,11 +142,11 @@ public class Settings extends javax.swing.JPanel {
         jLabel1.setText("Settings");
         jLabel1.setAutoscrolls(true);
 
-        applyChangesBtn.setForeground(new java.awt.Color(255, 255, 255));
-        applyChangesBtn.setText("Apply");
-        applyChangesBtn.setArc(15);
-        applyChangesBtn.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        applyChangesBtn.addActionListener(this::applyChangesBtnActionPerformed);
+        apply.setForeground(new java.awt.Color(255, 255, 255));
+        apply.setText("Apply");
+        apply.setArc(15);
+        apply.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        apply.addActionListener(this::applyActionPerformed);
 
         saveChangesBtn.setForeground(new java.awt.Color(255, 255, 255));
         saveChangesBtn.setText("Save");
@@ -157,7 +160,7 @@ public class Settings extends javax.swing.JPanel {
             OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OptionsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(applyChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(apply, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
@@ -187,7 +190,7 @@ public class Settings extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(applyChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(apply, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
 
