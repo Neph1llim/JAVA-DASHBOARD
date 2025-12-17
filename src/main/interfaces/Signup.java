@@ -1,18 +1,12 @@
 package main.interfaces;
 
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
-import javax.swing.border.Border;
+import java.awt.event.*;
+import javax.swing.*;
 import main.MainFrame;
 import backend.services.UserService;
 import backend.model.User;
+import javax.swing.border.Border;
 
 public class Signup extends javax.swing.JPanel {
 

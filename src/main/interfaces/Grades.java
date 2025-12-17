@@ -157,6 +157,7 @@ public class Grades extends javax.swing.JPanel {
     }
     
     private void showTab(String name) {
+        Color color = new Color(81,81,84);
         if (gradeContainer.getLayout() instanceof CardLayout card) {
             card.show(gradeContainer, name);
             currentTab = name;
@@ -371,7 +372,7 @@ public class Grades extends javax.swing.JPanel {
         panel1.setPreferredSize(new java.awt.Dimension(1440, 810));
         panel1.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setMinimumSize(new java.awt.Dimension(1440, 50));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -412,6 +413,7 @@ public class Grades extends javax.swing.JPanel {
         container.setViewportView(buttonContainer);
 
         buttonContainer.setArc(0);
+        buttonContainer.setBorderColor(new java.awt.Color(51, 51, 51));
         buttonContainer.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         buttonContainer.setMinimumSize(new java.awt.Dimension(100, 25));
         buttonContainer.setPanelBackground(new java.awt.Color(51, 51, 51));
