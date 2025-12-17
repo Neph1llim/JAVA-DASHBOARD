@@ -40,7 +40,9 @@
       <SubComponents>
         <Container class="main.component.Panel" name="actionPanel">
           <Properties>
-            <Property name="arc" type="int" value="0"/>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[91, 75]"/>
+            </Property>
             <Property name="panelBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="17" green="15" red="15" type="rgb"/>
             </Property>

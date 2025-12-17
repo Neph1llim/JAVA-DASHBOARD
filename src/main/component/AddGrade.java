@@ -4,6 +4,8 @@
  */
 package main.component;
 
+import backend.model.Assessment;
+
 /**
  *
  * @author charles cua
@@ -19,6 +21,29 @@ public class AddGrade extends javax.swing.JPanel {
         setupDefaults();
         setupListeners();
     }
+    
+    public Assessment toAssessment(int courseId) {
+    Assessment assessment = new Assessment();
+    assessment.setCourseId(courseId);
+    assessment.setAssessmentName(this.getAssessmentName());
+    assessment.setScore(this.getGradeValue()); // Using the calculated grade
+    assessment.setMaxScore(100.0); // Assuming max is 100 for grade contribution
+    assessment.setPercentage(this.getPercentageValue());
+    assessment.setCalculatedGrade(this.getGradeValue());
+    return assessment;
+}
+
+// Add method to get assessment data
+public Object[] getAssessmentData() {
+    return new Object[] {
+        getAssessmentName(),
+        getScore(),
+        getMaxScore(),
+        getPercentage(),
+        getCalculatedGrade()
+    };
+}
+    
     private void setupDefaults() {
         // Set placeholder text
         jTextField1.setText("Enter Assessment Name");
@@ -40,7 +65,7 @@ public class AddGrade extends javax.swing.JPanel {
         jTextField4.addActionListener(e -> calculateGrade());
     }
     
-    private void calculateGrade() {
+    void calculateGrade() {
         try {
             // Get values from text fields
             String scoreText = jTextField2.getText().trim();
